@@ -7,7 +7,9 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { ListComponent } from './pages/list/list.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatIconModule } from '@angular/material/icon';
-
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { UserCommandBarComponent } from './components/user-command-bar/user-command-bar.component';
 
 
 @NgModule({
@@ -15,12 +17,15 @@ import {MatIconModule } from '@angular/material/icon';
     FormComponent, 
     ListComponent,
     UserListComponent,
-    UserFormComponent
+    UserFormComponent,
+    UserCommandBarComponent
   ],
   imports: [
     CommonModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule
     //UserRoutingModule
   ],
   exports:[
