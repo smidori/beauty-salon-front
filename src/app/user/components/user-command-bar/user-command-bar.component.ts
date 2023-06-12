@@ -14,6 +14,7 @@ export class UserCommandBarComponent implements OnInit{
   ngOnInit(): void {
   }
   emitAction(action: CommandBarActions){
+    console.log("action ===> " + action)
     this.action.emit(action);
   }
 

@@ -10,6 +10,7 @@ import {MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { UserCommandBarComponent } from './components/user-command-bar/user-command-bar.component';
+import { UserRoutingModule } from './user-routing.module';
 
 
 @NgModule({
@@ -25,14 +26,14 @@ import { UserCommandBarComponent } from './components/user-command-bar/user-comm
     MatTableModule,
     MatIconModule,
     MatButtonModule,
-    MatToolbarModule
-    //UserRoutingModule
+    MatToolbarModule,
+    UserRoutingModule
   ],
-  exports:[
-    FormComponent, 
-    ListComponent,
-    UserListComponent,
-    UserFormComponent
-  ]
+  // exports:[
+  //   FormComponent, 
+  //   ListComponent,
+  //   UserListComponent,
+  //   UserFormComponent
+  // ]
 })
 export class UserModule { }

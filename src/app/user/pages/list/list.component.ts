@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/user/models/user.interface';
 import { TableActions } from '../../enums/table-actions.enum';
 import { Router } from '@angular/router';
+import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 
 
 @Component({
@@ -31,5 +32,18 @@ export class ListComponent implements OnInit{
   //selectUser(user: User){}
   selectUser(data: {user: User, action: TableActions}) {
     this.router.navigate(['users', 'form', data.user.id]);
+  }
+
+  executeCommandBarAction(action: CommandBarActions){
+    switch(action){
+      case CommandBarActions.Create :{
+        this.router.navigate(["users","form"]);
+        return;
+      }
+      // case CommandBarActions.DeleteAll :{
+      //   return;
+      // }
+      default: ""
+    }
   }
 }
