@@ -11,6 +11,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { UserCommandBarComponent } from './components/user-command-bar/user-command-bar.component';
 import { UserRoutingModule } from './user-routing.module';
+import { MatCardModule } from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,6 +30,9 @@ import { UserRoutingModule } from './user-routing.module';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    MatCardModule,
+    MatInputModule,
+    ReactiveFormsModule,
     UserRoutingModule
   ],
   // exports:[

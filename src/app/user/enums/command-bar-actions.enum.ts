@@ -1,3 +1,4 @@
 export enum CommandBarActions {
-    Create
+    Create,
+    List
 }

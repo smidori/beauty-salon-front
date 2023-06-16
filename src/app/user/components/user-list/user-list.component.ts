@@ -1,6 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { User } from 'src/app/user/models/user.interface';
 import { TableActions } from '../../enums/table-actions.enum';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -15,7 +16,9 @@ export class UserListComponent implements OnInit {
   @Output() user = new EventEmitter<{user: User, action:TableActions}>();
   headerFields:string[] = [];
 
-  constructor() { }
+  constructor() { 
+    
+  }
   
   ngOnInit(): void {
     this.getHeaderFields();

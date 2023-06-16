@@ -1,1 +1,3 @@
-<app-user-form [selectedId]="id"></app-user-form>
+<!-- <app-user-form [selectedUser]="user" (action)="formAction($event)"></app-user-form> -->
+<app-user-command-bar (action)="executeCommandBarAction($event)"></app-user-command-bar>
+<app-user-form [selectedUser]="user"></app-user-form>
