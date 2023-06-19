@@ -3,7 +3,7 @@ import { UserService } from "../services/user.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Router } from "@angular/router";
 import { UserActions } from "./user.actions";
-import { mergeMap } from "rxjs";
+import { EMPTY, catchError, map, mergeMap } from "rxjs";
 
 @Injectable()
 export class UserEffects{
@@ -19,16 +19,13 @@ export class UserEffects{
         return this.actions$.pipe(
             ofType(UserActions.GET_USER_LIST),
             mergeMap(() => this.userService.getUsers()
-            )
+            .pipe(
+                map(users => ({type: UserActions.SET_USER_LIST,users})),
+                catchError(() => EMPTY)
+            ))
         )}, {dispatch: true}
     );
 
 
-    // getUsers$ = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(UserActions.GET_USER_LIST),
-    //         mergeMap(() => this.userService.getUsers()
-    //         )
-    //     }, {dispatch: true}
-    //   );
+
 }
