@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { FormComponent } from './pages/form/form.component';
 import { ListComponent } from './pages/list/list.component';
+import { RouterModule, Routes } from '@angular/router';
+
 
 const routes: Routes = [
   {
@@ -28,8 +30,8 @@ const routes: Routes = [
   declarations: [],
   imports: [
     RouterModule.forChild(routes),
-    //CommonModule
+    CommonModule,
   ],
   exports:[RouterModule]
 })
-export class UserRoutingModule { }
+export class TreatmentRoutingModule { }

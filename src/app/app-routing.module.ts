@@ -11,6 +11,16 @@ const routes: Routes = [
     path:"users",
     loadChildren: () => import("./user/user.module").then((m) => m.UserModule)
   }
+
+  // {
+  //   path:"",
+  //   redirectTo:"treatments",
+  //   pathMatch:"full"
+  // },
+  ,{
+    path:"treatments",
+    loadChildren: () => import("./treatment/treatment.module").then((m) => m.TreatmentModule)
+  }
 ];
 
 @NgModule({

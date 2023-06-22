@@ -1,7 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { User } from 'src/app/user/models/user.interface';
 import { TableActions } from '../../enums/table-actions.enum';
-import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -11,14 +10,11 @@ import { UserService } from '../../services/user.service';
 })
 export class UserListComponent implements OnInit {
   @Input() headers: Array<{ headerName: string, fieldName: keyof User }> = []
-  //users: User[] = [];
-  @Input() users: Array<User> = [];
+  @Input() users: ReadonlyArray<User> = [];
   @Output() user = new EventEmitter<{user: User, action:TableActions}>();
   headerFields:string[] = [];
 
-  constructor() { 
-    
-  }
+  constructor() {}
   
   ngOnInit(): void {
     this.getHeaderFields();

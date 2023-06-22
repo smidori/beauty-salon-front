@@ -12,6 +12,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]>{
+    console.log('getUsers => ' + `${environment.apiURL}/users`)
     return this.http.get<User[]>(`${environment.apiURL}/users`).pipe(
       tap((data: User[]) => data),
       catchError(err => throwError(() => err))

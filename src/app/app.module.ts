@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { TreatmentModule } from './treatment/treatment.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { EffectsModule } from '@ngrx/effects';
     HttpClientModule,
     AppRoutingModule,
     UserModule,
+    TreatmentModule,
     BrowserAnimationsModule,
     RouterModule,
     SharedModule,

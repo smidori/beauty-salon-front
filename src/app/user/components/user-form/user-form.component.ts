@@ -16,7 +16,8 @@ export class UserFormComponent implements OnInit{
   constructor(private fb: FormBuilder){
     this.form = this.fb.group({
       id:[''],
-      name:[''],
+      firstName:[''],
+      lastName:[''],
     })
   }
   
