@@ -12,14 +12,4 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit{
   ngOnInit(): void {}
   title = 'beauty-salon';
-  users: User[] = [];
-  // constructor(private userService : UserService){
-
-  // }
-  // ngOnInit(): void {
-  //   this.userService.getUsers().subscribe(users => this.users = users);
-  // }
-  selectUser(user: User) {
-    // action
-  }
 }
