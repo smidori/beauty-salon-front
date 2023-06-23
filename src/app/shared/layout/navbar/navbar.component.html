@@ -1,5 +1,15 @@
-<p>
+<!-- <p>
     <mat-toolbar color="primary">
         <span>Beauty Salon</span>
     </mat-toolbar>
-</p>
+</p> -->
+<mat-toolbar color="primary">
+<span>Beauty Salon</span>
+    <button mat-raised-button color="primary"[routerLink]="'/treatments'">Treatments</button>
+    <button mat-raised-button color="primary"[routerLink]="'/users'">Users</button>
+    <!-- <a mat-list-item [routerLink]="'/treatments'"> Treatments </a>
+    <a mat-list-item [routerLink]="'/users'"> Users </a> -->
+<div class="spacer"></div>
+    <a mat-list-item [routerLink]="'/treatments'"> Home </a>
+    <a mat-list-item [routerLink]="'/login'"> Login </a>
+</mat-toolbar>

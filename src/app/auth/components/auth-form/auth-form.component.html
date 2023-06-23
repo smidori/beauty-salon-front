@@ -18,13 +18,11 @@
             </mat-form-field>
         </p>
         
-
-
         <div class="button">
             <button type="submit" mat-button>{{title}}</button>
         </div>
         <p *ngIf="title == 'Login'" class="link" [routerLink]="['register']" routerLinkActive="router-link-active" >Create account</p>
-        <p *ngIf="title == 'Register'" class="link" [routerLink]="['']" routerLinkActive="router-link-active" >Sign In</p>
+        <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p>
         
         </form>
     </mat-card-content>

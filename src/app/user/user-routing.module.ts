@@ -16,7 +16,7 @@ const routes: Routes = [
         component: FormComponent
       },
       {
-        path: "id",
+        path: ":id",
         component: FormComponent
       }
     ]

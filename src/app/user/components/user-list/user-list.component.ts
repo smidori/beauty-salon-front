@@ -26,7 +26,7 @@ export class UserListComponent implements OnInit {
   }
 
   selectUser(user: User, action:TableActions) {
-    //this.user.emit(user)
+    console.log("selectUser ---- user => " + user.id)
     this.user.emit({user,action})
   }
 

@@ -1,41 +1,68 @@
-<mat-card class="form-card">
-    <h2>{{selectedUser ? "Update/View Hero" : "Create User"}}</h2>
-    <form class="user-form" [formGroup]="form">
+<h2>{{selectedUser ? "Update/View User" : "Create User"}}</h2>
+
+<form [formGroup]="form">
+    <div class="form-row">
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>First Name</mat-label>
-            <input matInput formControlName="firstName" placeholder="First name">
+            <input matInput placeholder="First Name" formControlName="firstName" required>
         </mat-form-field>
-        &nbsp;
-        <mat-form-field class="example-full-width" appearance="outline">
+
+        <mat-form-field class="form-field">
             <mat-label>Last Name</mat-label>
-            <input matInput formControlName="lastName" placeholder="Last name">
+            <input matInput placeholder="Last Name" formControlName="lastName" required>
         </mat-form-field>
-    
-        <!-- <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>House</mat-label>
-            <input matInput formControlName="house" 
-                   placeholder="Ex. California">
+    </div>
+
+    <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>E-mail</mat-label>
+            <input matInput type="email" placeholder="Email" formControlName="email" required>
         </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Login</mat-label>
+            <input matInput placeholder="Login" formControlName="login" required>
+        </mat-form-field>
+    </div>
+
+    <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+                <mat-option value="others">Others</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    
+    <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+                <mat-option value="ADMIN">ADMIN</mat-option>
+                <mat-option value="CLIENT">CLIENT</mat-option>
+                <mat-option value="WORK">WORK</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="button-group">
+        <button mat-raised-button color="primary" (click)="emitAction()">
+                {{actionButtonLabel}}
+        </button>  
+        
+        <button  mat-raised-button color="warn" (click)="clear()">
+                Clear
+        </button> 
+    </div>
     
     
-        <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Known As</mat-label>
-            <input matInput formControlName="knownAs" 
-                   placeholder="Ex. Iron Man">
-        </mat-form-field> -->
-        <div class="button-group">
-            <button mat-raised-button color="primary" (click)="emitAction()">
-                 {{actionButtonLabel}}
-            </button>  
-            &nbsp;
-            <button  mat-raised-button color="warn" (click)="clear()">
-                 Clear
-            </button> 
-            &nbsp;
-            <button  mat-raised-button color="warn" (click)="clear()">
-                Cancel
-           </button> 
-        </div>
     
-    </form>
-</mat-card>
+    <!-- <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button> -->
+</form>

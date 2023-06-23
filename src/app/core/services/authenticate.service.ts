@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -9,7 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthenticateService {
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router) { }
 
   login(data: {login: string, password: string}): Observable<any> {
     console.log("login param ----->"+ JSON.stringify(data));
@@ -34,5 +35,17 @@ export class AuthenticateService {
     // true or false
     return !this.jwtHelper.isTokenExpired(token);
   }
+
+  //check if the token is expired
+  isTokenExpired(token: string): boolean {
+    return this.jwtHelper.isTokenExpired(token);
+  }
+
+  logout(){
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+
+
 
 }

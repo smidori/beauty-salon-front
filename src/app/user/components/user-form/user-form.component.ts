@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../models/user.interface';
 
 @Component({
@@ -15,10 +15,14 @@ export class UserFormComponent implements OnInit{
 
   constructor(private fb: FormBuilder){
     this.form = this.fb.group({
-      id:[''],
-      firstName:[''],
-      lastName:[''],
-    })
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      login: ['', Validators.required],
+      password: ['', Validators.required],
+      gender: ['', Validators.required],
+      role: ['', Validators.required]
+    });
   }
   
   
@@ -27,6 +31,7 @@ export class UserFormComponent implements OnInit{
   }
 
   emitAction() {
+    console.log("emitAction for user => " + JSON.stringify(this.form.value) )
     this.action.emit({value: this.form.value, action: this.actionButtonLabel})
   }
 

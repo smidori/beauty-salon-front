@@ -18,4 +18,23 @@ export class UserService {
       catchError(err => throwError(() => err))
     )
   }
+
+  addUser(user: User): Observable<User>{
+    return this.http.post<User>(`${environment.apiURL}/users`,user).pipe(
+      tap((data: User) => data),
+      catchError(err => throwError(() => err))
+    )
+  }
+
+  updateUser(id: number, user: User): Observable<User>{
+    return this.http.put<User>(`${environment.apiURL}/users/${id}`,user).pipe(
+      catchError(err => throwError(() => err))
+    )
+  }
+
+  deleteUser(id:number): Observable<User>{
+    return this.http.delete<User>(`${environment.apiURL}/users/${id}`).pipe(
+      catchError(err => throwError(() => err))
+    )
+  }
 }

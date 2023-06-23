@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 import { User } from '../../models/user.interface';
 import { Store } from '@ngrx/store';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
+import { AppState } from 'src/app/state/app.state';
+import { UserActions } from '../../state/user.actions';
+import { selectUser } from '../../state/user.selectors';
 //import { AppState } from 'src/app/state/app.state';
 
 
@@ -14,33 +17,31 @@ import { CommandBarActions } from '../../enums/command-bar-actions.enum';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit{
-  //id = "";
-  //user$: Observable<User | undefined>
-  ;
+  user$: Observable<User | undefined>;
   user: User | null = null;
 
-  constructor(private activateRoute: ActivatedRoute, private router: Router){
-    const id = this.activateRoute.snapshot.params['id'];
-    //this.user$ = selectUser(id)
-    //this.user$ = undefined
-    
+  constructor(private router: ActivatedRoute, 
+              private store: Store<AppState>){
+    const id = this.router.snapshot.params['id'];
+    this.user$ = this.store.select(selectUser(id));
+    this.user$.subscribe(d => {if(d) this.user = d})
   }
 
   ngOnInit(): void {
-    //this.id = this.router.snapshot.params['id'];  
+    
   }
 
-
-  executeCommandBarAction(action: CommandBarActions){
-    switch(action){
-      case CommandBarActions.List :{
-        //this.router.navigate(["users","list"]);
-        this.router.navigate(['../']);
+  formAction(data : {value:User, action: string}){
+    console.log("formAction for user => " + JSON.stringify(data.value) );
+    switch(data.action){
+      case "Create" : {
+        this.store.dispatch({type: UserActions.ADD_USER_API, payload: data.value});
         return;
       }
-      // case CommandBarActions.DeleteAll :{
-      //   return;
-      // }
+      case "Update" : {
+        this.store.dispatch({type: UserActions.UPDATE_USER_API, payload: data.value});
+        return;
+      }
       default: ""
     }
   }

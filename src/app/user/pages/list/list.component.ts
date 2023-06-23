@@ -47,11 +47,10 @@ export class ListComponent implements OnInit{
         this.router.navigate(['users', 'form', data.user.id]);
         return;
       }
-      // case TableActions.Delete: {
-      //   this.store.dispatch({type: UserActions.DELETE_USER_API, payload: data.user.id});
-      //   return;
-
-      // }
+      case TableActions.Delete: {
+        this.store.dispatch({type: UserActions.DELETE_USER_API, payload: data.user.id});
+        return;
+      }
       default: ""
     }
 

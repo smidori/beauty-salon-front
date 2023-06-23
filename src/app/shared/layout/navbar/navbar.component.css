@@ -1,0 +1,19 @@
+.mat-toolbar{
+    background-color: black;
+    color: white;
+  }
+  .mat-button{
+     color: white;
+  }
+  .spacer{
+    flex: 1 1 auto;
+  }
+
+  a {
+    color: aliceblue;
+    margin: 10px;
+  }
+
+  button{
+    margin: 0 0 0 10px ;
+  }

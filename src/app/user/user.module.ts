@@ -12,6 +12,7 @@ import { ListComponent } from './pages/list/list.component';
 import { UserEffects } from './state/user.effects';
 import { userReducer } from './state/user.reducers';
 import { UserRoutingModule } from './user-routing.module';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -30,5 +31,8 @@ import { UserRoutingModule } from './user-routing.module';
     StoreModule.forFeature('userState', userReducer),
     EffectsModule.forFeature([UserEffects])
   ],
+  providers: [ 
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } } 
+ ],
 })
 export class UserModule { }

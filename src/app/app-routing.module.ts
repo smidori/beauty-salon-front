@@ -21,19 +21,23 @@ const routes: Routes = [
 
   {
     path: "",
-    redirectTo: "login",
+    redirectTo: "treatments",
     pathMatch: "full",
   },
   {
     path: "login",
     loadChildren: () =>
     import("./auth/auth.module").then((m) => m.AuthModule),
-  },
-  
+  },  
   {
     path:"treatments",
     loadChildren: () => import("./treatment/treatment.module").then((m) => m.TreatmentModule)
+  },  
+  {
+    path:"users",
+    loadChildren: () => import("./user/user.module").then((m) => m.UserModule)
   }
+
 ];
 
 @NgModule({
