@@ -11,6 +11,9 @@ import { TreatmentRoutingModule } from './treatment-routing.module';
 import { TreatmentEffects } from './state/treatment.effects';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { HomeComponent } from './pages/home/home.component';
+import { TreatmentHomeComponent } from './components/treatment-home/treatment-home.component';
+import { TreatmentCommandBarComponent } from './components/treatment-command-bar/treatment-command-bar.component';
 
 
 @NgModule({
@@ -18,7 +21,10 @@ import { EffectsModule } from '@ngrx/effects';
     ListComponent,
     FormComponent,
     TreatmentFormComponent,
-    TreatmentListComponent,    
+    TreatmentListComponent,
+    HomeComponent,
+    TreatmentHomeComponent,
+    TreatmentCommandBarComponent,    
   ],
   imports: [
     CommonModule,

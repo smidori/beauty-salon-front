@@ -42,8 +42,11 @@ export class AuthenticateService {
   }
 
   logout(){
-    localStorage.removeItem('token');
     this.router.navigate(['/login']);
+    localStorage.removeItem('token'); 
+    console.log("logout isAuthenticated " + this.isAuthenticated())
+    const token = localStorage.getItem('token')
+    console.log("logout token " + token)
   }
 
 

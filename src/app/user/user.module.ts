@@ -21,7 +21,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     ListComponent,
     UserListComponent,
     UserFormComponent,
-    UserCommandBarComponent
+    UserCommandBarComponent,
   ],
   imports: [
     CommonModule,

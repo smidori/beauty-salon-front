@@ -16,17 +16,30 @@ export class UserEffects {
 
 
 
-    getUser$ = createEffect(() => {
+    // getUser$ = createEffect(() => {
+    //     return this.actions$.pipe(
+    //         ofType(UserActions.GET_USER_LIST),
+    //         mergeMap(() => this.userService.getUsers()
+    //             .pipe(
+    //                 map(users => ({ type: UserActions.SET_USER_LIST, users })),
+    //                 catchError(() => EMPTY)
+    //             ))
+    //     )
+    // }, { dispatch: true }
+    // );
+
+    getAntiHeroes$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(UserActions.GET_USER_LIST),
             mergeMap(() => this.userService.getUsers()
-                .pipe(
-                    map(users => ({ type: UserActions.SET_USER_LIST, users })),
-                    catchError(() => EMPTY)
-                ))
-        )
-    }, { dispatch: true }
-    );
+              .pipe(
+                map(users => ({ type: UserActions.SET_USER_LIST, users })),
+                catchError(() => EMPTY)
+              ))
+            )
+        }, {dispatch: true}
+      );
+
     addUser$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(UserActions.ADD_USER_API),
@@ -40,9 +53,10 @@ export class UserEffects {
     }, { dispatch: true })
 
     updateUser$ = createEffect(() => {
+        console.log("updateUser createEffect ")
         return this.actions$.pipe(
             ofType(UserActions.UPDATE_USER_API),
-            mergeMap((data: {type: string,payload: User}) =>
+            mergeMap((data: {type: string, payload: User}) =>
             this.userService.updateUser(data.payload.id, data.payload)
             .pipe(
                 map(users => ({type: UserActions.UPDATE_USER_STATE, user: data.payload})),

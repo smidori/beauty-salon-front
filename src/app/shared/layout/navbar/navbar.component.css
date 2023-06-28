@@ -17,3 +17,7 @@
   button{
     margin: 0 0 0 10px ;
   }
+
+  .logout-link {
+    text-decoration: underline; /* Adiciona o sublinhado */
+  }

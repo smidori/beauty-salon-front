@@ -27,6 +27,7 @@ export class UserService {
   }
 
   updateUser(id: number, user: User): Observable<User>{
+    console.log("updateUser service ")
     return this.http.put<User>(`${environment.apiURL}/users/${id}`,user).pipe(
       catchError(err => throwError(() => err))
     )

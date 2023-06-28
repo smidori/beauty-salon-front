@@ -1,19 +1,20 @@
-import { selectTreatment, selectTreatments } from './../../state/treatment.selectors';
 import { Component, OnInit } from '@angular/core';
 import { Treatment } from '../../models/treatment.interface';
 import { Router } from '@angular/router';
-import { AppState } from 'src/app/state/app.state';
 import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/state/app.state';
 import { TreatmentActions } from '../../state/treatment.actions';
 import { TableActions } from '../../enums/table-actions.enum';
+import { selectTreatments } from '../../state/treatment.selectors';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class ListComponent implements OnInit{
+export class HomeComponent implements OnInit {
+
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
   headers:{headerName: string, fieldName: keyof Treatment}[] = [
@@ -64,7 +65,4 @@ export class ListComponent implements OnInit{
       default: ""
     }
   }
-
-   
-
 }

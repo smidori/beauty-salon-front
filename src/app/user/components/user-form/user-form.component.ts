@@ -27,11 +27,26 @@ export class UserFormComponent implements OnInit{
   
   
   ngOnInit(): void {
-    
+    this.checkAction();
   }
 
+  checkAction() {
+    if(this.selectedUser) {
+      this.actionButtonLabel = "Update";
+      this.patchDataValues()
+    }
+  }
+
+  patchDataValues () {
+
+    if(this.selectedUser){
+      console.log(JSON.stringify("user => " + this.selectedUser.firstName));
+      this.form.patchValue(this.selectedUser);
+    }
+    
+ }
+
   emitAction() {
-    console.log("emitAction for user => " + JSON.stringify(this.form.value) )
     this.action.emit({value: this.form.value, action: this.actionButtonLabel})
   }
 

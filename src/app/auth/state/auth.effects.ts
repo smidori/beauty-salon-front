@@ -5,7 +5,9 @@ import { EMPTY } from 'rxjs';
 import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 import { User } from '../models/user.interface';
-import { AuthActions } from './auth.actions';
+import { AuthActions, setAuthentication } from './auth.actions';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/state/app.state';
 
 
 
@@ -20,7 +22,11 @@ export class AuthEffects {
         mergeMap(((data: {type: string, payload: User}) => this.authService.login(data.payload)
           .pipe(
             map(data => ({ type: AuthActions.SET_TOKEN, token: data.token })),
-            tap(() =>  this.router.navigate(["treatments"])),
+            //tap(() =>  this.router.navigate(["treatments"])),
+            tap(() => {
+              this.store.dispatch(setAuthentication({ isAuthenticated: true }));
+              this.router.navigate(['treatments']);
+            }),
             catchError(async (data) => ({ type: AuthActions.LOGIN_ERROR, error: data.error }))
           ))
         ))
@@ -41,6 +47,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthenticateService,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>,
   ) {}
 }

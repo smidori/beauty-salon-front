@@ -26,10 +26,16 @@ export const addUserState = createAction(
     UserActions.ADD_USER_STATE, props<{user: User}>()
 );
 
+// export const updateUserState = createAction(
+//     UserActions.UPDATE_USER_STATE, props<{user: User}>()
+// );
+
 export const updateUserState = createAction(
-    UserActions.UPDATE_USER_API, props<{user: User}>()
+    UserActions.UPDATE_USER_STATE,
+    props<{ user: User }>()
 );
 
+
 export const deleteUserState = createAction(
-    UserActions.DELETE_USER_API, props<{userId: number}>()
+    UserActions.DELETE_USER_STATE, props<{userId: number}>()
 )
