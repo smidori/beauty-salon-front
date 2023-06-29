@@ -1,27 +1,82 @@
 <mat-card>
-
     <mat-card-title>{{title}}</mat-card-title>
-    <mat-card-content>
+    <mat-card-content *ngIf="title == 'Login'">
         <form [formGroup]="form" (ngSubmit)="submit()">
         <p *ngIf="error" class="error">
             {{ error }}
         </p>
         <p>
-            <mat-form-field>
+            <mat-form-field class="form-field">
             <input type="text" matInput placeholder="Username" formControlName="login">
             </mat-form-field>
         </p>
 
         <p>
-            <mat-form-field>
+            <mat-form-field class="form-field">
             <input type="password" matInput placeholder="Password" formControlName="password">
             </mat-form-field>
         </p>
         
         <div class="button">
-            <button type="submit" mat-button>{{title}}</button>
+            <button type="submit" [disabled]="form.invalid" mat-button>{{title}}</button>
         </div>
-        <p *ngIf="title == 'Login'" class="link" [routerLink]="['register']" routerLinkActive="router-link-active" >Create account</p>
+        <p *ngIf="title == 'Login'" class="link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Create account</p>
+        <!-- <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p> -->
+        
+        </form>
+    </mat-card-content>
+
+
+
+    <mat-card-content *ngIf="title == 'Register'">
+        <form [formGroup]="formRegister" (ngSubmit)="submit()">
+        <p *ngIf="error" class="error">
+            {{ error }}
+        </p>
+        <p></p>
+        <div class="form-row">
+            <mat-form-field class="form-field">
+            <input matInput type="text" matInput placeholder="First Name" formControlName="firstName" >
+            </mat-form-field>
+
+
+            <mat-form-field class="form-field">
+                <input type="text" matInput placeholder="Last Name" formControlName="lastName" >
+            </mat-form-field>
+        </div>
+
+        <div class="form-row">
+            <mat-form-field class="form-field">
+            <input type="text" matInput placeholder="Email" formControlName="email" >
+            </mat-form-field>
+
+            <mat-form-field class="form-field" >
+                <mat-label>Gender</mat-label>
+                <mat-select formControlName="gender">
+                    <mat-option value="male">Male</mat-option>
+                    <mat-option value="female">Female</mat-option>
+                    <mat-option value="others">Others</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="form-row">
+            <mat-form-field class="form-field">
+            <input matInput type="text" matInput placeholder="Username" formControlName="login" >
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <input type="password" matInput placeholder="Password" formControlName="password">
+            </mat-form-field>
+        </div>
+
+        
+        
+        <div class="button">
+            <button type="submit" [disabled]="formRegister.invalid" mat-button>{{title}}</button>
+            
+        </div>
+        <!-- <p *ngIf="title == 'Login'" class="link" [routerLink]="['register']" routerLinkActive="router-link-active" >Create account</p> -->
         <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p>
         
         </form>

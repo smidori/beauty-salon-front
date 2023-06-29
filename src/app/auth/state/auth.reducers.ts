@@ -20,6 +20,9 @@ export const authReducer = createReducer(
   on(setToken, (state, { token }) => { return {...state, token}}),
   on(setError, (state, { error }) => { return {...state, error}}),
   on(setAuthentication, (state,{isAuthenticated}) => {return {...state, isAuthenticated}}),
-  on(logout, (state) => {return {...state,token: "",isAuthenticated: false,}})
+  on(logout, (state) => {
+    localStorage.removeItem('token');
+    return {...state,token: "",isAuthenticated: false}
+  })
   
 );

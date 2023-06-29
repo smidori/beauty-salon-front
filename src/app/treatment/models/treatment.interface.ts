@@ -6,4 +6,5 @@ export interface Treatment{
     description:string;
     price: number;
     type:TreatmentType;
+    duration:number;
 }

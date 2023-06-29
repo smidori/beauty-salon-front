@@ -32,3 +32,13 @@
       text-decoration: underline;
       
   }
+
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .form-field {
+    margin-right: 10px; 
+  }

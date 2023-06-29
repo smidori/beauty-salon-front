@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { TreatmentActions } from '../../state/treatment.actions';
 import { TableActions } from '../../enums/table-actions.enum';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
+import { TreatmentType } from '../../models/treatment-type.interface';
 
 @Component({
   selector: 'app-list',
@@ -16,11 +17,22 @@ import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 export class ListComponent implements OnInit{
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
-  headers:{headerName: string, fieldName: keyof Treatment}[] = [
-    {headerName: "Name", fieldName: "name"},
-    {headerName: "Description", fieldName: "description"},
-    {headerName: "Price", fieldName: "price"}    
-  ]
+
+  // headers:{headerName: string, fieldName: keyof Treatment, treatmentTypeName?: keyof TreatmentType }[] = [
+  //   {headerName: "Name", fieldName: "name"},
+  //   {headerName: "Description", fieldName: "description"},
+  //   {headerName: "Price", fieldName: "price"},
+  //   {headerName: "Type", fieldName: "type", treatmentTypeName: "name"}, 
+  // ]
+
+  headers: { headerName: string, fieldName: keyof Treatment, treatmentTypeName?: keyof TreatmentType }[] = [
+    { headerName: "Name", fieldName: "name" },
+    { headerName: "Description", fieldName: "description" },
+    { headerName: "Price", fieldName: "price" },
+    { headerName: "Type", fieldName: "type", treatmentTypeName: "name" },
+    { headerName: "Duration(min)", fieldName: "duration" }
+  ];
+  
 
   constructor(
     private router: Router, 
@@ -38,6 +50,10 @@ export class ListComponent implements OnInit{
         this.router.navigate(['treatments', 'form', data.treatment.id]);
         return;
       }
+      // case TableActions.Delete: {
+      //   this.store.dispatch({type: TreatmentActions.DELETE_TREATMENT_API, payload: data.treatment.id});
+      //   return;
+      // }
       default: ""
     }
   }

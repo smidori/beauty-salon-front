@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { User } from '../../models/user.interface';
 import { AuthActions } from '../../state/auth.actions';
+import { User } from 'src/app/user/models/user.interface';
 
 @Component({
   selector: 'app-register',
@@ -20,8 +20,8 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(data: User) {
+    console.log("submit user register");
     this.store.dispatch({type: AuthActions.CREATE_USER, payload: data})
-
   }
 
 }

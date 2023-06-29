@@ -5,7 +5,16 @@
         <th mat-header-cell *matHeaderCellDef>
             {{item.headerName}}</th>
         <td mat-cell *matCellDef="let element">
-            {{element[item.fieldName]}}
+            <!-- {{element[item.fieldName]}} -->
+            <!-- <ng-container *ngIf="item.fieldName === 'type' ">
+                {{ element[item.fieldName][item.treatmentTypeName] }}
+              </ng-container> -->
+            <ng-container *ngIf="item.fieldName === 'price'; else otherField">
+                {{ element[item.fieldName] | currency: 'EUR' }}
+            </ng-container>
+            <ng-template #otherField>
+                {{ element[item.fieldName] }}
+            </ng-template>
         </td>
     </ng-container>
     <!-- Actions -->

@@ -1,2 +1,5 @@
 <treatment-command-bar (action)="executeCommandBarAction($event)"></treatment-command-bar>
-<p>form works!</p>
+
+<div class="container">
+    <treatment-form [selectedTreatment]="treatment" (action)="formAction($event)"></treatment-form>
+</div>

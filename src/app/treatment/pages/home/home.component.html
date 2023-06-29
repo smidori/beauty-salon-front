@@ -1,6 +1,30 @@
 <treatment-command-bar (action)="executeCommandBarAction($event)"></treatment-command-bar>
 <h2>Treatments</h2>
-<div>
-    <!-- <treatment-list [treatments]="treatments" [headers]="headers" (treatment)="selectTreatment($event)"></treatment-list> -->
+<!-- <div>
     <treatment-home [treatments]="treatments" [headers]="headers"></treatment-home>
+</div> -->
+<!-- <treatment-list [treatments]="treatments" [headers]="headers" (treatment)="selectTreatment($event)"></treatment-list> -->
+<div class="container">
+<div *ngFor="let type of getTreatmentTypes()">
+    <div class="card">
+      <h2>{{ type }}</h2>
+      <div class="treatments-container">
+        <div *ngFor="let treatment of getTreatmentsByType(type)" class="treatment">
+          <div>
+            <div class="header">
+                <h4>{{ treatment.name }}</h4>
+                <span class="spacer"></span> 
+                <span class="price"> {{ treatment.price | currency: 'EUR' }}</span>
+            </div>
+            
+            <p class="description">{{ treatment.description }}</p>
+            <p class="description"><b>Duration:</b> {{ treatment.duration}} min</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+  
+  

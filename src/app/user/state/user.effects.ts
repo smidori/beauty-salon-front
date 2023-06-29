@@ -28,7 +28,7 @@ export class UserEffects {
     // }, { dispatch: true }
     // );
 
-    getAntiHeroes$ = createEffect(() => {
+    getUsers$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(UserActions.GET_USER_LIST),
             mergeMap(() => this.userService.getUsers()

@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
-import { User } from '../../models/user.interface';
+// import { User } from '../../models/user.interface';
 import { AuthActions } from '../../state/auth.actions';
 import { selectError } from '../../state/auth.selectors';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserLogin } from '../../models/user.interface';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class LoginComponent{
     this.getError();
   }
 
-  submit(data: User) {
+  submit(data: UserLogin) {
+    console.log("submit user login");
     this.store.dispatch({type: AuthActions.LOGIN, payload: data})
   }
 

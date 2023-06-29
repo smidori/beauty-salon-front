@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { catchError, Observable, tap, throwError } from 'rxjs';
+import { User } from 'src/app/user/models/user.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -14,7 +15,7 @@ export class AuthenticateService {
 
   login(data: {login: string, password: string}): Observable<any> {
     console.log("login param ----->"+ JSON.stringify(data));
-    var log = this.http.post<any>(`${environment.apiURL}/auth/signin`, data).pipe(
+    var log = this.http.post<any>(`${environment.apiURL}/auth/login`, data).pipe(
       tap((data: any) => data),
       catchError(err => throwError(() => err))
    )
@@ -22,8 +23,9 @@ export class AuthenticateService {
       return log
   }
 
-  register(data: {login: string, password: string}): Observable<any> {
-    return this.http.post<any>(`${environment.apiURL}/auth/signup`, data).pipe(
+  register(user: User): Observable<any> {
+    console.log("register " + JSON.stringify(user));
+    return this.http.post<any>(`${environment.apiURL}/auth/register`, user).pipe(
       tap((data: any) => data),
       catchError(err => throwError(() => err))
    )
@@ -43,10 +45,6 @@ export class AuthenticateService {
 
   logout(){
     this.router.navigate(['/login']);
-    localStorage.removeItem('token'); 
-    console.log("logout isAuthenticated " + this.isAuthenticated())
-    const token = localStorage.getItem('token')
-    console.log("logout token " + token)
   }
 
 

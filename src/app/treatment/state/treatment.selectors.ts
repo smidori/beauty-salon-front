@@ -10,5 +10,5 @@ export const selectTreatments = () => createSelector(
 
 export const selectTreatment = (id:number) => createSelector(
     selectTreatmentState,
-    (state:TreatmentState) => state.treatments.find(d => d.id === d.id)
+    (state:TreatmentState) => state.treatments.find(d => d.id == id)
 )

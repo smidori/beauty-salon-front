@@ -46,7 +46,6 @@ export class ListComponent implements OnInit{
   selectUser(data: {user: User, action: TableActions}) {
     switch(data.action) {
       case TableActions.View: {
-        console.log("navigate to users form " +  data.user.id);
         this.router.navigate(['users', 'form', data.user.id]);
         return;
       }

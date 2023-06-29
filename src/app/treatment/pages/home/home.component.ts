@@ -15,12 +15,16 @@ import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 })
 export class HomeComponent implements OnInit {
 
+  
+  treatmentsGroupedByType: { [key: string]: Treatment[] } = {};
+
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
   headers:{headerName: string, fieldName: keyof Treatment}[] = [
     {headerName: "Name", fieldName: "name"},
     {headerName: "Description", fieldName: "description"},
-    {headerName: "Price", fieldName: "price"}    
+    {headerName: "Price", fieldName: "price"},
+    {headerName: "Duration(min)", fieldName: "duration"}    
   ]
 
   constructor(
@@ -47,6 +51,15 @@ export class HomeComponent implements OnInit {
     this.treatments$.subscribe((data) => {
       this.treatments = data;
     })
+
+    this.treatmentsGroupedByType = this.treatments.reduce((acc, treatment) => {
+      const typeName = treatment.type.name;
+      if (!acc[typeName]) {
+        acc[typeName] = [];
+      }
+      acc[typeName].push(treatment);
+      return acc;
+    }, {} as { [key: string]: Treatment[] });
   }
 
   executeCommandBarAction(action: CommandBarActions){
@@ -64,5 +77,14 @@ export class HomeComponent implements OnInit {
       // }
       default: ""
     }
+  }
+
+
+  getTreatmentTypes(): string[] {
+    return Object.keys(this.treatmentsGroupedByType);
+  }
+
+  getTreatmentsByType(type: string): Treatment[] {
+    return this.treatments.filter(treatment => treatment.type.name === type);
   }
 }
