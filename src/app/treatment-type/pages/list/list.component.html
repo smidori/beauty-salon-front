@@ -1,0 +1,20 @@
+<p>list treatment type!</p> 
+
+
+<div *ngFor="let type of treatmentTypes">
+    <div class="card">
+      <h2>{{ type }}</h2>
+      <div class="treatments-container">
+        <div *ngFor="let treatment of treatmentTypes"  >
+          <div>
+             
+            
+            <p class="description">{{ treatment.id }}</p>
+            <p class="description">{{ treatment.name}} min</p>
+            
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/state/app.state';
+import { TreatmentType } from '../../models/treatment-type.interface';
+import { selectTreatmentTypes } from '../../state/treatment-type.selectors';
+import { TreatmentTypeActions } from '../../state/treatment-type.actions';
+
+
+@Component({
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css']
+})
+export class ListComponent implements OnInit{
+  treatmentTypes: ReadonlyArray<TreatmentType> = [];
+  treatmentTypes$ = this.store.select(selectTreatmentTypes());
+
+  headers: { headerName: string, fieldName: keyof TreatmentType, treatmentTypeName?: keyof TreatmentType }[] = [
+    { headerName: "Id", fieldName: "id" },
+    { headerName: "Name", fieldName: "name" },
+  ];
+  
+
+  constructor(
+    private router: Router, 
+    private store: Store<AppState>){}
+
+  ngOnInit(): void {
+    this.store.dispatch({type: TreatmentTypeActions.GET_TREATMENT_TYPE_LIST})
+    this.assignTreatmentTypes();
+  }
+
+  assignTreatmentTypes() {
+    this.treatmentTypes$.subscribe((data) => {
+      this.treatmentTypes = data;
+    })
+  }
+
+  
+  // selectTreatmentType(data: {treatmentType: TreatmentType, action : TableActions}){
+  //   switch(data.action){
+  //     case TableActions.View :{
+  //       this.router.navigate(['treatmentTypes', 'form', data.treatmentType.id]);
+  //       return;
+  //     }
+  //     case TableActions.Delete: {
+  //       this.store.dispatch({type: TreatmentTypeActions.DELETE_TREATMENT_API, payload: data.treatmentType.id});
+  //       return;
+  //     }
+  //     default: ""
+  //   }
+  // }
+
+  
+
+  // executeCommandBarAction(action: CommandBarActions){
+  //   switch(action){
+  //     case CommandBarActions.Create :{
+  //       this.router.navigate(["treatmentTypes","form"]);
+  //       return;
+  //     }
+  //     case CommandBarActions.List :{
+  //       this.router.navigate(["treatmentTypes","list"]);
+  //       return;
+  //     }
+  //     // case CommandBarActions.DeleteAll :{
+  //     //   return;
+  //     // }
+  //     default: ""
+  //   }
+  // }
+
+   
+
+}

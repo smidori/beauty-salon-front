@@ -14,13 +14,7 @@ export const userReducer = createReducer(
     initialState,
     // on(setUserList, (state, {users}) => {return {...state, users}} ),
     on(setUserList, (state, { users }) => { return {...state, users}}),
-
-    
     on(addUserState, (state, {user}) => {return {...state, users:[...state.users, user]}}),
-    // on(updateUserState, (state, {user}) => {
-    //     return {...state, users: state.users.map(
-    //         data => data.id === user.id ? user: data)}
-    // }),
     on(updateUserState, (state, {user}) => {
         return {...state, users: state.users.map(data => data.id === user.id ? user : data)}
       }),

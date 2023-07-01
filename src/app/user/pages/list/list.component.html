@@ -1,5 +1,6 @@
 <app-user-command-bar (action)="executeCommandBarAction($event)"></app-user-command-bar>
-<h2>User list</h2>
-<div>
+
+<div class="container">
+  <h2>User list</h2>
   <users-list [users]="users" [headers]="headers" (user)="selectUser($event)"></users-list>
 </div>

@@ -1,3 +1,4 @@
+import { AvailabilityModule } from './availability/availability.module';
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -16,6 +17,7 @@ import { TreatmentModule } from './treatment/treatment.module';
 import { HeaderInterceptor } from './core/interceptors/header.interceptors';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@auth0/angular-jwt';
+import { TreatmentTypeModule } from './treatment-type/treatment-type.module';
 
 
 export function tokenGetter() {
@@ -37,6 +39,8 @@ export function tokenGetter() {
     RouterModule,
     SharedModule,
     FormsModule,
+    TreatmentTypeModule,
+    AvailabilityModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([]),

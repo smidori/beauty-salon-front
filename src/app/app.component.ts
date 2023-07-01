@@ -1,7 +1,3 @@
-//import { UserService } from './services/user.service';
-import { User } from './user/models/user.interface';
-
-
 import { Component, OnInit } from '@angular/core';
 
 @Component({

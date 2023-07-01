@@ -50,10 +50,10 @@ export class ListComponent implements OnInit{
         this.router.navigate(['treatments', 'form', data.treatment.id]);
         return;
       }
-      // case TableActions.Delete: {
-      //   this.store.dispatch({type: TreatmentActions.DELETE_TREATMENT_API, payload: data.treatment.id});
-      //   return;
-      // }
+      case TableActions.Delete: {
+        this.store.dispatch({type: TreatmentActions.DELETE_TREATMENT_API, payload: data.treatment.id});
+        return;
+      }
       default: ""
     }
   }

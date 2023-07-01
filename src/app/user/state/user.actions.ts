@@ -26,9 +26,6 @@ export const addUserState = createAction(
     UserActions.ADD_USER_STATE, props<{user: User}>()
 );
 
-// export const updateUserState = createAction(
-//     UserActions.UPDATE_USER_STATE, props<{user: User}>()
-// );
 
 export const updateUserState = createAction(
     UserActions.UPDATE_USER_STATE,

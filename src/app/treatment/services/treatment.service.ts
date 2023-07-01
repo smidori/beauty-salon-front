@@ -18,4 +18,25 @@ export class TreatmentService {
       catchError(err => throwError(() => err))
     )
   }
+
+  addTreatment(treatment: Treatment): Observable<Treatment>{
+    console.log("Post treatment => " + `${environment.apiURL}/treatments`);
+    return this.http.post<Treatment>(`${environment.apiURL}/treatments`,treatment).pipe(
+      tap((data: Treatment) => data),
+      catchError(err => throwError(() => err))
+    )
+  }
+
+  updateTreatment(id: number, treatment: Treatment): Observable<Treatment>{
+    return this.http.put<Treatment>(`${environment.apiURL}/treatments/${id}`,treatment).pipe(
+      catchError(err => throwError(() => err))
+    )
+  }
+
+  deleteTreatment(id:number): Observable<Treatment>{
+    return this.http.delete<Treatment>(`${environment.apiURL}/treatments/${id}`).pipe(
+      catchError(err => throwError(() => err))
+    )
+  }
+  
 }

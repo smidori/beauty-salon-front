@@ -12,24 +12,33 @@ import { AppState } from 'src/app/state/app.state';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+
 export class NavbarComponent implements OnInit {
-   isAuthenticated$: Observable<boolean>;
+  isAuthenticated$: Observable<boolean>;
 
 
-   ngOnInit() {
+  ngOnInit() {
     this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
+    
+    if(!this.isAuthenticated$){
+
+      //maybe delete this code
+      console.log("************** is not Authenticated - setar token para vazio ***************")
+      localStorage.removeItem('token');
+      localStorage.setItem('token','');
+      //delete ends
+    }
   }
 
 
-  constructor(private auth: AuthenticateService, private router: Router, private store: Store<AppState>){
+  constructor(private auth: AuthenticateService, private router: Router, private store: Store<AppState>) {
     this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
+    
   }
 
-  logout(){
+  logout() {
     this.auth.logout();
     this.store.dispatch(logout());
   }
 
 }
-
-

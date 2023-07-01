@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { logout, setAuthentication, setError, setToken } from './auth.actions';
+import { clearToken, logout, setAuthentication, setError, setToken } from './auth.actions';
 export interface AuthState {
     userDetails: any;
     token: string;
@@ -23,6 +23,8 @@ export const authReducer = createReducer(
   on(logout, (state) => {
     localStorage.removeItem('token');
     return {...state,token: "",isAuthenticated: false}
-  })
+  }),
+  on(clearToken, () => initialState)
+
   
 );

@@ -1,5 +1,5 @@
 <treatment-command-bar (action)="executeCommandBarAction($event)"></treatment-command-bar>
 
 <div class="container">
-    <treatment-form [selectedTreatment]="treatment" (action)="formAction($event)"></treatment-form>
+    <treatment-form [selectedTreatment]="treatment" [treatmentTypes]="treatmentTypes" (action)="formAction($event)"></treatment-form>
 </div>

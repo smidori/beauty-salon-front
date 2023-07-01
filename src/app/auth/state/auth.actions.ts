@@ -7,7 +7,8 @@ export enum AuthActions {
     SET_TOKEN = '[AUTH] Set Token',
     CREATE_USER = '[AUTH] Create User',
     LOGIN_ERROR = '[AUTH] LOGIN_ERROR',
-    SET_IS_AUTHENTICATED = '[AUTH] SET_IS_AUTHENTICATED'
+    SET_IS_AUTHENTICATED = '[AUTH] SET_IS_AUTHENTICATED',
+    CLEAR_TOKEN = '[Auth] Clear Token',
 }
 
 
@@ -30,3 +31,9 @@ export const setAuthentication = createAction(
 export const logout = createAction(
     AuthActions.LOGOUT
 );
+
+
+export const clearToken = createAction (
+    AuthActions.CLEAR_TOKEN
+);
+    
