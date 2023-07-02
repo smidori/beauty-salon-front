@@ -44,6 +44,7 @@ export class AuthenticateService {
   }
 
   logout(){
+    localStorage.setItem('token','semtoken');
     this.router.navigate(['/login']);
   }
 

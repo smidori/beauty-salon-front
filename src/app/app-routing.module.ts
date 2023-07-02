@@ -27,6 +27,10 @@ const routes: Routes = [
     path:"availabilities",
     loadChildren: () => import("./availability/availability.module").then((m) => m.AvailabilityModule)
   }
+  // {
+  //   path:"availabilities",
+  //   loadChildren: () => import("./availability/availability.module").then((m) => m.AvailabilityModule)
+  // }
 
 ];
 

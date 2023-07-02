@@ -25,9 +25,10 @@ export class ListComponent implements OnInit{
   constructor(
     private router: Router, 
     private store: Store<AppState>,
-  ){}
+  ){console.log("availability constructor");}
 
   ngOnInit(): void {  
+    console.log("availability ngOnInit");
     this.store.dispatch({ type: AvailabilityActions.GET_AVAILABILITY_LIST});
     this.assignAvailabilities();
   }

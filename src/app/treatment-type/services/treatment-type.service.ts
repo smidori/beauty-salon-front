@@ -13,29 +13,29 @@ export class TreatmentTypeService {
   constructor(private http: HttpClient) { }
 
   getTreatmentTypes():Observable<TreatmentType[]>{
-    console.log('getTreatmentTypes => ' + `${environment.apiURL}/treatmentTypes`)
-    return this.http.get<TreatmentType[]>(`${environment.apiURL}/treatmentTypes`).pipe(
+    console.log('getTreatmentTypes => ' + `${environment.apiURL}/treatment-types`)
+    return this.http.get<TreatmentType[]>(`${environment.apiURL}/treatment-types`).pipe(
       tap((data: TreatmentType[]) => data),
       catchError(err => throwError(() => err))
     )
   }
 
   addTreatmentType(treatmentType: TreatmentType): Observable<TreatmentType>{
-    console.log("Post treatmentType => " + `${environment.apiURL}/treatmentTypes`);
-    return this.http.post<TreatmentType>(`${environment.apiURL}/treatmentTypes`,treatmentType).pipe(
+    console.log("Post treatmentType => " + `${environment.apiURL}/treatment-types`);
+    return this.http.post<TreatmentType>(`${environment.apiURL}/treatment-types`,treatmentType).pipe(
       tap((data: TreatmentType) => data),
       catchError(err => throwError(() => err))
     )
   }
 
   updateTreatmentType(id: number, treatmentType: TreatmentType): Observable<TreatmentType>{
-    return this.http.put<TreatmentType>(`${environment.apiURL}/treatmentTypes/${id}`,treatmentType).pipe(
+    return this.http.put<TreatmentType>(`${environment.apiURL}/treatment-types/${id}`,treatmentType).pipe(
       catchError(err => throwError(() => err))
     )
   }
 
   deleteTreatmentType(id:number): Observable<TreatmentType>{
-    return this.http.delete<TreatmentType>(`${environment.apiURL}/treatmentTypes/${id}`).pipe(
+    return this.http.delete<TreatmentType>(`${environment.apiURL}/treatment-types/${id}`).pipe(
       catchError(err => throwError(() => err))
     )
   }
