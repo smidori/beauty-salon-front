@@ -1,1 +1,24 @@
-<p>treatment-type-form works!</p>
+
+<h2>{{selectedTreatmentType ? "Update/View TreatmentType" : "Create TreatmentType"}}</h2>
+
+<form [formGroup]="form">
+    <div class="form-row">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput user="Name" formControlName="name" required>
+        </mat-form-field>
+    </div>
+    <div class="button-group">
+        <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="emitAction()">
+                {{actionButtonLabel}}
+        </button>  
+        
+        <button  mat-raised-button color="warn" (click)="clear()">
+                Clear
+        </button> 
+    </div>
+    
+    
+    
+    <!-- <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button> -->
+</form>

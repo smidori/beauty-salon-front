@@ -1,1 +1,125 @@
-<p>availability-form works!</p>
+<h2>{{selectedAvailability ? "Update/View Availability" : "Create Availability"}}</h2>
+
+
+
+
+<form [formGroup]="form">
+    <div class="form-row">
+        <!-- <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Monday</mat-label>
+            <input matInput placeholder="Monday" formControlMonday="monday" required>
+        </mat-form-field> -->
+
+        <div class="form-row">
+
+            <mat-form-field class="form-field">
+                <mat-label>First Name</mat-label>
+                <input matInput [value]="form.get('user')?.value?.firstName" [readonly]="true">
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <mat-label>Last Name</mat-label>
+                <input matInput [value]="form.get('user')?.value?.lastName" [readonly]="true">
+            </mat-form-field>
+        </div>
+
+        <div class="form-row">
+            <mat-form-field class="form-field">
+                <mat-label>Treatments</mat-label>
+                <mat-select formControlName="treatments" multiple>
+                    <mat-option *ngFor="let treatment of treatments" [value]="treatment">{{ treatment.name
+                        }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row">
+            <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="startDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <!-- <mat-form-field>
+                <mat-label>Finish Date</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="finishDate">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field> -->
+
+        </div>
+
+
+        <div class="form-row">
+            <div>
+                <span> Days of work</span>
+            </div>
+            <div>
+                <mat-checkbox formControlName="sunday">
+                    <span class="checkbox-text">Sunday</span>
+                </mat-checkbox>
+                <mat-checkbox formControlName="monday">Monday</mat-checkbox>
+                <mat-checkbox formControlName="tuesday">Tuesday</mat-checkbox>
+                <mat-checkbox formControlName="wednesday">Wednesday</mat-checkbox>
+                <mat-checkbox formControlName="thursday">Thursday</mat-checkbox>
+                <mat-checkbox formControlName="friday">Friday</mat-checkbox>
+                <mat-checkbox formControlName="saturday">Saturday</mat-checkbox>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+        <!-- <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Monday</mat-label>
+            <mat-checkbox formControlName="monday">Monday</mat-checkbox>
+          </mat-form-field>
+
+          
+        
+        <mat-form-field class="form-field">
+            <mat-label>Tuesday</mat-label>
+            <input matInput placeholder="Tuesday" formControlMonday="tuesday" required>
+        </mat-form-field> -->
+    </div>
+
+    <!-- <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" placeholder="Price" formControlMonday="price" required>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Duration</mat-label>
+            <input matInput placeholder="Duration" formControlMonday="duration" required>
+        </mat-form-field>
+    </div> -->
+    <!-- 
+    <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>Availability type</mat-label>
+            <mat-select  formControlMonday="type">
+                <mat-option *ngFor="let type of availabilityTypes" [value]="type">{{ type.name }}</mat-option>
+            </mat-select>       
+        </mat-form-field>
+    </div>
+
+     -->
+
+
+     <div class="button-group">
+        <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="emitAction()">
+                {{actionButtonLabel}}
+        </button>  
+        
+        <button  mat-raised-button color="warn" (click)="clear()">
+                Clear
+        </button> 
+    </div>
+    
+</form>

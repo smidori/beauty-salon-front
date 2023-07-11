@@ -1,1 +1,34 @@
-<p>treatment-type-list works!</p>
+<table mat-table [dataSource]="treatmentTypes" class="mat-elevation-z8">
+
+  <!-- Data -->
+  <ng-container *ngFor="let item of headers" [matColumnDef]="item.fieldName" >
+    <th mat-header-cell *matHeaderCellDef> {{item.headerName}} </th>
+    <td mat-cell *matCellDef="let element">{{element[item.fieldName]}} </td>
+</ng-container>
+
+<!-- Actions -->
+<ng-container matColumnDef="actions">
+    <th  mat-header-cell *matHeaderCellDef="">
+        Actions
+    </th>
+    <td mat-cell *matCellDef="let element">
+        <button class="my-button-table" (click)="selectTreatmentType(element,0)" mat-raised-button color="primary">
+            <mat-icon>pageview</mat-icon> View
+        </button>
+        &nbsp;
+        <button class="my-button-table" (click)="selectTreatmentType(element, 1)"
+          mat-raised-button color="warn">
+            <mat-icon>delete</mat-icon> Delete
+        </button>
+    </td>
+</ng-container>
+<tr class="my-cell" mat-header-row *matHeaderRowDef="headerFields"></tr>
+<tr class="my-cell" mat-row *matRowDef="let row; columns: headerFields"></tr>
+
+</table>
+<!-- 
+<div *ngFor="let type of treatmentTypes">
+    <div class="card">
+      <p class="description">{{ type.id }} - {{ type.name}}</p>
+    </div>
+  </div> -->

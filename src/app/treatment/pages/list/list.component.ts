@@ -18,13 +18,7 @@ export class ListComponent implements OnInit{
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
 
-  // headers:{headerName: string, fieldName: keyof Treatment, treatmentTypeName?: keyof TreatmentType }[] = [
-  //   {headerName: "Name", fieldName: "name"},
-  //   {headerName: "Description", fieldName: "description"},
-  //   {headerName: "Price", fieldName: "price"},
-  //   {headerName: "Type", fieldName: "type", treatmentTypeName: "name"}, 
-  // ]
-
+  
   headers: { headerName: string, fieldName: keyof Treatment, treatmentTypeName?: keyof TreatmentType }[] = [
     { headerName: "Name", fieldName: "name" },
     { headerName: "Description", fieldName: "description" },

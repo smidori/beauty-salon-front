@@ -1,1 +1,6 @@
-<p>list works!</p>
+<command-bar (action)="executeCommandBarAction($event)"></command-bar>
+
+<div class="container">
+    <h2>Availability list</h2>
+    <availability-list [availabilities]="availabilities" [headers]="headers" (availability)="selectAvailability($event)"></availability-list>
+ </div>

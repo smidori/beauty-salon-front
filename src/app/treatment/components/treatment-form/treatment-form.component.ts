@@ -20,6 +20,7 @@ export class TreatmentFormComponent {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
+      id:[null],
       name: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
@@ -31,7 +32,7 @@ export class TreatmentFormComponent {
 
   ngOnInit(): void {
     this.checkAction();
-    console.log("treatmentTypes " + JSON.stringify(this.treatmentTypes));
+    //console.log("treatmentTypes " + JSON.stringify(this.treatmentTypes));
   }
 
   checkAction() {

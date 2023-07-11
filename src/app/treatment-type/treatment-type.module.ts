@@ -11,6 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { TreatmentTypeEffects } from './state/treatment-type.effects';
 import { treatmentTypeReducer } from './state/treatment-type.reducers';
 import { TreatmentTypeRoutingModule } from './treatment-type-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -19,7 +20,7 @@ import { TreatmentTypeRoutingModule } from './treatment-type-routing.module';
     ListComponent,
     FormComponent,
     TreatmentTypeListComponent,
-    TreatmentTypeFormComponent
+    TreatmentTypeFormComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +29,8 @@ import { TreatmentTypeRoutingModule } from './treatment-type-routing.module';
     TreatmentTypeRoutingModule,
     StoreModule.forFeature('treatmentTypeState', treatmentTypeReducer),
     EffectsModule.forFeature([TreatmentTypeEffects]),
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class TreatmentTypeModule { }

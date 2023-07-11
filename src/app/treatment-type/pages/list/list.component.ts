@@ -5,6 +5,8 @@ import { AppState } from 'src/app/state/app.state';
 import { TreatmentType } from '../../models/treatment-type.interface';
 import { selectTreatmentTypes } from '../../state/treatment-type.selectors';
 import { TreatmentTypeActions } from '../../state/treatment-type.actions';
+import { TableActions } from 'src/app/shared/enums/table-actions.enum';
+import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
 
 
 @Component({
@@ -17,7 +19,7 @@ export class ListComponent implements OnInit{
   treatmentTypes$ = this.store.select(selectTreatmentTypes());
 
   headers: { headerName: string, fieldName: keyof TreatmentType, treatmentTypeName?: keyof TreatmentType }[] = [
-    { headerName: "Id", fieldName: "id" },
+    //{ headerName: "Id", fieldName: "id" },
     { headerName: "Name", fieldName: "name" },
   ];
   
@@ -38,38 +40,38 @@ export class ListComponent implements OnInit{
   }
 
   
-  // selectTreatmentType(data: {treatmentType: TreatmentType, action : TableActions}){
-  //   switch(data.action){
-  //     case TableActions.View :{
-  //       this.router.navigate(['treatmentTypes', 'form', data.treatmentType.id]);
-  //       return;
-  //     }
-  //     case TableActions.Delete: {
-  //       this.store.dispatch({type: TreatmentTypeActions.DELETE_TREATMENT_API, payload: data.treatmentType.id});
-  //       return;
-  //     }
-  //     default: ""
-  //   }
-  // }
+  selectTreatmentType(data: {treatmentType: TreatmentType, action : TableActions}){
+    switch(data.action){
+      case TableActions.View :{
+        this.router.navigate(['treatment-types', 'form', data.treatmentType.id]);
+        return;
+      }
+      case TableActions.Delete: {
+        this.store.dispatch({type: TreatmentTypeActions.DELETE_TREATMENT_TYPE_API, payload: data.treatmentType.id});
+        return;
+      }
+      default: ""
+    }
+  }
 
   
 
-  // executeCommandBarAction(action: CommandBarActions){
-  //   switch(action){
-  //     case CommandBarActions.Create :{
-  //       this.router.navigate(["treatmentTypes","form"]);
-  //       return;
-  //     }
-  //     case CommandBarActions.List :{
-  //       this.router.navigate(["treatmentTypes","list"]);
-  //       return;
-  //     }
-  //     // case CommandBarActions.DeleteAll :{
-  //     //   return;
-  //     // }
-  //     default: ""
-  //   }
-  // }
+  executeCommandBarAction(action: CommandBarActions){
+    switch(action){
+      case CommandBarActions.Create :{
+        this.router.navigate(["treatment-types","form"]);
+        return;
+      }
+      case CommandBarActions.List :{
+        this.router.navigate(["treatment-types","list"]);
+        return;
+      }
+      // case CommandBarActions.DeleteAll :{
+      //   return;
+      // }
+      default: ""
+    }
+  }
 
    
 

@@ -33,7 +33,7 @@ export class TreatmentTypeEffects{
             mergeMap((data: { type: string, payload: TreatmentType }) => this.treatmentTypeService.addTreatmentType(data.payload)
                 .pipe(
                     map(treatmentTypes => ({ type: TreatmentTypeActions.ADD_TREATMENT_TYPE_STATE, treatmentType: data.payload })),
-                    tap(() => this.router.navigate(["treatmentTypes"])),
+                    tap(() => this.router.navigate(["treatment-types"])),
                     catchError(() => EMPTY)
                 ))
         )

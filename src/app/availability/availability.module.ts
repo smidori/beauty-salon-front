@@ -25,6 +25,7 @@ import { StoreModule } from "@ngrx/store";
 import { availabilityReducer } from "./state/availability.reducers";
 import { EffectsModule } from "@ngrx/effects";
 import { AvailabilityEffects } from "./state/availability.effects";
+import { SharedModule } from "../shared/shared.module";
 
 
 
@@ -40,8 +41,10 @@ import { AvailabilityEffects } from "./state/availability.effects";
     MaterialModule,
     ReactiveFormsModule,
     AvailabilityRoutingModule,
+    SharedModule,
     StoreModule.forFeature('availabilityState', availabilityReducer),
     EffectsModule.forFeature([AvailabilityEffects])
+
   ]
 })
 export class AvailabilityModule { }

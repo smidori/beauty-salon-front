@@ -23,13 +23,7 @@ export class FormComponent implements OnInit {
   
   treatmentTypes: ReadonlyArray<TreatmentType> = [];
   treatmentTypes$ = this.store.select(selectTreatmentTypes());
-
-  test$ = this.store.select(selectTreatments());
-
   
-
-  //treatmentTypes$: Observable<TreatmentType[]>;
-
 
   constructor(
     private acRouter: ActivatedRoute,
@@ -42,11 +36,6 @@ export class FormComponent implements OnInit {
         this.treatment = d;
       }
     });
- 
-    
-    //this.store.dispatch(getTreatmentTypeList());
-    //this.treatmentTypes$ = this.store.select(selectTreatmentTypes());
-    
   }
 
 
@@ -55,16 +44,7 @@ export class FormComponent implements OnInit {
     this.store.dispatch({type: TreatmentTypeActions.GET_TREATMENT_TYPE_LIST});
     this.treatmentTypes$.subscribe((data) => {
       this.treatmentTypes = data;
-
-      console.log("test => " + JSON.stringify(this.treatmentTypes)) 
     })
-
-    // this.treatmentTypes = [
-    //   { id: 1, name: 'Nails' },
-    //   { id: 2, name: 'Haircut female' },
-    //   { id: 3, name: 'Haircut male' },
-    // ];
-    // console.log("treatmentTypes form => " + JSON.stringify(this.treatmentTypes));
   }
 
 
@@ -75,6 +55,7 @@ export class FormComponent implements OnInit {
         return;
       }
       case "Update": {
+        console.log("*********** update treatment => " + JSON.stringify(data.value));
         this.store.dispatch({ type: TreatmentActions.UPDATE_TREATMENT_API, payload: data.value });
         return;
       }

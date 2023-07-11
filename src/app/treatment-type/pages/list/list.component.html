@@ -1,5 +1,6 @@
-<div *ngFor="let type of treatmentTypes">
-  <div class="card">
-    <p class="description">{{ type.id }} - {{ type.name}}</p>
-  </div>
-</div>
+<command-bar (action)="executeCommandBarAction($event)"></command-bar>
+
+<div class="container">
+    <h2>Treatment Type list</h2>
+    <treatment-type-list [treatmentTypes]="treatmentTypes" [headers]="headers" (treatmentType)="selectTreatmentType($event)"></treatment-type-list>
+ </div>

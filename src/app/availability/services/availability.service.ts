@@ -11,9 +11,29 @@ export class AvailabilityService {
 
   constructor(private http: HttpClient) { }
   getAvailabilities(): Observable<Availability[]> {
-    console.log('getAvailabilities => ' + `${environment.apiURL}/availabilities`)
+    console.log('getAvailabilities => ')
     return this.http.get<Availability[]>(`${environment.apiURL}/availabilities`).pipe(
       tap((data: Availability[]) => data),
+      catchError(err => throwError(() => err))
+    )
+  }
+
+  addAvailability(availability: Availability): Observable<Availability>{
+    console.log("Post availability => " + `${environment.apiURL}/availabilities`);
+    return this.http.post<Availability>(`${environment.apiURL}/availabilities`,availability).pipe(
+      tap((data: Availability) => data),
+      catchError(err => throwError(() => err))
+    )
+  }
+
+  updateAvailability(id: number, availability: Availability): Observable<Availability>{
+    return this.http.put<Availability>(`${environment.apiURL}/availabilities/${id}`,availability).pipe(
+      catchError(err => throwError(() => err))
+    )
+  }
+
+  deleteAvailability(id:number): Observable<Availability>{
+    return this.http.delete<Availability>(`${environment.apiURL}/availabilities/${id}`).pipe(
       catchError(err => throwError(() => err))
     )
   }
