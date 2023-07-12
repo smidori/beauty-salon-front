@@ -5,13 +5,8 @@
             {{ item.headerName }}
         </th>
         <td mat-cell *matCellDef="let element">
-            <!-- <ng-container *ngFor="let day of daysOfWeek">
-                <ng-container *ngIf="item.fieldName === day">
-                    <mat-checkbox [checked]="element[item.fieldName]"></mat-checkbox>
-                </ng-container>
-            </ng-container> -->
             
-            <ng-container *ngFor="let day of daysOfWeek">
+            <!-- <ng-container *ngFor="let day of daysOfWeek">
               <ng-container *ngIf="item.fieldName === day">
                 <div>
                   <span>
@@ -20,7 +15,7 @@
                   </span>
                 </div>
               </ng-container>
-            </ng-container>
+            </ng-container> -->
             
             
 
@@ -32,17 +27,6 @@
                 {{ element[item.fieldName] | date: 'dd/MM/yyyy' }}
             </ng-container>
 
-            <!-- <ng-container *ngIf="item.fieldName === 'treatments'">
-                <mat-form-field appearance="outline">
-                  <mat-label>Treatments</mat-label>
-                  <mat-select multiple>
-                    <mat-option *ngFor="let treatment of element[item.fieldName]" [value]="treatment">
-                      {{ treatment.name }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </ng-container> -->
-
               <ng-container *ngIf="item.fieldName === 'treatments'">
                 <div >
                   <ul class="treatments">
@@ -53,8 +37,8 @@
                 </div>
               </ng-container>
 
-            <ng-container *ngIf="!daysOfWeek.includes(item.fieldName) && 
-                                 !(item.fieldName === 'user' 
+            <!-- <ng-container *ngIf="!daysOfWeek.includes(item.fieldName) &&  -->
+              <ng-container *ngIf=" !(item.fieldName === 'user' 
                                  || item.userName
                                  || item.fieldName === 'startDate' 
                                  || item.fieldName === 'finishDate'

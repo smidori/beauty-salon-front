@@ -27,6 +27,7 @@ export class AvailabilityService {
   }
 
   updateAvailability(id: number, availability: Availability): Observable<Availability>{
+    console.log("====> update availability => " + JSON.stringify(availability));
     return this.http.put<Availability>(`${environment.apiURL}/availabilities/${id}`,availability).pipe(
       catchError(err => throwError(() => err))
     )

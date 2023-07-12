@@ -1,17 +1,9 @@
 <h2>{{selectedAvailability ? "Update/View Availability" : "Create Availability"}}</h2>
 
 
-
-
 <form [formGroup]="form">
-    <div class="form-row">
-        <!-- <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Monday</mat-label>
-            <input matInput placeholder="Monday" formControlMonday="monday" required>
-        </mat-form-field> -->
 
-        <div class="form-row">
-
+        <div class="form-row" *ngIf="selectedAvailability">
             <mat-form-field class="form-field">
                 <mat-label>First Name</mat-label>
                 <input matInput [value]="form.get('user')?.value?.firstName" [readonly]="true">
@@ -20,6 +12,16 @@
             <mat-form-field class="form-field">
                 <mat-label>Last Name</mat-label>
                 <input matInput [value]="form.get('user')?.value?.lastName" [readonly]="true">
+            </mat-form-field>
+        </div>
+        
+        <div class="form-row" *ngIf="!selectedAvailability">
+            <mat-form-field class="form-field">
+                <mat-label>User</mat-label>
+                <mat-select formControlName="user">
+                    <mat-option *ngFor="let user of users" [value]="user">{{ user.firstName
+                        }}</mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
 
@@ -31,6 +33,7 @@
                         }}</mat-option>
                 </mat-select>
             </mat-form-field>
+            
         </div>
 
         <div class="form-row">
@@ -50,8 +53,19 @@
 
         </div>
 
-
         <div class="form-row">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Start Time</mat-label>
+                <input matInput placeholder="Start Time" formControlName="hourStartTime" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Finish Time</mat-label>
+                <input matInput placeholder="Finish Time" formControlName="hourFinishTime" required>
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="form-row">
             <div>
                 <span> Days of work</span>
             </div>
@@ -67,7 +81,7 @@
                 <mat-checkbox formControlName="saturday">Saturday</mat-checkbox>
             </div>
 
-        </div>
+        </div> -->
 
 
 
@@ -86,7 +100,7 @@
             <mat-label>Tuesday</mat-label>
             <input matInput placeholder="Tuesday" formControlMonday="tuesday" required>
         </mat-form-field> -->
-    </div>
+
 
     <!-- <div class="form-row">
         <mat-form-field class="form-field">

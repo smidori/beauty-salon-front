@@ -1,8 +1,27 @@
-.custom-checkbox {
-    margin-left: 1px; /* Ajuste o valor conforme necessário */
+/* .custom-checkbox {
+    margin-left: 1px; 
   }
   
   .checkbox-text {
-    margin-right: 8px; /* Ajuste o valor conforme necessário */
+    margin-right: 8px;  
+  } */
+
+  .form-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .form-field {
+    margin-right: 10px; 
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px; 
+  }
+  
+  
+  .full-width {
+    width: 100%;
   }
   

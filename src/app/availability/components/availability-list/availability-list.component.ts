@@ -12,7 +12,7 @@ export class AvailabilityListComponent implements OnInit{
   @Input() headers: Array<{ headerName: string, fieldName: keyof Availability, userName?: (keyof User)[] }> = []
   @Input() availabilities: ReadonlyArray<Availability> = [];
   @Output() availability = new EventEmitter<{availability: Availability, action:TableActions}>();
-  daysOfWeek: string[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  //daysOfWeek: string[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
   headerFields:string[] = [];
 

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Availability } from '../../models/availability.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
+import { User } from 'src/app/user/models/user.interface';
 
 @Component({
   selector: 'availability-form',
@@ -12,6 +13,7 @@ export class AvailabilityFormComponent implements OnInit {
   @Input() selectedAvailability: Availability | null = null;
   @Input() actionButtonLabel: string = "Create";
   @Input() treatments: ReadonlyArray<Treatment> = [];
+  @Input() users: ReadonlyArray<User> = [];
 
   @Output() action = new EventEmitter();
   form: FormGroup;
@@ -20,17 +22,19 @@ export class AvailabilityFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       id: [null],
-      sunday: [false],
-      monday: [false],
-      tuesday: [false],
-      wednesday: [false],
-      thursday: [false],
-      friday: [false],
-      saturday: [false],
+      // sunday: [false],
+      // monday: [false],
+      // tuesday: [false],
+      // wednesday: [false],
+      // thursday: [false],
+      // friday: [false],
+      // saturday: [false],
       user: [null],
       startDate: [null],
       finishDate: [null],
-      treatments: [[]]
+      treatments: [[]],
+      hourStartTime:[null],
+      hourFinishTime:[null]
 
     });
   }

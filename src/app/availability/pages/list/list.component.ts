@@ -22,25 +22,20 @@ export class ListComponent implements OnInit{
   
   headers: { headerName: string, fieldName: keyof Availability, userName?: (keyof User)[] }[] = [
     { headerName: "User", fieldName: "user", userName: ["firstName", "lastName"] },
-    //{ headerName: "Id", fieldName: "id" },
-    // { headerName: "Sunday", fieldName: "sunday" },
-    // { headerName: "Monday", fieldName: "monday" },
-    // { headerName: "Tuesday", fieldName: "tuesday" },
-    // { headerName: "Wednesday", fieldName: "wednesday" },
-    // { headerName: "Thursday", fieldName: "thursday" },
-    // { headerName: "Friday", fieldName: "friday" },
-    // { headerName: "Saturday", fieldName: "saturday" },
-    { headerName: "S", fieldName: "sunday" },
-    { headerName: "M", fieldName: "monday" },
-    { headerName: "T", fieldName: "tuesday" },
-    { headerName: "W", fieldName: "wednesday" },
-    { headerName: "T", fieldName: "thursday" },
-    { headerName: "F", fieldName: "friday" },
-    { headerName: "S", fieldName: "saturday" },
+    
+    // { headerName: "S", fieldName: "sunday" },
+    // { headerName: "M", fieldName: "monday" },
+    // { headerName: "T", fieldName: "tuesday" },
+    // { headerName: "W", fieldName: "wednesday" },
+    // { headerName: "T", fieldName: "thursday" },
+    // { headerName: "F", fieldName: "friday" },
+    // { headerName: "S", fieldName: "saturday" },
     
     { headerName: "Start Date", fieldName: "startDate" },
     //{ headerName: "Finish Date", fieldName: "finishDate" }, //não exibir na list para ter sempre 1 nulo que é o atual
     { headerName: "Treatments", fieldName: "treatments" },
+    { headerName: "Start Time", fieldName: "hourStartTime" },
+    { headerName: "Finish Time", fieldName: "hourFinishTime" },
 
   ];
   

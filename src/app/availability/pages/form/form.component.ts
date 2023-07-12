@@ -10,6 +10,9 @@ import { AvailabilityActions } from '../../state/availability.action';
 import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
 import { selectAvailabilities, selectAvailability } from '../../state/availability.selectors';
 import { selectTreatments } from 'src/app/treatment/state/treatment.selectors';
+import { selectUsers } from 'src/app/user/state/user.selectors';
+import { User } from 'src/app/user/models/user.interface';
+import { UserActions } from 'src/app/user/state/user.actions';
 
 @Component({
   selector: 'app-form',
@@ -26,7 +29,8 @@ export class FormComponent implements OnInit {
 
   test$ = this.store.select(selectAvailabilities());
 
-  
+  users: ReadonlyArray<User>=[];
+  users$ = this.store.select(selectUsers());  
 
   //availabilityTypes$: Observable<AvailabilityType[]>;
 
@@ -52,11 +56,16 @@ export class FormComponent implements OnInit {
 
   ngOnInit(): void {
     
+    //GET TREATMENT LIST
     this.store.dispatch({type: TreatmentActions.GET_TREATMENT_LIST});
     this.treatments$.subscribe((data) => {
       this.treatments = data;
+    });
 
-      console.log("test => " + JSON.stringify(this.treatments)) 
+    //GET USERS LIST
+    this.store.dispatch({type: UserActions.GET_USER_LIST});
+    this.users$.subscribe((data) => {
+      this.users = data;
     })
   }
 
