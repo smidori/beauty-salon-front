@@ -1,0 +1,15 @@
+<p>book-list works!</p>
+<ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef="">
+        Actions
+    </th>
+    <td mat-cell *matCellDef="let element">
+        <button (click)="selectBook(element,0)" mat-raised-button color="primary">
+            <mat-icon>pageview</mat-icon> View
+        </button>
+        &nbsp;
+        <button (click)="selectBook(element, 1)" mat-raised-button color="warn">
+            <mat-icon>delete</mat-icon> Delete
+        </button>
+    </td>
+</ng-container>

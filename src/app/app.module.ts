@@ -18,6 +18,7 @@ import { HeaderInterceptor } from './core/interceptors/header.interceptors';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { TreatmentTypeModule } from './treatment-type/treatment-type.module';
+import { BookModule } from './book/book.module';
 
 
 export function tokenGetter() {
@@ -41,6 +42,7 @@ export function tokenGetter() {
     FormsModule,
     TreatmentTypeModule,
     AvailabilityModule,
+    BookModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([]),

@@ -1,3 +1,4 @@
+import { Book } from './book/model/book.interface';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -26,12 +27,12 @@ const routes: Routes = [
   {
     path:"availabilities",
     loadChildren: () => import("./availability/availability.module").then((m) => m.AvailabilityModule)
+  },  
+  {
+    path:"books",
+    loadChildren: () => import("./book/book.module").then((m) => m.BookModule)
   }
-  // {
-  //   path:"availabilities",
-  //   loadChildren: () => import("./availability/availability.module").then((m) => m.AvailabilityModule)
-  // }
-
+  
 ];
 
 @NgModule({

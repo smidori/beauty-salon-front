@@ -1,0 +1,55 @@
+<h2>{{selectedBook ? "Update/View Book" : "Create Book"}}</h2>
+
+
+<form [formGroup]="form">
+
+
+        <div class="form-row">
+            
+            
+        </div>
+
+        <div class="form-row">
+            <mat-form-field class="form-field">
+                <mat-label>Treatments</mat-label>
+                <mat-select formControlName="treatment" [compareWith]="compareTreatmentObjects">
+                    <mat-option *ngFor="let treatment of treatments" [value]="treatment">{{ treatment.name
+                        }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dateBook">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="form-row">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Start Time</mat-label>
+                <input matInput placeholder="Start Time" formControlName="hourStartTime" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Finish Time</mat-label>
+                <input matInput placeholder="Finish Time" formControlName="hourFinishTime" required>
+            </mat-form-field>
+        </div> -->
+
+
+
+     <div class="button-group">
+        <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="emitAction()">
+                {{actionButtonLabel}}
+        </button>  
+        
+        <button  mat-raised-button color="warn" (click)="clear()">
+                Clear
+        </button> 
+
+        <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="searchSlots()">Search Slots</button>
+    </div>
+    
+</form>
