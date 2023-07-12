@@ -8,18 +8,18 @@ import { Treatment } from 'src/app/treatment/models/treatment.interface';
   templateUrl: './availability-form.component.html',
   styleUrls: ['./availability-form.component.css']
 })
-export class AvailabilityFormComponent implements OnInit{
+export class AvailabilityFormComponent implements OnInit {
   @Input() selectedAvailability: Availability | null = null;
-  @Input() actionButtonLabel : string = "Create";
+  @Input() actionButtonLabel: string = "Create";
   @Input() treatments: ReadonlyArray<Treatment> = [];
 
   @Output() action = new EventEmitter();
   form: FormGroup;
   selectedTreatment: Treatment | null = null;
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      id:[null],
+      id: [null],
       sunday: [false],
       monday: [false],
       tuesday: [false],
@@ -31,37 +31,43 @@ export class AvailabilityFormComponent implements OnInit{
       startDate: [null],
       finishDate: [null],
       treatments: [[]]
-      
+
     });
   }
-  
-  
+
+
   ngOnInit(): void {
     this.checkAction();
   }
 
   checkAction() {
-    if(this.selectedAvailability) {
+    if (this.selectedAvailability) {
       this.actionButtonLabel = "Update";
       this.patchDataValues()
     }
   }
 
-  patchDataValues () {
+  patchDataValues() {
 
-    if(this.selectedAvailability){
+    if (this.selectedAvailability) {
       //console.log(JSON.stringify("availability => " + this.selectedAvailability.firstName));
       this.form.patchValue(this.selectedAvailability);
     }
-    
- }
+
+  }
+
+
+
+  compareTreatmentObjects(object1: any, object2: any) {
+    return object1 && object2 && object1.id == object2.id;
+  }
 
   emitAction() {
-    this.action.emit({value: this.form.value, action: this.actionButtonLabel})
+    this.action.emit({ value: this.form.value, action: this.actionButtonLabel })
   }
 
   clear() {
     this.form.reset();
- }
+  }
 }
 

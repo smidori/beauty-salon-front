@@ -26,7 +26,7 @@
         <div class="form-row">
             <mat-form-field class="form-field">
                 <mat-label>Treatments</mat-label>
-                <mat-select formControlName="treatments" multiple>
+                <mat-select formControlName="treatments" multiple [compareWith]="compareTreatmentObjects">
                     <mat-option *ngFor="let treatment of treatments" [value]="treatment">{{ treatment.name
                         }}</mat-option>
                 </mat-select>

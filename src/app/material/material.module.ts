@@ -47,7 +47,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core'
     MatSnackBarModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }

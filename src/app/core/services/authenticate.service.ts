@@ -44,6 +44,7 @@ export class AuthenticateService {
   }
 
   logout(){
+    console.log("authenticate.service => clean token the local storage")
     localStorage.setItem('token','');
     this.router.navigate(['/login']);
   }

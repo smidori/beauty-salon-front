@@ -16,7 +16,7 @@ export class TreatmentFormComponent {
   @Output() action = new EventEmitter();
   form: FormGroup;
 
-  selectedTreatmentType: TreatmentType | null = null;
+  selectedTreatmentTypeId: number | undefined;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -24,7 +24,6 @@ export class TreatmentFormComponent {
       name: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
-      // type: ['', Validators.required],
       duration: ['', Validators.required],
       type: ['', Validators.required],
     });
@@ -32,12 +31,14 @@ export class TreatmentFormComponent {
 
   ngOnInit(): void {
     this.checkAction();
+    
     //console.log("treatmentTypes " + JSON.stringify(this.treatmentTypes));
   }
 
   checkAction() {
     if (this.selectedTreatment) {
       this.actionButtonLabel = "Update";
+      this.selectedTreatmentTypeId = this.selectedTreatment.type.id;
       this.patchDataValues()
     }
   }
@@ -46,8 +47,13 @@ export class TreatmentFormComponent {
 
     if (this.selectedTreatment) {
       this.form.patchValue(this.selectedTreatment);
+     // this.form.patchValue({ type: this.selectedTreatment.type.id });
     }
   }
+
+  compareTypeObjects(object1: any, object2: any) {
+    return object1 && object2 && object1.id == object2.id;
+}
 
   emitAction() {
     this.action.emit({ value: this.form.value, action: this.actionButtonLabel })

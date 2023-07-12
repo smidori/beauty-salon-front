@@ -29,8 +29,8 @@
     <div class="form-row">
         <mat-form-field class="form-field">
             <mat-label>Treatment type</mat-label>
-            <mat-select  formControlName="type">
-                <mat-option *ngFor="let type of treatmentTypes" [value]="type">{{ type.name }}</mat-option>
+            <mat-select  formControlName="type" [compareWith]="compareTypeObjects">
+                <mat-option *ngFor="let type of treatmentTypes" [value]="type" >{{ type.name }}</mat-option>
             </mat-select>       
         </mat-form-field>
     </div>
