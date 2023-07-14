@@ -11,7 +11,8 @@ import { SharedModule } from '../shared/shared.module';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { BookEffects } from './state/book.effects';
-import { bookReducer } from './state/book.reducers';
+import { bookReducer, bookSlotReducer } from './state/book.reducers';
+import { KeysPipe } from './pipes/keys';
 
 
 
@@ -20,7 +21,8 @@ import { bookReducer } from './state/book.reducers';
     ListComponent,
     FormComponent,
     BookListComponent,
-    BookFormComponent
+    BookFormComponent,
+    KeysPipe
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { bookReducer } from './state/book.reducers';
     BookRoutingModule,
     SharedModule,
     StoreModule.forFeature('bookState', bookReducer),
-    EffectsModule.forFeature([BookEffects])
+    EffectsModule.forFeature([BookEffects]),
+    StoreModule.forFeature('bookSlotState', bookSlotReducer),
   ]
 })
 export class BookModule { }

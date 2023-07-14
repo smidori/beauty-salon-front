@@ -12,7 +12,13 @@ export const initialState: TreatmentState = {
 
 export const treatmentReducer = createReducer(
     initialState, 
-    on(setTreatmentList, (state, {treatments}) => {return {...state, treatments}} ),
+    //on(setTreatmentList, (state, {treatments}) => {return {...state, treatments}} ),
+
+    on(setTreatmentList, (state, { treatments }) => {
+        console.log('Reducer treatments state:', {...state, treatments});
+        return {...state, treatments};
+      }),
+
     on(addTreatmentState, (state, {treatment}) => {return {...state, treatments:[...state.treatments, treatment]}}),
     on(updateTreatmentState, (state, {treatment}) => {
         return {...state, treatments: state.treatments.map(data => data.id === treatment.id ? treatment : data)}

@@ -1,7 +1,9 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { BookState } from "./book.reducers";
+import { BookSlotState, BookState } from "./book.reducers";
 
 export const selectBookState = createFeatureSelector<BookState>('bookState')
+export const selectBookSlotState = createFeatureSelector<BookSlotState>('bookSlotState')
+
 
 export const selectBooks = () => createSelector(
     selectBookState,
@@ -21,7 +23,16 @@ export const selectBook = (id: number) => createSelector(
 );
 
 
+// export const selectSlots = () => createSelector(
+//     selectBookSlotState,
+//     (state: BookSlotState) => state.bookSlots
+// )
+
 export const selectSlots = () => createSelector(
-    selectBookState,
-    (state: BookState) => state.books
-)
+    selectBookSlotState,
+    (state: BookSlotState) => {
+      //console.log('Slots state:', state);
+      return state.bookSlots;
+    }
+  );
+  

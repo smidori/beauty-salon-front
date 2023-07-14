@@ -12,7 +12,9 @@ import { MatCardModule } from '@angular/material/card';
 import {MatSnackBarModule} from '@angular/material/snack-bar'
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MAT_DATE_LOCALE } from '@angular/material/core'
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
+
+//import { MAT_DATE_LOCALE } from '@angular/material/core'
 
 //import { MatDatepickerModule} from '@angular/material/datepicker';
 //import { MAT_DATE_FORMATS } from '@angular/material/core';
@@ -34,6 +36,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core'
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMomentDateModule,
+
   ],
   exports: [
     MatToolbarModule,
@@ -48,9 +52,12 @@ import { MAT_DATE_LOCALE } from '@angular/material/core'
     MatCheckboxModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMomentDateModule,
+
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+    //{ provide: MAT_DATE_LOCALE, useValue: 'en-IE' }
+    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}
   ]
 })
 export class MaterialModule { }

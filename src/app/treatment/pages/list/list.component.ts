@@ -55,6 +55,9 @@ export class ListComponent implements OnInit{
   assignTreatments() {
     this.treatments$.subscribe((data) => {
       this.treatments = data;
+      if (this.treatments && this.treatments.length > 0) {
+        console.log("data treatments => " + JSON.stringify(data));
+      }
     })
   }
 

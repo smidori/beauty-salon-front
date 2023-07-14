@@ -49,7 +49,7 @@ export function tokenGetter() {
     JwtModule.forRoot({ config: { tokenGetter } })//for jwt service
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },   
   ],
   bootstrap: [AppComponent]
 })

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Book } from '../model/book.interface';
+import { Book, BookAvailableResponse } from '../model/book.interface';
 import { BookSearchParams } from '../model/bookSearchParams.interface';
 
 
@@ -29,10 +29,14 @@ export class BookService {
   //   );
   // }
 
-  getBookSlots(book: BookSearchParams): Observable<Book[]> {
+  getBookSlots(book: BookSearchParams): Observable<BookAvailableResponse> {
     console.log("getBookSlots => " + `${environment.apiURL}/books/availability`);
-    return this.http.post<Book[]>(`${environment.apiURL}/books/availability`, book).pipe(
-      tap((data: Book[]) => data),
+    console.log("Params => " + JSON.stringify(book.dateBook));
+    return this.http.post<BookAvailableResponse>(`${environment.apiURL}/books/availability`, book).pipe(
+      //tap((data: Book[]) => data),
+      tap((data: BookAvailableResponse) => {
+        console.log("Response slots: ========> ", data);
+      }),
       catchError(err => throwError(() => err))
     );
   }

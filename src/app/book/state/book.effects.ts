@@ -31,9 +31,10 @@ export class BookEffects {
     getBookSlots$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(BookActions.GET_BOOK_SLOT_LIST),
-            mergeMap((data: { type: string, payload: BookSearchParams }) => this.bookService.getBookSlots(data.payload)
+            mergeMap((data: { type: string, payload: BookSearchParams }) => 
+            this.bookService.getBookSlots(data.payload)
                 .pipe(
-                    map(books => ({ type: BookActions.SET_BOOK_SLOT_LIST, books })),
+                    map(bookSlots => ({ type: BookActions.SET_BOOK_SLOT_LIST, bookSlots })),
                     catchError(() => EMPTY)
                 ))
         )

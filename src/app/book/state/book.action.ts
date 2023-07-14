@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Book } from "../model/book.interface";
+import { Book, BookAvailableResponse } from "../model/book.interface";
 import { BookSearchParams } from "../model/bookSearchParams.interface";
 
 export enum BookActions{
@@ -33,7 +33,7 @@ export const getBookSlotList = createAction(
 
 export const setBookSlotList = createAction(
     BookActions.SET_BOOK_SLOT_LIST,
-    props<{books:ReadonlyArray<Book>}>()
+    props<{bookSlots: ReadonlyArray<BookAvailableResponse>}>()
 )
 
 export const addBookState = createAction(
