@@ -1,27 +1,25 @@
-/* .custom-checkbox {
-    margin-left: 1px; 
-  }
-  
-  .checkbox-text {
-    margin-right: 8px;  
-  } */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .form-row {
-    display: flex;
-    justify-content: space-between;
-  }
+.form-field {
+  margin-right: 10px;
+}
 
-  .form-field {
-    margin-right: 10px; 
-  }
-  
-  .button-group {
-    display: flex;
-    gap: 10px; 
-  }
-  
-  
-  .full-width {
-    width: 100%;
-  }
-  
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* .full-width {
+  width: 100%;
+} */
+
+.custom-datepicker {
+  width: 213px; /* Defina o tamanho desejado aqui */
+}
+
+/* .custom-form-field .mat-form-field-wrapper .mat-mdc-text-field-wrapper {
+  height: 40px;
+} */

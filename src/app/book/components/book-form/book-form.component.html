@@ -1,5 +1,4 @@
-<h2>{{selectedBook ? "Update/View Book" : "Create Book"}}</h2>
-
+<h4>{{selectedBook ? "Update/View Book" : "Select the treatment and the day"}}</h4>
 <form [formGroup]="searchForm">
   <div class="form-row">
     <mat-form-field class="form-field">
@@ -21,7 +20,7 @@
     </mat-form-field>
   </div>
 
-  <div class="button-group">
+  <!-- <div class="button-group">
     <button mat-raised-button color="primary" [disabled]="searchForm.invalid" (click)="emitAction()">
       {{actionButtonLabel}}
     </button>
@@ -32,36 +31,96 @@
 
     <button mat-raised-button color="primary" [disabled]="searchForm.invalid" (click)="searchSlots()">Search
       Slots</button>
-  </div>
+  </div> -->
 
 </form>
 
 <hr>
 
-<!-- <div *ngIf="bookSlots$ | async as bookSlots"> -->
-<ng-container *ngIf="bookSlots$ | async as bookSlots">
-  <div *ngIf="searchCompleted">
-  <div *ngIf="getBookSlotsSize(bookSlots) > 0">
-    <h3>Results:</h3>
-    <ul>
-      <li *ngFor="let slotKey of bookSlots | keys">
-        <h4>Time: {{ slotKey}}</h4>
-        <ul>
-          <li>
-            <p>{{ bookSlots[slotKey]['dateBook']}}</p>
-            <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}}</p>
-          </li>
-          <ul>
-            <li *ngFor="let bookSlot of toArray(bookSlots[slotKey]['bookDetails'])">
-              <p>Professional: {{ bookSlot.userName }}</p>
-            </li>
-          </ul>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <div *ngIf="getBookSlotsSize(bookSlots) == 0">
-    <h3>Sorry, there is no availability for this criteria</h3>
-  </div>
-</div>
-</ng-container>
+<form [formGroup]="resultForm">
+  <ng-container *ngIf="bookSlots$ | async as bookSlots">
+    <div *ngIf="searchCompleted">
+      <div *ngIf="getBookSlotsSize(bookSlots) > 0">
+        <mat-form-field>
+          <mat-label>Select Time:</mat-label>
+          <mat-select id="mySelect" formControlName="selectedSlotKey" (selectionChange)="selectSlotKey($event.value)">
+            <mat-option *ngFor="let slotKey of bookSlots | keys" [value]="slotKey">{{ slotKey }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <div *ngFor="let slotKey of bookSlots | keys">
+          <ng-container *ngIf="resultForm.get('selectedSlotKey')?.value === slotKey">
+            <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} ({{ bookSlots[slotKey]['dateBook']}}) </p>
+            <mat-radio-group formControlName="selectedBookSlot">
+              <mat-radio-button *ngFor="let bookSlot of toArray(bookSlots[selectedSlotKey]['bookDetails'])" [value]="bookSlot" (click)="selectBookSlot(bookSlot)">
+                Professional: {{ bookSlot.userName }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </ng-container>
+        </div>
+      </div>
+      <div *ngIf="getBookSlotsSize(bookSlots) == 0">
+        <h3>Sorry, there is no availability for this criteria</h3>
+      </div>
+    </div>
+  </ng-container>
+  
+    <!-- não apagar 
+      <ng-container *ngIf="bookSlots$ | async as bookSlots">
+      <div *ngIf="searchCompleted">
+        <div *ngIf="getBookSlotsSize(bookSlots) > 0">
+          <mat-form-field>
+            <mat-label>Select Time:</mat-label>
+            <mat-select formControlName="selectedSlotKey">
+              <mat-option *ngFor="let slotKey of bookSlots | keys" [value]="slotKey">{{ slotKey }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <div *ngFor="let slotKey of bookSlots | keys">
+            <ng-container *ngIf="resultForm.get('selectedSlotKey')?.value === slotKey">
+              <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} ({{ bookSlots[slotKey]['dateBook']}}) </p>
+              <mat-radio-group formControlName="selectedBookSlot">
+                <mat-radio-button *ngFor="let bookSlot of toArray(bookSlots[slotKey]['bookDetails'])" [value]="bookSlot" (click)="selectBookSlot(bookSlot)">
+                  Professional: {{ bookSlot.userName }}
+                </mat-radio-button>
+              </mat-radio-group>
+            </ng-container>
+          </div>
+        </div>
+        <div *ngIf="getBookSlotsSize(bookSlots) == 0">
+          <h3>Sorry, there is no availability for this criteria</h3>
+        </div>
+      </div>
+    </ng-container> -->
+      
+      
+      <!-- <ng-container *ngIf="bookSlots$ | async as bookSlots">
+        <div *ngIf="searchCompleted && getBookSlotsSize(bookSlots) > 0">
+          <mat-form-field>
+            <mat-label>Select Time:</mat-label>
+            <div class="button-toggle-container-horizontal">
+              <mat-button-toggle-group formControlName="selectedSlotKey">
+                <mat-button-toggle *ngFor="let slotKey of bookSlots | keys" [value]="slotKey">{{ slotKey }}</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+          </mat-form-field>
+      
+          <div *ngFor="let slotKey of bookSlots | keys">
+            <ng-container *ngIf="resultForm.get('selectedSlotKey')?.value === slotKey">
+              <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} ({{ bookSlots[slotKey]['dateBook']}}) </p>
+              <mat-radio-group formControlName="selectedBookSlot">
+                <mat-radio-button *ngFor="let bookSlot of toArray(bookSlots[slotKey]['bookDetails'])" [value]="bookSlot" (click)="selectBookSlot(bookSlot)">
+                  Professional: {{ bookSlot.userName }}
+                </mat-radio-button>
+              </mat-radio-group>
+            </ng-container>
+          </div>
+        </div>
+        <div *ngIf="searchCompleted && getBookSlotsSize(bookSlots) == 0">
+          <h3>Sorry, there is no availability for this criteria</h3>
+        </div>
+      </ng-container> -->
+      
+</form>
+  
+  

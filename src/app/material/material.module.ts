@@ -13,6 +13,9 @@ import {MatSnackBarModule} from '@angular/material/snack-bar'
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 //import { MAT_DATE_LOCALE } from '@angular/material/core'
 
@@ -37,6 +40,9 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/m
     MatDatepickerModule,
     MatNativeDateModule,
     MatMomentDateModule,
+    MatRadioModule,
+    MatMenuModule,
+    MatButtonToggleModule,
 
   ],
   exports: [
@@ -53,7 +59,9 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/m
     MatDatepickerModule,
     MatNativeDateModule,
     MatMomentDateModule,
-
+    MatRadioModule,
+    MatMenuModule,
+    MatButtonToggleModule
   ],
   providers: [
     //{ provide: MAT_DATE_LOCALE, useValue: 'en-IE' }

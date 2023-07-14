@@ -1,13 +1,31 @@
-/* .disabled-date {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-  
-  .grayed-out-date {
-    color: #ccc;
-  }
-  
-  .today-date {
-    background-color: yellow;
-  }
-   */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-field {
+  margin-right: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.button-toggle-container-horizontal {
+  display: flex;
+  flex-wrap: nowrap; /* Impede a quebra dos botões para a próxima linha */
+  overflow-x: auto; /* Habilita a rolagem horizontal */
+  width: 1000px;
+}
+
+
+/* .auto-close-panel .mat-select-panel {
+  position: static;
+  pointer-events: none;
+  opacity: 0;
+} */
+
+/* .auto-close-panel .mat-select-panel {
+  display: none !important;
+} */

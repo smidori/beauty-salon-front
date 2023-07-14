@@ -1,0 +1,13 @@
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-field {
+  margin-right: 10px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+}

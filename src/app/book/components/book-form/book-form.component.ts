@@ -56,17 +56,24 @@ export class BookFormComponent implements OnInit {
 
     this.resultForm = this.fb.group({
       bookSlots: this.fb.array([]),
+      selectedSlotKey: [null],
+      selectedBookSlot: ['']
+
     })
   }
 
   //search the available time for this treatment and date
   searchSlots() {
+    
     this.searchCompleted = false;
     const bs: BookSearchParams = {
       user: null,
       treatment: this.searchForm.get('treatment')?.value,
       dateBook: this.searchForm.get('dateBook')?.value.toISOString(),
     };
+
+    this.resultForm.get('selectedSlotKey')?.setValue('');
+    this.resultForm.get('selectedBookSlot')?.setValue('');
 
     // console.log("form dateBook => " + this.searchForm.get('dateBook')?.value);
     // console.log("dateBook => " + bs.dateBook);
@@ -141,6 +148,40 @@ export class BookFormComponent implements OnInit {
   clear() {
     this.searchForm.reset();
   }
+
+
+  expandedItems: string[] = [];
+  selectedBookSlot: any = null;
+  
+  //selectedSlotKey: string = '';
+  selectedSlotKey: number = 0;
+
+selectSlotKey(slotKey: number) {
+  this.selectedSlotKey = slotKey;
+  const element = document.getElementById('mySelect'); // Replace 'myButton' with the ID of your button element
+  if (element) {
+    console.log("element =====> " + element)
+    element.dispatchEvent(new Event('click'));
+  }
+}
+
+  
+
+toggleExpand(slotKey: string) {
+  if (this.isExpanded(slotKey)) {
+    this.expandedItems = this.expandedItems.filter(item => item !== slotKey);
+  } else {
+    this.expandedItems.push(slotKey);
+  }
+}
+
+isExpanded(slotKey: string): boolean {
+  return this.expandedItems.includes(slotKey);
+}
+
+selectBookSlot(bookSlot: any) {
+  this.selectedBookSlot = bookSlot;
+}
 
 }
 
