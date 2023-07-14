@@ -18,7 +18,7 @@ export class ListComponent implements OnInit{
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
 
-  
+  //headers used to show in the list 
   headers: { headerName: string, fieldName: keyof Treatment, treatmentTypeName?: keyof TreatmentType }[] = [
     { headerName: "Name", fieldName: "name" },
     { headerName: "Description", fieldName: "description" },
@@ -37,7 +37,17 @@ export class ListComponent implements OnInit{
     this.assignTreatments();
   }
 
-  
+  //assign the treatments from the service to the variable
+  assignTreatments() {
+    this.treatments$.subscribe((data) => {
+      this.treatments = data;
+      // if (this.treatments && this.treatments.length > 0) {
+      //   console.log("data treatments => " + JSON.stringify(data));
+      // }
+    })
+  }
+
+  //select treatment from the list
   selectTreatment(data: {treatment: Treatment, action : TableActions}){
     switch(data.action){
       case TableActions.View :{
@@ -52,15 +62,8 @@ export class ListComponent implements OnInit{
     }
   }
 
-  assignTreatments() {
-    this.treatments$.subscribe((data) => {
-      this.treatments = data;
-      if (this.treatments && this.treatments.length > 0) {
-        console.log("data treatments => " + JSON.stringify(data));
-      }
-    })
-  }
-
+  
+  //navigate to the page
   executeCommandBarAction(action: CommandBarActions){
     switch(action){
       case CommandBarActions.Create :{
@@ -71,9 +74,6 @@ export class ListComponent implements OnInit{
         this.router.navigate(["treatments","list"]);
         return;
       }
-      // case CommandBarActions.DeleteAll :{
-      //   return;
-      // }
       default: ""
     }
   }

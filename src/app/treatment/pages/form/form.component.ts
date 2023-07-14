@@ -19,35 +19,43 @@ import { TreatmentTypeActions, getTreatmentTypeList } from 'src/app/treatment-ty
 export class FormComponent implements OnInit {
   treatment$: Observable<Treatment | undefined>;
   treatment: Treatment | null = null;
-  
-  
+
   treatmentTypes: ReadonlyArray<TreatmentType> = [];
   treatmentTypes$ = this.store.select(selectTreatmentTypes());
-  
+
 
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
     private router: Router) {
+
+    //get id from the url
     const id = this.acRouter.snapshot.params['id'];
+
+    //use the selector to get the object from store
     this.treatment$ = this.store.select(selectTreatment(id));
-    this.treatment$.subscribe(d => {
-      if (d) {
-        this.treatment = d;
+
+    //assign the value to this.treatment
+    this.treatment$.subscribe(data => {
+      if (data) {
+        this.treatment = data;
       }
     });
   }
 
 
   ngOnInit(): void {
-    
-    this.store.dispatch({type: TreatmentTypeActions.GET_TREATMENT_TYPE_LIST});
+    //dispatch the action
+    this.store.dispatch({ type: TreatmentTypeActions.GET_TREATMENT_TYPE_LIST });
+
+    //subscribe the treatmentTypes$
     this.treatmentTypes$.subscribe((data) => {
       this.treatmentTypes = data;
     })
   }
 
 
+  //actions that can be executed
   formAction(data: { value: Treatment, action: string }) {
     switch (data.action) {
       case "Create": {
@@ -55,7 +63,6 @@ export class FormComponent implements OnInit {
         return;
       }
       case "Update": {
-        console.log("*********** update treatment => " + JSON.stringify(data.value));
         this.store.dispatch({ type: TreatmentActions.UPDATE_TREATMENT_API, payload: data.value });
         return;
       }
@@ -63,6 +70,7 @@ export class FormComponent implements OnInit {
     }
   }
 
+  //navigate to the page
   executeCommandBarAction(action: CommandBarActions) {
     switch (action) {
       case CommandBarActions.Create: {
@@ -73,12 +81,8 @@ export class FormComponent implements OnInit {
         this.router.navigate(["treatments", "list"]);
         return;
       }
-      // case CommandBarActions.DeleteAll :{
-      //   return;
-      // }
       default: ""
     }
   }
-
 
 }
