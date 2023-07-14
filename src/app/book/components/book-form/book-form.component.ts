@@ -9,6 +9,8 @@ import { Store } from '@ngrx/store';
 import { BookActions } from '../../state/book.action';
 import { selectSlots } from '../../state/book.selectors';
 import { take, switchMap, interval } from 'rxjs';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 
 @Component({
   selector: 'book-form',
@@ -31,6 +33,11 @@ export class BookFormComponent implements OnInit {
   bookSlots: ReadonlyArray<BookAvailableResponse> = [];
   bookSlots$ = this.store.select(selectSlots());
 
+  searchCompleted = false;
+
+  minDate = new Date();
+  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1)); //limit the date for 1 year in advance
+  
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.searchForm = this.fb.group({
@@ -50,12 +57,14 @@ export class BookFormComponent implements OnInit {
   }
 
   searchSlots() {
+    this.searchCompleted = false;
+
     console.log("++++++++++++++++++++++ chamada search slots +++++++++++++++++++++++++++")
     const bs: BookSearchParams = {
       user: null,
       treatment: this.searchForm.get('treatment')?.value,
       //dateBook: this.searchForm.get('dateBook')?.value.toLocaleDateString('en-IE'),
-      
+
       dateBook: this.searchForm.get('dateBook')?.value.toISOString(),
     };
     console.log("form dateBook => " + this.searchForm.get('dateBook')?.value);
@@ -81,23 +90,24 @@ export class BookFormComponent implements OnInit {
     //   const intervalId = setInterval(() => {
     //     console.log(count + "this.bookSlots => ", this.bookSlots);
     //     count++;
-      
+
     //     if (count === 10) {
     //       clearInterval(intervalId); // Limpa o intervalo após 10 execuções
     //     }
     //   }, 2000);
 
-      // if (this.bookSlots && this.bookSlots.length > 0) {
-      //   console.log("if this.bookSlots ", this.bookSlots);
+    // if (this.bookSlots && this.bookSlots.length > 0) {
+    //   console.log("if this.bookSlots ", this.bookSlots);
 
-      // } else {
-      //   console.log("else this.bookSlots ", this.bookSlots);
-      // }
+    // } else {
+    //   console.log("else this.bookSlots ", this.bookSlots);
+    // }
     // });
 
 
     this.bookSlots$.subscribe((data) => {
       this.bookSlots = data;
+      this.searchCompleted = true;
       // console.log("============= chamada subscribe bookSlots ==========================")
       // this.bookSlots = data;
       // let count = 0; // Variável de controle para contar o número de vezes que o código foi executado
@@ -105,7 +115,7 @@ export class BookFormComponent implements OnInit {
       // const intervalId = setInterval(() => {
       //   console.log(count + "this.bookSlots => ", this.bookSlots);
       //   count++;
-      
+
       //   if (count === 10) {
       //     clearInterval(intervalId); // Limpa o intervalo após 10 execuções
       //   }
@@ -124,6 +134,21 @@ export class BookFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkAction();
+    // Observa as mudanças no campo 'dateBook' do formulário
+    this.searchForm.get('dateBook')?.valueChanges.pipe(
+      distinctUntilChanged(), // Emite apenas quando o valor for diferente do anterior
+      filter(() => this.searchForm.get('treatment')?.value !== null) // Verifica se o campo treatment está preenchido
+    ).subscribe(() => {
+      this.searchSlots();
+    });
+
+    // Observa as mudanças no campo 'treatment' do formulário
+    this.searchForm.get('treatment')?.valueChanges.pipe(
+      distinctUntilChanged(), // Emite apenas quando o valor for diferente do anterior
+      filter(() => this.searchForm.get('dateBook')?.value !== null) // Verifica se o campo dateBook está preenchido
+    ).subscribe(() => {
+      this.searchSlots();
+    });
   }
 
   checkAction() {
@@ -155,6 +180,30 @@ export class BookFormComponent implements OnInit {
   clear() {
     this.searchForm.reset();
   }
+
+
+  // dateClass = (timestamp: number): MatCalendarCellCssClasses => {
+  //   const date = new Date(timestamp);
+  //   const isToday = this.isDateToday(date);
+  //   const isSunday = date.getDay() === 0;
+  
+  //   console.log("date < new Date() || isSunday ====>  " + (date < new Date() || isSunday));
+
+  //   return {
+  //     'disabled-date': date < new Date() || isSunday,
+  //     'grayed-out-date': date < new Date() || isSunday,
+  //     'today-date': isToday
+  //   };
+  // };
+  
+  // isDateToday(date: Date): boolean {
+  //   const today = new Date();
+  //   const valid = date.getDate() === today.getDate() &&
+  //     date.getMonth() === today.getMonth() &&
+  //     date.getFullYear() === today.getFullYear() 
+  //     return valid;
+  // }
+  
 }
 
 

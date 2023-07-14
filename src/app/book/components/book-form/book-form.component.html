@@ -4,17 +4,20 @@
   <div class="form-row">
     <mat-form-field class="form-field">
       <mat-label>Treatments</mat-label>
-      <mat-select formControlName="treatment" [compareWith]="compareTreatmentObjects">
+      <mat-select formControlName="treatment" [compareWith]="compareTreatmentObjects" required>
         <mat-option *ngFor="let treatment of treatments" [value]="treatment">{{ treatment.name
           }}</mat-option>
       </mat-select>
+      <mat-error *ngIf="searchForm.controls['treatment'].errors?.['required']">Treatments is required</mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-field">
       <mat-label>Date</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="dateBook">
+      <input matInput [matDatepicker]="picker" formControlName="dateBook" [min]="minDate" [max]="maxDate" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <!-- <mat-datepicker #picker [dateClass]="dateClass"></mat-datepicker> -->
       <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="searchForm.controls['dateBook'].errors?.['required']">Date is required</mat-error>
     </mat-form-field>
   </div>
 
@@ -37,24 +40,28 @@
 
 <!-- <div *ngIf="bookSlots$ | async as bookSlots"> -->
 <ng-container *ngIf="bookSlots$ | async as bookSlots">
+  <div *ngIf="searchCompleted">
   <div *ngIf="getBookSlotsSize(bookSlots) > 0">
-  <h3>Results:</h3>
-  <ul>
-    <li *ngFor="let slotKey of bookSlots | keys">
-      <h4>Time: {{ slotKey}}</h4>
-      <ul>
-        <li>
-          <p>{{ bookSlots[slotKey]['dateBook']}}</p>
-          <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}}</p>
-        </li>
+    <h3>Results:</h3>
+    <ul>
+      <li *ngFor="let slotKey of bookSlots | keys">
+        <h4>Time: {{ slotKey}}</h4>
         <ul>
-          <li *ngFor="let bookSlot of toArray(bookSlots[slotKey]['bookDetails'])">
-            <p>Professional: {{ bookSlot.userName }}</p>
+          <li>
+            <p>{{ bookSlots[slotKey]['dateBook']}}</p>
+            <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}}</p>
           </li>
-
+          <ul>
+            <li *ngFor="let bookSlot of toArray(bookSlots[slotKey]['bookDetails'])">
+              <p>Professional: {{ bookSlot.userName }}</p>
+            </li>
+          </ul>
         </ul>
-      </ul>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="getBookSlotsSize(bookSlots) == 0">
+    <h3>Sorry, there is no availability for this criteria</h3>
+  </div>
 </div>
 </ng-container>
