@@ -60,8 +60,10 @@ export class FormComponent implements OnInit {
 
 
   formAction(data: { value: Book, action: string }) {
+    console.log("******************* formAction from pages BOOK ******************" )
     switch (data.action) {
       case "Create": {
+        console.log("*********** create book => " + JSON.stringify(data.value));
         this.store.dispatch({ type: BookActions.ADD_BOOK_API, payload: data.value });
         return;
       }

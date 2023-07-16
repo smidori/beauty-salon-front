@@ -1,12 +1,19 @@
+import { Treatment } from 'src/app/treatment/models/treatment.interface';
+import { Availability } from './../../availability/models/availability.interface';
 import { Time } from "@angular/common";
+import { User } from 'src/app/user/models/user.interface';
 
-export interface Book { //desativar pois é igual ao details
+export interface Book { 
     id: number;
-    userId: number;
-    userName: string;
+    // availability: Availability;
+    // treatment : Treatment;
+    //availabilityId: number;
+    treatmentId:  number;
     dateBook: Date;
     startTimeBook: string;
     finishTimeBook: string;
+    workerUserId: number;
+    //clientUser: User;
 }
 
 export interface BookAvailableResponse {

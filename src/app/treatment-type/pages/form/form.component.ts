@@ -16,8 +16,8 @@ import { selectTreatmentType } from '../../state/treatment-type.selectors';
 export class FormComponent implements OnInit {
   treatmentType$: Observable<TreatmentType | undefined>;
   treatmentType: TreatmentType | null = null;
-  
-  
+
+  //constructor
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
@@ -28,16 +28,13 @@ export class FormComponent implements OnInit {
       if (d) {
         this.treatmentType = d;
       }
-    });   
+    });
   }
 
 
-  ngOnInit(): void {
-    
-    
-  }
+  ngOnInit(): void {}
 
-
+  //actions that can be executed
   formAction(data: { value: TreatmentType, action: string }) {
     switch (data.action) {
       case "Create": {
@@ -52,6 +49,7 @@ export class FormComponent implements OnInit {
     }
   }
 
+  //navigate to the page
   executeCommandBarAction(action: CommandBarActions) {
     switch (action) {
       case CommandBarActions.Create: {
@@ -62,12 +60,7 @@ export class FormComponent implements OnInit {
         this.router.navigate(["treatment-types", "list"]);
         return;
       }
-      // case CommandBarActions.DeleteAll :{
-      //   return;
-      // }
       default: ""
     }
   }
-
-
 }

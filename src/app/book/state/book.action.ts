@@ -7,8 +7,8 @@ export enum BookActions{
     SET_BOOK_LIST = '[Book] Set Book list',
     ADD_BOOK_API = '[Book] Add Book api',
     ADD_BOOK_STATE = '[Book] Add Book state',
-    UPDATE_BOOK_API = '[Book] Add Book api',
-    UPDATE_BOOK_STATE = '[Book] Add Book state',
+    UPDATE_BOOK_API = '[Book] Update Book api',
+    UPDATE_BOOK_STATE = '[Book] Update Book state',
     DELETE_BOOK_API = '[Book] Delete Book api',
     DELETE_BOOK_STATE = '[Book] Delete Book state',
 

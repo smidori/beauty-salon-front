@@ -25,6 +25,9 @@ export class ListComponent implements OnInit{
     { headerName: "dateBook", fieldName: "dateBook" },
     { headerName: "start time", fieldName: "startTimeBook" },
     { headerName: "Finish Time", fieldName: "finishTimeBook" },
+    { headerName: "Worked User Id", fieldName: "workerUserId" },
+    { headerName: "Treatment Id", fieldName: "treatmentId" },
+    
     // id:number;
     // userId: number;
     // userName:string;

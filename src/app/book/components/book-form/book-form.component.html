@@ -47,15 +47,21 @@
             <mat-option *ngFor="let slotKey of bookSlots | keys" [value]="slotKey">{{ slotKey }}</mat-option>
           </mat-select>
         </mat-form-field>
-        
+
         <div *ngFor="let slotKey of bookSlots | keys">
           <ng-container *ngIf="resultForm.get('selectedSlotKey')?.value === slotKey">
-            <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} ({{ bookSlots[slotKey]['dateBook']}}) </p>
-            <mat-radio-group formControlName="selectedBookSlot">
-              <mat-radio-button *ngFor="let bookSlot of toArray(bookSlots[selectedSlotKey]['bookDetails'])" [value]="bookSlot" (click)="selectBookSlot(bookSlot)">
-                Professional: {{ bookSlot.userName }}
+            <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} ({{
+              bookSlots[slotKey]['dateBook']}}) </p>
+              <p>Select de Professional: </p>
+            <mat-radio-group formControlName="selectedBookSlot" required>
+              <mat-radio-button *ngFor="let bookSlot of toArray(bookSlots[selectedSlotKey]['bookDetails'])"
+                [value]="bookSlot" (click)="selectBookSlot(bookSlot)">
+                {{ bookSlot.userName }}
               </mat-radio-button>
             </mat-radio-group>
+
+            <button mat-raised-button color="primary" [disabled]="resultForm.invalid" (click)="booking()">Search
+              Slots</button>
           </ng-container>
         </div>
       </div>
@@ -64,8 +70,8 @@
       </div>
     </div>
   </ng-container>
-  
-    <!-- não apagar 
+
+  <!-- não apagar 
       <ng-container *ngIf="bookSlots$ | async as bookSlots">
       <div *ngIf="searchCompleted">
         <div *ngIf="getBookSlotsSize(bookSlots) > 0">
@@ -92,9 +98,9 @@
         </div>
       </div>
     </ng-container> -->
-      
-      
-      <!-- <ng-container *ngIf="bookSlots$ | async as bookSlots">
+
+
+  <!-- <ng-container *ngIf="bookSlots$ | async as bookSlots">
         <div *ngIf="searchCompleted && getBookSlotsSize(bookSlots) > 0">
           <mat-form-field>
             <mat-label>Select Time:</mat-label>
@@ -120,7 +126,5 @@
           <h3>Sorry, there is no availability for this criteria</h3>
         </div>
       </ng-container> -->
-      
+
 </form>
-  
-  

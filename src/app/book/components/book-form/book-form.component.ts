@@ -30,6 +30,7 @@ export class BookFormComponent implements OnInit {
   //variable
   searchForm: FormGroup;
   resultForm: FormGroup;
+  bookForm: FormGroup;
 
   selectedTreatment: Treatment | null = null;
 
@@ -58,13 +59,21 @@ export class BookFormComponent implements OnInit {
       bookSlots: this.fb.array([]),
       selectedSlotKey: [null],
       selectedBookSlot: ['']
+    });
 
-    })
+    this.bookForm = this.fb.group({
+      treatmentId: [null],
+      dateBook: [null],
+      startTimeBook: [''],
+      finishTimeBook: [''],
+      workerUserId: [null],
+
+    });
   }
 
   //search the available time for this treatment and date
   searchSlots() {
-    
+
     this.searchCompleted = false;
     const bs: BookSearchParams = {
       user: null,
@@ -72,21 +81,27 @@ export class BookFormComponent implements OnInit {
       dateBook: this.searchForm.get('dateBook')?.value.toISOString(),
     };
 
-    this.resultForm.get('selectedSlotKey')?.setValue('');
-    this.resultForm.get('selectedBookSlot')?.setValue('');
-
-    // console.log("form dateBook => " + this.searchForm.get('dateBook')?.value);
-    // console.log("dateBook => " + bs.dateBook);
-    // //console.log("BookSearchParams => " + JSON.stringify(bs));
-    // console.log("bs.dateBook:", bs.dateBook);
-
     this.store.dispatch({ type: BookActions.GET_BOOK_SLOT_LIST, payload: bs });
-    // console.log("Ação despachada: GET_BOOK_SLOT_LIST, payload:", bs.dateBook);
-
+    
     this.bookSlots$.subscribe((data) => {
       this.bookSlots = data;
       this.searchCompleted = true;
     })
+  }
+
+  //save the booking
+  booking() {
+    const bookDetails = this.resultForm.get('selectedBookSlot')?.value;
+    this.bookForm.get('treatmentId')?.setValue(this.searchForm.get('treatment')?.value.id);
+    this.bookForm.get('dateBook')?.setValue(this.searchForm.get('dateBook')?.value);
+    this.bookForm.get('startTimeBook')?.setValue(bookDetails.startTimeBook);
+    this.bookForm.get('finishTimeBook')?.setValue(bookDetails.finishTimeBook);
+    this.bookForm.get('workerUserId')?.setValue(bookDetails.userId);    
+    console.log("------- booking this.bookForm => " + JSON.stringify(this.bookForm.value));
+  
+    this.emitAction();
+
+
   }
 
   //convert object into array
@@ -120,6 +135,7 @@ export class BookFormComponent implements OnInit {
 
   //check is is update or create
   checkAction() {
+    console.log(" -------- checkAction this.selectedBook " + JSON.stringify(this.selectedBook));
     if (this.selectedBook) {
       this.actionButtonLabel = "Update";
       this.patchDataValues()
@@ -141,7 +157,8 @@ export class BookFormComponent implements OnInit {
 
   //send an action
   emitAction() {
-    this.action.emit({ value: this.searchForm.value, action: this.actionButtonLabel })
+    //this.action.emit({ value: this.searchForm.value, action: this.actionButtonLabel })
+    this.action.emit({ value: this.bookForm.value, action: this.actionButtonLabel })
   }
 
   //clear the form
@@ -152,36 +169,36 @@ export class BookFormComponent implements OnInit {
 
   expandedItems: string[] = [];
   selectedBookSlot: any = null;
-  
+
   //selectedSlotKey: string = '';
   selectedSlotKey: number = 0;
 
-selectSlotKey(slotKey: number) {
-  this.selectedSlotKey = slotKey;
-  const element = document.getElementById('mySelect'); // Replace 'myButton' with the ID of your button element
-  if (element) {
-    console.log("element =====> " + element)
-    element.dispatchEvent(new Event('click'));
+  selectSlotKey(slotKey: number) {
+    this.selectedSlotKey = slotKey;
+    const element = document.getElementById('mySelect'); // Replace 'myButton' with the ID of your button element
+    if (element) {
+      console.log("element =====> " + element + " used to force to close the panel of date ")
+      element.dispatchEvent(new Event('click'));
+    }
   }
-}
 
-  
 
-toggleExpand(slotKey: string) {
-  if (this.isExpanded(slotKey)) {
-    this.expandedItems = this.expandedItems.filter(item => item !== slotKey);
-  } else {
-    this.expandedItems.push(slotKey);
+
+  toggleExpand(slotKey: string) {
+    if (this.isExpanded(slotKey)) {
+      this.expandedItems = this.expandedItems.filter(item => item !== slotKey);
+    } else {
+      this.expandedItems.push(slotKey);
+    }
   }
-}
 
-isExpanded(slotKey: string): boolean {
-  return this.expandedItems.includes(slotKey);
-}
+  isExpanded(slotKey: string): boolean {
+    return this.expandedItems.includes(slotKey);
+  }
 
-selectBookSlot(bookSlot: any) {
-  this.selectedBookSlot = bookSlot;
-}
+  selectBookSlot(bookSlot: any) {
+    this.selectedBookSlot = bookSlot;
+  }
 
 }
 

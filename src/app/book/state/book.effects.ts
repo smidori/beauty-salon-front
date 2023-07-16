@@ -56,6 +56,9 @@ export class BookEffects {
     updateBook$ = createEffect(() => {
          return this.actions$.pipe(
             ofType(BookActions.UPDATE_BOOK_API),
+            // tap((data: { type: string, payload: Book }) => {
+            //     console.log('Update Book effect triggered:', data);
+            //   }),
             mergeMap((data: {type: string, payload: Book}) =>
             this.bookService.updateBook(data.payload.id, data.payload)
             .pipe(

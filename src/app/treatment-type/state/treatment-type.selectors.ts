@@ -1,6 +1,3 @@
-// import { createFeatureSelector, createSelector } from '@ngrx/store';
-// import { TreatmentTypeState } from './treatment-type.reducers';
-
 import { createFeatureSelector, createSelector } from "@ngrx/store"
 import { TreatmentTypeState } from "./treatment-type.reducers"
 

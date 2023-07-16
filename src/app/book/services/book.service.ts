@@ -42,7 +42,7 @@ export class BookService {
   }
 
   addBook(book: Book): Observable<Book>{
-    console.log("Post book => " + `${environment.apiURL}/books`);
+    console.log("Service => Post book => " + `${environment.apiURL}/books`);
     return this.http.post<Book>(`${environment.apiURL}/books`,book).pipe(
       tap((data: Book) => data),
       catchError(err => throwError(() => err))
@@ -50,7 +50,7 @@ export class BookService {
   }
 
   updateBook(id: number, book: Book): Observable<Book>{
-    console.log("====> update book => " + JSON.stringify(book));
+    console.log("Service => Update book => " + JSON.stringify(book));
     return this.http.put<Book>(`${environment.apiURL}/books/${id}`,book).pipe(
       catchError(err => throwError(() => err))
     )

@@ -31,7 +31,7 @@ export const selectBook = (id: number) => createSelector(
 export const selectSlots = () => createSelector(
     selectBookSlotState,
     (state: BookSlotState) => {
-      //console.log('Slots state:', state);
+      console.log('Slots state:', state);
       return state.bookSlots;
     }
   );

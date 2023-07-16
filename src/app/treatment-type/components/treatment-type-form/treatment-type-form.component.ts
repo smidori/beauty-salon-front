@@ -41,6 +41,7 @@ export class TreatmentTypeFormComponent {
   }
 
   emitAction() {
+    console.log("treatmentType => " + JSON.stringify(this.form.value));
     this.action.emit({ value: this.form.value, action: this.actionButtonLabel })
   }
 
