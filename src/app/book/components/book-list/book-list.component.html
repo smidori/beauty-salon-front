@@ -17,18 +17,11 @@
                 {{ element[item.fieldName] | date: 'dd/MM/yyyy' }}
             </ng-container> -->
 
-            <!-- <ng-container *ngIf="item.fieldName === 'treatments'">
-                <div>
-                    <ul class="treatments">
-                        <li *ngFor="let treatment of element[item.fieldName]">
-                            {{ treatment.name }}
-                        </li>
-                    </ul>
-                </div>
+            <ng-container *ngIf="item.fieldName === 'status'">
+                            {{ getStatusName(element[item.fieldName]) }}
             </ng-container>
-            -->
-            <ng-container *ngIf=" !( item.fieldName === 'dateBook' 
-                                 )
+           
+            <ng-container *ngIf=" !( item.fieldName === 'dateBook' || item.fieldName === 'status')
                                  ">
                 {{ element[item.fieldName] }}
             </ng-container> 
@@ -44,7 +37,7 @@
                 <mat-icon>pageview</mat-icon> View
             </button>
             &nbsp;
-            <button (click)="selectBook(element, 1)" mat-raised-button color="warn">
+            <button (click)="selectBook(element, 1)" mat-raised-button color="warn" *ngIf="element['status'] === 'BOOKED'">
                 <mat-icon>delete</mat-icon> Delete
             </button>
         </td>

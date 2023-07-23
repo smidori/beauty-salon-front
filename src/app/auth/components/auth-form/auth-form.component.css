@@ -42,3 +42,39 @@
   .form-field {
     margin-right: 10px; 
   }
+
+
+
+
+mat-card {
+  max-width: auto;
+  margin: 0 auto;
+}
+
+.form-field {
+  margin-bottom: 16px;
+}
+
+button[mat-button] {
+  background-color: #007bff;
+  color: white;
+}
+
+button[mat-button]:disabled {
+  background-color: #bdbdbd;
+  color: #616161;
+}
+
+.link {
+  display: inline-block;
+  padding: 8px 16px;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.link:hover {
+  background-color: #0056b3;
+}

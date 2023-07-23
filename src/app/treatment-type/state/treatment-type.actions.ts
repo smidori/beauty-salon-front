@@ -10,8 +10,8 @@ export enum TreatmentTypeActions{
     SET_TREATMENT_TYPE_LIST = '[TreatmentType] Set TreatmentType List',
     ADD_TREATMENT_TYPE_API = '[TreatmentType] Add TreatmentType api',
     ADD_TREATMENT_TYPE_STATE = '[TreatmentType] Add TreatmentType state',
-    UPDATE_TREATMENT_TYPE_API = '[TreatmentType] Add TreatmentType api',
-    UPDATE_TREATMENT_TYPE_STATE = '[TreatmentType] Add TreatmentType state',
+    UPDATE_TREATMENT_TYPE_API = '[TreatmentType] Update TreatmentType api',
+    UPDATE_TREATMENT_TYPE_STATE = '[TreatmentType] Update TreatmentType state',
     DELETE_TREATMENT_TYPE_API = '[TreatmentType] Delete TreatmentType api',
     DELETE_TREATMENT_TYPE_STATE = '[TreatmentType] Delete TreatmentType state',
 

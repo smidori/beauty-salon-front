@@ -5,15 +5,16 @@
 </p> -->
 <mat-toolbar color="primary">
 <span>Beauty Salon</span>
-    <button mat-raised-button color="primary"[routerLink]="'/treatments'">Treatments</button>
-    <button  mat-raised-button color="primary"[routerLink]="'/users'">Users</button>
-    <button  mat-raised-button color="primary"[routerLink]="'/treatment-types'">Treatment types</button>
-    <button  mat-raised-button color="primary"[routerLink]="'/availabilities'">Availabilities</button>
-    <button  mat-raised-button color="primary"[routerLink]="'/books'">Books</button>
+    <button  mat-raised-button color="primary"[routerLink]="'/treatments'">Treatments</button>
+    <button *ngIf="isAuthenticated && isAdmin" mat-raised-button color="primary"[routerLink]="'/users'">Users</button>
+    <button *ngIf="isAdmin" mat-raised-button color="primary"[routerLink]="'/treatment-types'">Treatment types</button>
+    <button *ngIf="isAdmin" mat-raised-button color="primary"[routerLink]="'/availabilities'">Availabilities</button>
+    <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/books'">Books</button>
     <!-- <a mat-list-item [routerLink]="'/treatments'"> Treatments </a>
     <a mat-list-item [routerLink]="'/users'"> Users </a> -->
 <div class="spacer"></div>
-    <a mat-list-item [routerLink]="'/treatments'"> Home </a>
-    <a mat-list-item *ngIf="!(isAuthenticated$ | async)" [routerLink]="'/login'">Login</a>
-    <a mat-list-item *ngIf="(isAuthenticated$ | async)"  (click)="logout()" class="logout-link" >Logout</a>
+    <a mat-list-item [routerLink]="'/treatments'"> Home </a>    
+    <span *ngIf="isAuthenticated">Hello, {{ name }}</span>
+    <a mat-list-item *ngIf="!isUserLoggedIn()" [routerLink]="'/login'">Login</a>
+    <a mat-list-item *ngIf="isUserLoggedIn()"  (click)="logout()" class="logout-link" >Logout</a>
 </mat-toolbar>

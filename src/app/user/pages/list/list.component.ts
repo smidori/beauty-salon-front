@@ -25,6 +25,7 @@ export class ListComponent implements OnInit{
     {headerName: "Last Name", fieldName: "lastName"},
     {headerName: "E-mail", fieldName: "email"},
     {headerName: "Gender", fieldName: "gender"},
+    {headerName: "Mobile Phone", fieldName: "mobilePhone"},
   ]  
   
   constructor(

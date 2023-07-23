@@ -21,19 +21,14 @@ export class ListComponent implements OnInit{
   
   
   headers: { headerName: string, fieldName: keyof Book, userName?: (keyof User)[] }[] = [
-    //{ headerName: "User", fieldName: "user", userName: ["firstName", "lastName"] },        
-    { headerName: "dateBook", fieldName: "dateBook" },
-    { headerName: "start time", fieldName: "startTimeBook" },
+    { headerName: "Date", fieldName: "dateBook" },
+    { headerName: "Start time", fieldName: "startTimeBook" },
     { headerName: "Finish Time", fieldName: "finishTimeBook" },
-    { headerName: "Worked User Id", fieldName: "workerUserId" },
-    { headerName: "Treatment Id", fieldName: "treatmentId" },
-    
-    // id:number;
-    // userId: number;
-    // userName:string;
-    // dateBook:Date;
-    // startTimeBook:string;
-    // finishTimeBook:string;
+    { headerName: "Treatment", fieldName: "treatmentName" },
+    { headerName: "Professional", fieldName: "workerUserFirstName" },
+    { headerName: "Client", fieldName: "clientUserFirstName" },
+    { headerName: "Status", fieldName: "status" },  
+    { headerName: "Observation", fieldName: "observation" },   
   ];
   
   

@@ -8,6 +8,7 @@ import { TreatmentActions } from '../../state/treatment.actions';
 import { TableActions } from '../../enums/table-actions.enum';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 import { TreatmentType } from '../../models/treatment-type.interface';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 
 @Component({
   selector: 'app-list',
@@ -17,6 +18,7 @@ import { TreatmentType } from '../../models/treatment-type.interface';
 export class ListComponent implements OnInit{
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
+  // isAdmin = false;
 
   //headers used to show in the list 
   headers: { headerName: string, fieldName: keyof Treatment, treatmentTypeName?: keyof TreatmentType }[] = [
@@ -30,11 +32,13 @@ export class ListComponent implements OnInit{
 
   constructor(
     private router: Router, 
-    private store: Store<AppState>){}
+    private store: Store<AppState>,
+    private authService: AuthenticateService){}
 
   ngOnInit(): void {
     this.store.dispatch({type: TreatmentActions.GET_TREATMENT_LIST})
     this.assignTreatments();
+    // this.isAdmin = this.authService.isAdmin();
   }
 
   //assign the treatments from the service to the variable

@@ -1,6 +1,8 @@
-<treatment-command-bar (action)="executeCommandBarAction($event)"></treatment-command-bar>
+<!-- <div *ngIf="isAdmin"></div> -->
+
+<command-bar menuTitle="Treatment list" (action)="executeCommandBarAction($event)"></command-bar>
 
 <div class="container">
-    <h2>Treatment list</h2>
+    <!-- <h2>Treatment list</h2> -->
     <treatment-list [treatments]="treatments" [headers]="headers" (treatment)="selectTreatment($event)"></treatment-list>
  </div>

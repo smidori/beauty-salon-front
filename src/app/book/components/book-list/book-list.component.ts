@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TableActions } from 'src/app/shared/enums/table-actions.enum';
 import { User } from 'src/app/user/models/user.interface';
 import { Book } from '../../model/book.interface';
+import { bookStatusLabels } from '../../model/book-status.enum';
 
 @Component({
   selector: 'book-list',
@@ -33,5 +34,15 @@ export class BookListComponent implements OnInit{
 
   selectBook(book: Book, action:TableActions) {
     this.book.emit({book,action})
+  }
+
+  // get the values from enum BookStatus 
+  getBookStatusValues(): string[] {
+    return Object.keys(bookStatusLabels);
+  }
+  
+  // get the name in enum BookStatus
+  getStatusName(statusValue: string): string {
+    return bookStatusLabels[statusValue];
   }
 }

@@ -4,7 +4,7 @@ import { UserService } from "../services/user.service";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Router } from "@angular/router";
 import { UserActions } from "./user.actions";
-import { EMPTY, catchError, map, mergeMap, tap } from "rxjs";
+import { EMPTY, catchError, map, mergeMap, of, tap } from "rxjs";
 
 @Injectable()
 export class UserEffects {
@@ -47,7 +47,9 @@ export class UserEffects {
                 .pipe(
                     map(users => ({ type: UserActions.ADD_USER_STATE, user: data.payload })),
                     tap(() => this.router.navigate(["users"])),
-                    catchError(() => EMPTY)
+                    catchError((error) => of({ type: UserActions.ADD_USER_ERROR, error: error.error.message }))
+
+                    //catchError(() => EMPTY)
                 ))
         )
     }, { dispatch: true })

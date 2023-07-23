@@ -13,7 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { HomeComponent } from './pages/home/home.component';
 import { TreatmentHomeComponent } from './components/treatment-home/treatment-home.component';
-import { TreatmentCommandBarComponent } from './components/treatment-command-bar/treatment-command-bar.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -24,13 +24,13 @@ import { TreatmentCommandBarComponent } from './components/treatment-command-bar
     TreatmentListComponent,
     HomeComponent,
     TreatmentHomeComponent,
-    TreatmentCommandBarComponent,    
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     TreatmentRoutingModule,
+    SharedModule,
     StoreModule.forFeature('treatmentState', treatmentReducer),
     EffectsModule.forFeature([TreatmentEffects]),
     FormsModule

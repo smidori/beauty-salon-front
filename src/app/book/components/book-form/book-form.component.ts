@@ -11,6 +11,9 @@ import { selectSlots } from '../../state/book.selectors';
 import { take, switchMap, interval } from 'rxjs';
 import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DateFilterFn } from '@angular/material/datepicker';
+import { BookStatus, bookStatusLabels } from '../../model/book-status.enum';
 
 @Component({
   selector: 'book-form',
@@ -38,9 +41,13 @@ export class BookFormComponent implements OnInit {
   bookSlots$ = this.store.select(selectSlots());
 
   searchCompleted = false; // used to control when show the results
-
-  minDate = new Date();
+  
+  //periodo to do the agenda from tomorrow til 1 year ahead
+  minDate = new Date(new Date().setDate(new Date().getDate() + 1));
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1)); //limit the date for 1 year in advance
+
+  isSlotSelected: boolean = false;
+  bookStatus = BookStatus;
 
   //constructor
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
@@ -62,56 +69,22 @@ export class BookFormComponent implements OnInit {
     });
 
     this.bookForm = this.fb.group({
+      id:[null],
       treatmentId: [null],
       dateBook: [null],
       startTimeBook: [''],
       finishTimeBook: [''],
       workerUserId: [null],
-
-    });
-  }
-
-  //search the available time for this treatment and date
-  searchSlots() {
-
-    this.searchCompleted = false;
-    const bs: BookSearchParams = {
-      user: null,
-      treatment: this.searchForm.get('treatment')?.value,
-      dateBook: this.searchForm.get('dateBook')?.value.toISOString(),
-    };
-
-    this.store.dispatch({ type: BookActions.GET_BOOK_SLOT_LIST, payload: bs });
-    
-    this.bookSlots$.subscribe((data) => {
-      this.bookSlots = data;
-      this.searchCompleted = true;
-    })
-  }
-
-  //save the booking
-  booking() {
-    const bookDetails = this.resultForm.get('selectedBookSlot')?.value;
-    this.bookForm.get('treatmentId')?.setValue(this.searchForm.get('treatment')?.value.id);
-    this.bookForm.get('dateBook')?.setValue(this.searchForm.get('dateBook')?.value);
-    this.bookForm.get('startTimeBook')?.setValue(bookDetails.startTimeBook);
-    this.bookForm.get('finishTimeBook')?.setValue(bookDetails.finishTimeBook);
-    this.bookForm.get('workerUserId')?.setValue(bookDetails.userId);    
-    console.log("------- booking this.bookForm => " + JSON.stringify(this.bookForm.value));
-  
-    this.emitAction();
-
-
-  }
-
-  //convert object into array
-  toArray(obj: any): any[] {
-    return Array.from(obj);
-  }
-
-  //check the size of the map object
-  getBookSlotsSize(bookSlots: any): number {
-    return Object.keys(bookSlots).length;
+      treatmentName: [''],
+      workerUserFirstName: [null],
+      workerUserLastName: [null],
+      clientUserFirstName: [null],
+      clientUserLastName: [null],
+      clientUserId: [null],
+      observation:[''],
+      status:[''],
+      createdDate:[null],
+    });    
   }
 
   ngOnInit(): void {
@@ -133,19 +106,72 @@ export class BookFormComponent implements OnInit {
     });
   }
 
-  //check is is update or create
+  //search the available time for this treatment and date
+  searchSlots() {
+    this.selectedBookSlot = null;
+    this.searchCompleted = false;
+    const bs: BookSearchParams = {
+      user: null,
+      treatment: this.searchForm.get('treatment')?.value,
+      dateBook: this.searchForm.get('dateBook')?.value.toISOString(),
+    };
+
+    this.store.dispatch({ type: BookActions.GET_BOOK_SLOT_LIST, payload: bs });
+    
+    this.bookSlots$.subscribe((data) => {
+      this.bookSlots = data;
+      this.searchCompleted = true;
+    })
+  }
+
+  //create the booking
+  booking() {
+    const bookDetails = this.resultForm.get('selectedBookSlot')?.value;
+    this.bookForm.get('treatmentId')?.setValue(this.searchForm.get('treatment')?.value.id);
+    this.bookForm.get('dateBook')?.setValue(this.searchForm.get('dateBook')?.value);
+    this.bookForm.get('startTimeBook')?.setValue(bookDetails.startTimeBook);
+    this.bookForm.get('finishTimeBook')?.setValue(bookDetails.finishTimeBook);
+    this.bookForm.get('workerUserId')?.setValue(bookDetails.userId);
+    this.bookForm.get('treatmentName')?.setValue(this.searchForm.get('treatment')?.value.name);
+    if(this.actionButtonLabel==='Create'){
+      this.bookForm.get('status')?.setValue('BOOKED');
+    }
+
+    console.log("------- booking this.bookForm => " + JSON.stringify(this.bookForm.value));
+  
+    this.emitAction();
+  }
+  updateStatus(){
+    this.emitAction();
+  }
+
+  //convert object into array
+  toArray(obj: any): any[] {
+    return Array.from(obj);
+  }
+
+  //check the size of the map object
+  getBookSlotsSize(bookSlots: any): number {
+    return Object.keys(bookSlots).length;
+  }
+
+  
+
+  //check if is update or create
   checkAction() {
     console.log(" -------- checkAction this.selectedBook " + JSON.stringify(this.selectedBook));
     if (this.selectedBook) {
       this.actionButtonLabel = "Update";
-      this.patchDataValues()
+      this.patchDataValues();
+      this.bookForm.get('status')?.setValue(this.selectedBook.status);
+
     }
   }
 
-  //copy the values from selectedBook to form
+  //copy the values from selectedBook to bookForm
   patchDataValues() {
     if (this.selectedBook) {
-      this.searchForm.patchValue(this.selectedBook);
+      this.bookForm.patchValue(this.selectedBook);
     }
   }
 
@@ -167,15 +193,17 @@ export class BookFormComponent implements OnInit {
   }
 
 
-  expandedItems: string[] = [];
+  //expandedItems: string[] = [];
   selectedBookSlot: any = null;
 
   //selectedSlotKey: string = '';
   selectedSlotKey: number = 0;
 
+  //select the time
   selectSlotKey(slotKey: number) {
+    this.selectedBookSlot = null;
     this.selectedSlotKey = slotKey;
-    const element = document.getElementById('mySelect'); // Replace 'myButton' with the ID of your button element
+    const element = document.getElementById('mySelect'); 
     if (element) {
       console.log("element =====> " + element + " used to force to close the panel of date ")
       element.dispatchEvent(new Event('click'));
@@ -183,23 +211,45 @@ export class BookFormComponent implements OnInit {
   }
 
 
-
-  toggleExpand(slotKey: string) {
-    if (this.isExpanded(slotKey)) {
-      this.expandedItems = this.expandedItems.filter(item => item !== slotKey);
-    } else {
-      this.expandedItems.push(slotKey);
-    }
-  }
-
-  isExpanded(slotKey: string): boolean {
-    return this.expandedItems.includes(slotKey);
-  }
-
+  //assign the value once the professional is selected
   selectBookSlot(bookSlot: any) {
     this.selectedBookSlot = bookSlot;
   }
 
+
+  // toggleExpand(slotKey: string) {
+  //   if (this.isExpanded(slotKey)) {
+  //     this.expandedItems = this.expandedItems.filter(item => item !== slotKey);
+  //   } else {
+  //     this.expandedItems.push(slotKey);
+  //   }
+  // }
+
+  // isExpanded(slotKey: string): boolean {
+  //   return this.expandedItems.includes(slotKey);
+  // }
+
+  
+  //don't let the sunday be selected
+  sundayFilter: DateFilterFn<Date | null> = (timestamp: Date | null): boolean => {
+    if (!timestamp) {
+      return true;
+    }
+    const day = new Date(timestamp).getDay();
+    return day !== 0; // return true in case isn't sunday 
+  };
+
+  // get the values from enum BookStatus 
+  getBookStatusValues(): string[] {
+    return Object.keys(bookStatusLabels);
+  }
+  
+  // get the name in enum BookStatus
+  getStatusName(statusValue: string): string {
+    return bookStatusLabels[statusValue];
+  }
+  
+  
 }
 
 

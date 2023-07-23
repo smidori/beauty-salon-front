@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 
 @Component({
@@ -8,6 +8,7 @@ import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 })
 export class CommandBarComponent implements OnInit{
   @Output() action = new EventEmitter<CommandBarActions>();
+  @Input() menuTitle = '';
   
 
   ngOnInit(): void {

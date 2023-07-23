@@ -1,13 +1,13 @@
- table, th, td {
-    /* border: 1px solid; */
-    /* border-collapse: collapse; */
-    height: 3px;
+table, th, td {
+  /* border: 1px solid; */
+  /* border-collapse: collapse; */
+  height: 3px;
 }
 
- .my-cell {
-    min-height: 30px;
-    height: 30px;
-  } 
-  .my-button-table{
-    height: 20px;
-  }
+.custom-tr {
+  min-height: 30px;
+  height: 30px;
+}
+.custom-button-table {
+  height: 20px;
+}

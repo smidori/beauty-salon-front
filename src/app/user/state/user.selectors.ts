@@ -13,6 +13,10 @@ export const selectUsers = () => createSelector(
     (state: UserState) => state.users
 )
 
+export const selectError = createSelector(
+    selectUserState,
+    (state: UserState) => state.error
+  );
 
 // export const selectUser = (id: number) => createSelector(
 //     selectUserState,

@@ -6,4 +6,6 @@ export interface User{
     password: string;
     role: string;
     gender:string;
+    mobilePhone:string;
+    homePhone:string;
 }

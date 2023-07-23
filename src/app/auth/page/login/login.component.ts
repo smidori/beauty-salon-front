@@ -22,6 +22,7 @@ export class LoginComponent{
               private authService: AuthenticateService, 
               private router: Router, 
               private _snackBar: MatSnackBar) {
+    console.log("!!!!!!!!!!!!!!! executing constructor of login.component !!!!!!!!")
     this.checkJWT();
     this.getError();
   }
@@ -42,6 +43,7 @@ export class LoginComponent{
 
   checkJWT() {
     if(this.authService.isAuthenticated()) {
+      console.log("checkJWT ==> isAutehnticated ");
       this.router.navigate(['/users'])
     }
   }

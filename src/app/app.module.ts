@@ -19,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { TreatmentTypeModule } from './treatment-type/treatment-type.module';
 import { BookModule } from './book/book.module';
+import { InactivityService } from './core/services/inactivity.service';
 
 
 export function tokenGetter() {
@@ -49,7 +50,8 @@ export function tokenGetter() {
     JwtModule.forRoot({ config: { tokenGetter } })//for jwt service
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },   
+    { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },
+    InactivityService   
   ],
   bootstrap: [AppComponent]
 })

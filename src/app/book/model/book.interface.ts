@@ -14,6 +14,15 @@ export interface Book {
     finishTimeBook: string;
     workerUserId: number;
     //clientUser: User;
+    treatmentName: string;
+    workerUserFirstName: string;
+    clientUserId: number | null;
+    clientUserFirstName: string | null;
+    status: string;
+    observation: string | null;
+    createdDate: string | null;
+
+
 }
 
 export interface BookAvailableResponse {

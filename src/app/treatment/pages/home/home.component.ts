@@ -33,7 +33,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch({type: TreatmentActions.GET_TREATMENT_LIST})
-    this.assignTreatments();
+    
+    this.treatments$.subscribe((data) => {
+      this.treatments = data;
+      this.assignTreatments();
+    })
   }
 
   
@@ -48,9 +52,7 @@ export class HomeComponent implements OnInit {
   }
 
   assignTreatments() {
-    this.treatments$.subscribe((data) => {
-      this.treatments = data;
-    })
+    
 
     this.treatmentsGroupedByType = this.treatments.reduce((acc, treatment) => {
       const typeName = treatment.type.name;

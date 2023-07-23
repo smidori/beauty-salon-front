@@ -16,8 +16,11 @@ import { authReducer } from './state/auth.reducers';
 
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
-  return localStorageSync({keys: ['token']})(reducer);
+  console.log("************ localStorageSyncReducer....")
+  return localStorageSync({keys: ['token', 'userDetails']})(reducer);
 }
+
+
 const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 @NgModule({

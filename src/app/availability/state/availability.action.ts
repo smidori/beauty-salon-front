@@ -6,8 +6,8 @@ export enum AvailabilityActions{
     SET_AVAILABILITY_LIST = '[Availability] Set Availability list',
     ADD_AVAILABILITY_API = '[Availability] Add Availability api',
     ADD_AVAILABILITY_STATE = '[Availability] Add Availability state',
-    UPDATE_AVAILABILITY_API = '[Availability] Add Availability api',
-    UPDATE_AVAILABILITY_STATE = '[Availability] Add Availability state',
+    UPDATE_AVAILABILITY_API = '[Availability] Update Availability api',
+    UPDATE_AVAILABILITY_STATE = '[Availability] Update Availability state',
     DELETE_AVAILABILITY_API = '[Availability] Delete Availability api',
     DELETE_AVAILABILITY_STATE = '[Availability] Delete Availability state',
 }

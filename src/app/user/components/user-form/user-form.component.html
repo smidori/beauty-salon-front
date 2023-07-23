@@ -20,18 +20,6 @@
         </mat-form-field>
 
         <mat-form-field class="form-field">
-            <mat-label>Login</mat-label>
-            <input matInput placeholder="Login" formControlName="login" required>
-        </mat-form-field>
-    </div>
-
-    <div class="form-row">
-        <mat-form-field class="form-field">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" placeholder="Password" formControlName="password" required>
-        </mat-form-field>
-
-        <mat-form-field class="form-field">
             <mat-label>Gender</mat-label>
             <mat-select formControlName="gender">
                 <mat-option value="male">Male</mat-option>
@@ -40,7 +28,29 @@
             </mat-select>
         </mat-form-field>
     </div>
-    
+
+    <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>Login</mat-label>
+            <input matInput placeholder="Login" formControlName="login" required>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" placeholder="Password" formControlName="password" required>
+        </mat-form-field>
+    </div>
+    <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>Mobile Phone</mat-label>
+            <input matInput placeholder="Mobile Phone" formControlName="mobilePhone" required>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Home Phone</mat-label>
+            <input matInput placeholder="Home Phone" formControlName="homePhone">
+        </mat-form-field>
+    </div>
     <div class="form-row">
         <mat-form-field class="form-field">
             <mat-label>Role</mat-label>

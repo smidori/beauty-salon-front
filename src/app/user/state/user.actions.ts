@@ -1,11 +1,13 @@
 import { createAction, props } from "@ngrx/store";
 import { User } from "../models/user.interface";
 
-export enum UserActions{
+export enum UserActions {
     GET_USER_LIST = '[User] Get User list',
     SET_USER_LIST = '[User] Set User list',
     ADD_USER_API = '[User] Add User api',
     ADD_USER_STATE = '[User] Add User state',
+    ADD_USER_ERROR = '[User] Add User error',
+    CLEAR_USER_ERROR = '[User] Clear User Error',
     UPDATE_USER_API = '[User] Update User api',
     UPDATE_USER_STATE = '[User] Update User state',
     DELETE_USER_API = '[User] Delete User api',
@@ -19,11 +21,11 @@ export const getUserList = createAction(
 
 export const setUserList = createAction(
     UserActions.SET_USER_LIST,
-    props<{users:ReadonlyArray<User>}>()
+    props<{ users: ReadonlyArray<User> }>()
 )
 
 export const addUserState = createAction(
-    UserActions.ADD_USER_STATE, props<{user: User}>()
+    UserActions.ADD_USER_STATE, props<{ user: User }>()
 );
 
 
@@ -34,5 +36,15 @@ export const updateUserState = createAction(
 
 
 export const deleteUserState = createAction(
-    UserActions.DELETE_USER_STATE, props<{userId: number}>()
+    UserActions.DELETE_USER_STATE, props<{ userId: number }>()
 )
+
+
+export const addUserError = createAction(
+    UserActions.ADD_USER_ERROR,
+    props<{ error: any }>()
+);
+
+export const clearUserError = createAction(
+    UserActions.CLEAR_USER_ERROR
+);

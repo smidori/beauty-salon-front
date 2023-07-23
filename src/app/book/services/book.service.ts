@@ -13,7 +13,7 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
   getBooks(): Observable<Book[]> {
-    console.log('getBooks => ')
+    console.log('getBooks => ' + `${environment.apiURL}/books`)
     return this.http.get<Book[]>(`${environment.apiURL}/books`).pipe(
       tap((data: Book[]) => data),
       catchError(err => throwError(() => err))

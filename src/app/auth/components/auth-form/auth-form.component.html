@@ -7,21 +7,21 @@
         </p>
         <p>
             <mat-form-field class="form-field">
-            <input type="text" matInput user="Username" formControlName="login">
+            <input type="text" name="username" matInput user="Username" placeholder="Username" formControlName="login">
             </mat-form-field>
         </p>
 
         <p>
             <mat-form-field class="form-field">
-            <input type="password" matInput user="Password" formControlName="password">
+            <input type="password" name="password" matInput user="Password" placeholder="Password" formControlName="password">
             </mat-form-field>
         </p>
         
         <div class="button">
             <button type="submit" [disabled]="form.invalid" mat-button>{{title}}</button>
         </div>
-        <p *ngIf="title == 'Login'" class="link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Create account</p>
-        <!-- <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p> -->
+        <!-- <p *ngIf="title == 'Login'" class="link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Create account</p> -->
+        <button mat-raised-button color="primary" *ngIf="title === 'Login'" [routerLink]="['/register']" routerLinkActive="router-link-active" > Create account </button>
         
         </form>
     </mat-card-content>
@@ -36,18 +36,18 @@
         <p></p>
         <div class="form-row">
             <mat-form-field class="form-field">
-            <input matInput type="text" matInput user="First Name" formControlName="firstName" >
+            <input matInput type="text" matInput user="First Name" placeholder="First Name"  formControlName="firstName" >
             </mat-form-field>
 
 
             <mat-form-field class="form-field">
-                <input type="text" matInput user="Last Name" formControlName="lastName" >
+                <input type="text" matInput user="Last Name" placeholder="Last Name" formControlName="lastName" >
             </mat-form-field>
         </div>
 
         <div class="form-row">
             <mat-form-field class="form-field">
-            <input type="text" matInput user="Email" formControlName="email" >
+            <input type="text" matInput user="Email" placeholder="Email" formControlName="email" >
             </mat-form-field>
 
             <mat-form-field class="form-field" >
@@ -63,10 +63,10 @@
 
         <div class="form-row">
             <mat-form-field class="form-field">
-            <input matInput type="text" matInput user="Username" formControlName="login" >
+            <input matInput type="text" matInput user="Username" placeholder="Username" formControlName="login" >
             </mat-form-field>
             <mat-form-field class="form-field">
-                <input type="password" matInput user="Password" formControlName="password">
+                <input type="password" matInput user="Password" placeholder="Password" formControlName="password">
             </mat-form-field>
         </div>
 
@@ -76,8 +76,10 @@
             <button type="submit" [disabled]="formRegister.invalid" mat-button>{{title}}</button>
             
         </div>
-        <!-- <p *ngIf="title == 'Login'" class="link" [routerLink]="['register']" routerLinkActive="router-link-active" >Create account</p> -->
-        <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p>
+        
+        <!-- <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p> -->
+
+        <button mat-raised-button color="primary" *ngIf="title === 'Register'" [routerLink]="['/login']" routerLinkActive="router-link-active" > Sign In </button>
         
         </form>
     </mat-card-content>

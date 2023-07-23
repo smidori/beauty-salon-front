@@ -11,17 +11,17 @@
             Actions
         </th>
         <td mat-cell *matCellDef="let element">
-            <button class="my-button-table" (click)="selectUser(element,0)" mat-raised-button color="primary">
+            <button class="custom-button-table" (click)="selectUser(element,0)" mat-raised-button color="primary">
                 <mat-icon>pageview</mat-icon> View
             </button>
             &nbsp;
-            <button class="my-button-table" (click)="selectUser(element, 1)"
+            <button class="custom-button-table" (click)="selectUser(element, 1)"
               mat-raised-button color="warn">
                 <mat-icon>delete</mat-icon> Delete
             </button>
         </td>
     </ng-container>
-    <tr class="my-cell" mat-header-row *matHeaderRowDef="headerFields"></tr>
-    <tr class="my-cell" mat-row *matRowDef="let row; columns: headerFields"></tr>
+    <tr class="custom-tr" mat-header-row *matHeaderRowDef="headerFields"></tr>
+    <tr class="custom-tr" mat-row *matRowDef="let row; columns: headerFields"></tr>
     
 </table>
