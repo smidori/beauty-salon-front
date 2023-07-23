@@ -1,0 +1,69 @@
+<h2>{{selectedInvoice ? "Update/View Invoice" : "Create Invoice"}}</h2>
+
+<form [formGroup]="form">
+
+    <div class="form-row" *ngIf="selectedInvoice">
+        <mat-form-field class="form-field custom-form-field">
+            <mat-label>First Name</mat-label>
+            <input matInput [value]="form.get('user')?.value?.firstName" [readonly]="true">
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Last Name</mat-label>
+            <input matInput [value]="form.get('user')?.value?.lastName" [readonly]="true">
+        </mat-form-field>
+    </div>
+
+    
+    <div class="form-row" *ngIf="!selectedInvoice">
+        <mat-form-field class="form-field">
+            <mat-label>Client</mat-label>
+            <mat-select formControlName="client">
+                <mat-option *ngFor="let user of users" [value]="user">{{ user.firstName
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>Treatments</mat-label>
+            <mat-select formControlName="treatments" multiple [compareWith]="compareTreatmentObjects">
+                <mat-option *ngFor="let treatment of treatments" [value]="treatment">{{ treatment.name
+                    }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- <div class="form-row">
+        <mat-form-field class="form-field custom-datepicker">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div> -->
+
+    <div class="form-row">
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Total</mat-label>
+            <input matInput placeholder="Total" formControlName="total" required>
+        </mat-form-field>
+
+        <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Observation</mat-label>
+            <input matInput placeholder="Observation" formControlName="observation" required>
+        </mat-form-field>
+    </div>
+
+    <div class="button-group">
+        <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="emitAction()">
+            {{actionButtonLabel}}
+        </button>
+
+        <button mat-raised-button color="warn" (click)="clear()">
+            Clear
+        </button>
+    </div>
+
+</form>

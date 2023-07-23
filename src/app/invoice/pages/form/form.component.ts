@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Availability } from '../../models/availability.interface';
-import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppState } from 'src/app/state/app.state';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AppState } from 'src/app/state/app.state';
+import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { TreatmentActions } from 'src/app/treatment/state/treatment.actions';
-import { AvailabilityActions } from '../../state/availability.action';
-import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
-import { selectAvailabilities, selectAvailability } from '../../state/availability.selectors';
 import { selectTreatments } from 'src/app/treatment/state/treatment.selectors';
-import { selectUsers } from 'src/app/user/state/user.selectors';
 import { User } from 'src/app/user/models/user.interface';
 import { UserActions } from 'src/app/user/state/user.actions';
+import { selectUsers } from 'src/app/user/state/user.selectors';
+import { CommandBarActions } from '../../enums/command-bar-actions.enum';
+import { Invoice } from '../../model/invoice.interface';
+import { InvoiceActions } from '../../state/invoice.action';
+import { selectInvoices, selectInvoice } from '../../state/invoice.selectors';
 
 @Component({
   selector: 'app-form',
@@ -22,15 +22,15 @@ import { UserActions } from 'src/app/user/state/user.actions';
 export class FormComponent implements OnInit {
 
   //properties
-  menuTitle: string = 'Create Availability';
-  availability$: Observable<Availability | undefined>;
-  availability: Availability | null = null;
+  menuTitle: string = 'Create Invoice';
+  invoice$: Observable<Invoice | undefined>;
+  invoice: Invoice | null = null;
 
 
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
 
-  test$ = this.store.select(selectAvailabilities());
+  test$ = this.store.select(selectInvoices());
 
   users: ReadonlyArray<User> = [];
   users$ = this.store.select(selectUsers());
@@ -42,13 +42,13 @@ export class FormComponent implements OnInit {
 
     //properties
     const id = this.acRouter.snapshot.params['id'];
-    this.availability$ = this.store.select(selectAvailability(id));
+    this.invoice$ = this.store.select(selectInvoice(id));
 
-    //subscribe the availability$
-    this.availability$.subscribe(data => {
+    //subscribe the invoice$
+    this.invoice$.subscribe(data => {
       if (data) {
-        this.menuTitle = "Update Availability";
-        this.availability = data;
+        this.menuTitle = "Update Invoice";
+        this.invoice = data;
       }
     });
   }
@@ -69,14 +69,14 @@ export class FormComponent implements OnInit {
   }
 
   //actions that can be executed
-  formAction(data: { value: Availability, action: string }) {
+  formAction(data: { value: Invoice, action: string }) {
     switch (data.action) {
       case "Create": {
-        this.store.dispatch({ type: AvailabilityActions.ADD_AVAILABILITY_API, payload: data.value });
+        this.store.dispatch({ type: InvoiceActions.ADD_INVOICE_API, payload: data.value });
         return;
       }
       case "Update": {
-        this.store.dispatch({ type: AvailabilityActions.UPDATE_AVAILABILITY_API, payload: data.value });
+        this.store.dispatch({ type: InvoiceActions.UPDATE_INVOICE_API, payload: data.value });
         return;
       }
       default: ""
@@ -87,11 +87,11 @@ export class FormComponent implements OnInit {
   executeCommandBarAction(action: CommandBarActions) {
     switch (action) {
       case CommandBarActions.Create: {
-        this.router.navigate(["availabilities", "form"]);
+        this.router.navigate(["invoices", "form"]);
         return;
       }
       case CommandBarActions.List: {
-        this.router.navigate(["availabilities", "list"]);
+        this.router.navigate(["invoices", "list"]);
         return;
       }
       default: ""
@@ -100,4 +100,5 @@ export class FormComponent implements OnInit {
 
 
 }
+
 

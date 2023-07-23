@@ -17,6 +17,8 @@ import { TreatmentTypeActions, getTreatmentTypeList } from 'src/app/treatment-ty
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+  
+  //properties
   menuTitle: string = 'Create Treatment';
   treatment$: Observable<Treatment | undefined>;
   treatment: Treatment | null = null;
@@ -35,11 +37,11 @@ export class FormComponent implements OnInit {
 
     //use the selector to get the object from store
     this.treatment$ = this.store.select(selectTreatment(id));
-
-    //assign the value to this.treatment
+   
     this.treatment$.subscribe(data => {
       if (data) {
         this.menuTitle = "Update Treatment";
+        //assign the value to this.treatment
         this.treatment = data;
       }
     });

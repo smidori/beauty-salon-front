@@ -1,0 +1,5 @@
+<command-bar (action)="executeCommandBarAction($event)"></command-bar>
+
+<div class="container">
+    <invoice-form [selectedInvoice]="invoice" [treatments]="treatments" [users]="users" (action)="formAction($event)"></invoice-form>
+</div>

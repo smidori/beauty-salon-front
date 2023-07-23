@@ -20,6 +20,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { TreatmentTypeModule } from './treatment-type/treatment-type.module';
 import { BookModule } from './book/book.module';
 import { InactivityService } from './core/services/inactivity.service';
+import { InvoiceModule } from './invoice/invoice.module';
 
 
 export function tokenGetter() {
@@ -44,6 +45,7 @@ export function tokenGetter() {
     TreatmentTypeModule,
     AvailabilityModule,
     BookModule,
+    InvoiceModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([]),

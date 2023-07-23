@@ -17,7 +17,7 @@ export class TreatmentFormComponent {
   //send data
   @Output() action = new EventEmitter();
   
-  //variables
+  //properties
   form: FormGroup;
   selectedTreatmentTypeId: number | undefined;
 

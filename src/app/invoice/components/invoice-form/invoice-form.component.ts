@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Availability } from '../../models/availability.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { User } from 'src/app/user/models/user.interface';
+import { Invoice } from '../../model/invoice.interface';
 
 @Component({
-  selector: 'availability-form',
-  templateUrl: './availability-form.component.html',
-  styleUrls: ['./availability-form.component.css']
+  selector: 'invoice-form',
+  templateUrl: './invoice-form.component.html',
+  styleUrls: ['./invoice-form.component.css']
 })
-export class AvailabilityFormComponent implements OnInit {
+export class InvoiceFormComponent implements OnInit {
   //get data from input
-  @Input() selectedAvailability: Availability | null = null;
+  @Input() selectedInvoice: Invoice | null = null;
   @Input() actionButtonLabel: string = "Create";
   @Input() treatments: ReadonlyArray<Treatment> = [];
   @Input() users: ReadonlyArray<User> = [];
@@ -27,12 +27,11 @@ export class AvailabilityFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       id: [null],
-      user: [null],
-      startDate: [null],
-      finishDate: [null],
-      treatments: [[]],
-      hourStartTime:[null],
-      hourFinishTime:[null]
+      client: [null],
+      observation: [null],
+      total: [0],
+      date:[null],
+      items: [[]],
     });
   }
 
@@ -43,17 +42,17 @@ export class AvailabilityFormComponent implements OnInit {
 
   //check is is update or create
   checkAction() {
-    if (this.selectedAvailability) {
+    if (this.selectedInvoice) {
       this.actionButtonLabel = "Update";
       this.patchDataValues()
     }
   }
 
-  //copy the values from selectedAvailability to form
+  //copy the values from selectedInvoice to form
   patchDataValues() {
-    if (this.selectedAvailability) {
-      //console.log(JSON.stringify("availability => " + this.selectedAvailability.firstName));
-      this.form.patchValue(this.selectedAvailability);
+    if (this.selectedInvoice) {
+      //console.log(JSON.stringify("invoice => " + this.selectedInvoice.firstName));
+      this.form.patchValue(this.selectedInvoice);
     }
 
   }
