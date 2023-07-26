@@ -1,14 +1,11 @@
-import { BookService } from './../../../book/services/book.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/state/app.state';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { User } from 'src/app/user/models/user.interface';
 import { Invoice, Product } from '../../model/invoice.interface';
-import { Store } from '@ngrx/store';
-import { BookActions } from 'src/app/book/state/book.action';
-import { AppState } from 'src/app/state/app.state';
-import { Book } from 'src/app/book/model/book.interface';
-import { selectBooks } from 'src/app/book/state/book.selectors';
+import { BookService } from './../../../book/services/book.service';
 
 @Component({
   selector: 'invoice-form',
@@ -21,11 +18,7 @@ export class InvoiceFormComponent implements OnInit {
   @Input() actionButtonLabel: string = "Create";
   @Input() treatments: ReadonlyArray<Treatment> = [];
   @Input() products: ReadonlyArray<Product> = [];
-
   @Input() users: ReadonlyArray<User> = [];
-
-  // booksDone: ReadonlyArray<Book> = [];
-  // booksDone$ = this.store.select(selectBooks());
 
   //send data to page
   @Output() action = new EventEmitter();
@@ -36,7 +29,7 @@ export class InvoiceFormComponent implements OnInit {
   selectedTreatment: Treatment | null = null;
 
   clientFormControl: FormControl;
-  
+
 
 
   //constructor
@@ -57,53 +50,48 @@ export class InvoiceFormComponent implements OnInit {
     })
   }
 
+  ngOnInit(): void {
+    this.checkAction();
+    // Add observer to call the service, when the client is changed
+    this.clientFormControl.valueChanges.subscribe((client) => {
+      if (client) {
+        this.loadBooksForClient(client.id); //Load books from this client for this current date
+      }
+    });
+  }
+
   calculateTotalInvoice() {
     const invoiceItemsArray = this.invoiceForm.get('invoiceItems') as FormArray;
     let total = 0;
-  
+
     // Iterate over each item in the invoiceItems array and add its 'total' value to the 'total' variable
     for (const itemGroup of invoiceItemsArray.controls) {
       const totalValue = itemGroup.get('total')?.value || 0;
       total += totalValue;
     }
-  
+
     // Update the 'total' field in the invoiceForm with the calculated total value
     this.invoiceForm.get('total')?.setValue(total);
   }
-  
 
+  //check if there in invoiceItems
   hasInvoiceItems(): boolean {
     const invoiceItemsArray = this.invoiceForm.get('invoiceItems') as FormArray;
     return invoiceItemsArray && invoiceItemsArray.length > 0;
   }
 
-  ngOnInit(): void {
-    this.checkAction();
-    // Adicione o observador para chamar o serviço quando o cliente for alterado
-    this.clientFormControl.valueChanges.subscribe((client) => {
-      if (client) {
-        this.loadBooksForClient(client.id); // Chame o método que carrega os livros para o cliente
-      }
-    });
-  }
 
+  //find the treatment by id
   findTreatmentById(treatmentId: number): Treatment | undefined {
-    // Supondo que você tenha um array de tratamentos chamado 'treatmentsArray'
     return this.treatments.find(treatment => treatment.id === treatmentId);
   }
 
-  // Método para carregar os livros do cliente usando o serviço
+  // load books
   loadBooksForClient(clientId: number) {
-    console.log("loadBooksForClient => " + clientId);
-
-    //this.invoiceForm.get('invoiceItems')?.reset(); // Limpa os items antigos
     const invoiceItemsFormArray = this.invoiceForm.get('invoiceItems') as FormArray;
-    invoiceItemsFormArray.clear(); // Limpa todos os FormGroups dentro do FormArray
+    invoiceItemsFormArray.clear(); // Clean all the FormGroups
 
-
-    // this.clientFormControl.setValue(null); // Reseta o valor do cliente selecionado
-
-
+    //foreach book, create an invoiceItem
     this.bookService.getBooksCompletedByClientToday(clientId)
       .subscribe(
         (books) => {
@@ -123,15 +111,6 @@ export class InvoiceFormComponent implements OnInit {
     console.log("InvoiceForm = " + JSON.stringify(this.invoiceForm.value));
   }
 
-  // searchBooksDone() {
-
-  //   this.store.dispatch({ type: BookActions.GET_BOOK_SLOT_LIST, payload: bs });
-
-  //   this.booksDone$.subscribe((data) => {
-  //     this.booksDone = data;
-  //   })
-  // }
-
   //check is is update or create
   checkAction() {
     if (this.selectedInvoice) {
@@ -143,7 +122,6 @@ export class InvoiceFormComponent implements OnInit {
   //copy the values from selectedInvoice to form
   patchDataValues() {
     if (this.selectedInvoice) {
-      //console.log(JSON.stringify("invoice => " + this.selectedInvoice.firstName));
       this.invoiceForm.patchValue(this.selectedInvoice);
     }
 
@@ -172,18 +150,17 @@ export class InvoiceFormComponent implements OnInit {
     return control as FormGroup;
   }
 
+  //return the invoiceItem as a formarray
   get invoiceItemsFormArray(): FormArray {
     return this.invoiceForm.get('invoiceItems') as FormArray;
   }
 
-  // // Update the loop to explicitly type itemGroup as FormGroup
-  // getInvoiceItemsFormArrayControls(): FormGroup[] {
-  //   return this.invoiceItemsFormArray.controls as FormGroup[];
-  // }
+  //return form array controls from invoiceItems
   getInvoiceItemsFormArrayControls(): AbstractControl[] {
     return (this.invoiceForm.get('invoiceItems') as FormArray).controls;
   }
 
+  //add Treatment to invoice item
   addTreatment(treatment: any, book: any) {
     console.log("-------- addTreatment => " + JSON.stringify(treatment))
     const treatments = this.invoiceForm.get('invoiceItems') as FormArray;
@@ -199,7 +176,7 @@ export class InvoiceFormComponent implements OnInit {
       total: [treatment.price, Validators.required],
       book: [book],
       item: [treatment, Validators.required],
-      invoice: [null] 
+      invoice: [null]
     });
 
     // Add listeners to recalculate when there is any change
@@ -221,6 +198,7 @@ export class InvoiceFormComponent implements OnInit {
 
   }
 
+  //add product to invoice item
   addProduct() {
     const product = this.productForm.get('product')?.value;
     console.log("-------- addProduct => " + JSON.stringify(product))
@@ -237,7 +215,7 @@ export class InvoiceFormComponent implements OnInit {
       total: [product.price, Validators.required],
       book: [null],
       item: [product, Validators.required],
-      invoice: [null] 
+      invoice: [null]
     });
 
     // Add listeners to recalculate when there is any change
@@ -261,7 +239,7 @@ export class InvoiceFormComponent implements OnInit {
   }
 
 
-  
+
   // calculate the total for the item based on the fields "subtotal", "extra" e "discount"
   calculateProductTotal(formGroup: FormGroup) {
     const subtotal = formGroup.get('subtotal')?.value || 0;
@@ -306,11 +284,12 @@ export class InvoiceFormComponent implements OnInit {
     this.calculateTotalInvoice();
   }
 
-
+  //get form group from invoice item index
   getInvoiceItemFormGroup(index: number): FormGroup {
     return (this.invoiceForm.get('invoiceItems') as FormArray).at(index) as FormGroup;
   }
 
+  //convert control to formGroup
   getItemFormGroup(control: AbstractControl): FormGroup {
     return control as FormGroup;
   }

@@ -32,10 +32,9 @@ export class ListComponent implements OnInit{
   constructor(
     private router: Router, 
     private store: Store<AppState>,
-  ){console.log("invoice constructor");}
+  ){}
 
   ngOnInit(): void {  
-    console.log("invoice ngOnInit");
     this.store.dispatch({ type: InvoiceActions.GET_INVOICE_LIST});
     this.assignInvoices();
   }
@@ -49,7 +48,7 @@ export class ListComponent implements OnInit{
   selectInvoice(data: {invoice: Invoice, action: TableActions}) {
     switch(data.action) {
       case TableActions.View: {
-        this.router.navigate(['invoices', 'form', data.invoice.id]);
+        this.router.navigate(['invoices', 'pdf', data.invoice.id]);
         return;
       }
       case TableActions.Delete: {

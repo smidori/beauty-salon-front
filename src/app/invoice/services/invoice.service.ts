@@ -19,6 +19,14 @@ export class InvoiceService {
     )
   }
 
+  getInvoiceById(id: number): Observable<Invoice>{
+    console.log('getInvoices => ' + `${environment.apiURL}/invoices/${id}`)
+    return this.http.get<Invoice>(`${environment.apiURL}/invoices/${id}`).pipe(
+      tap((data: Invoice) => data),
+      catchError(err => throwError(() => err))
+    )
+  }
+
   addInvoice(invoice: Invoice): Observable<Invoice>{
     console.log('addInvoice => ' + `${environment.apiURL}/invoices`)
     console.log('addInvoice invoice => ' + invoice)

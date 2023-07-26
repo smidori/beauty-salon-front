@@ -8,7 +8,7 @@ export interface Invoice{
   observation : string;
   total: number;
   date: Date;
-  items: InvoiceItem[];
+  invoiceItems: InvoiceItem[];
 }
 
 export interface Item {

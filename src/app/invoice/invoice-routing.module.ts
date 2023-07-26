@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './pages/list/list.component';
 import { FormComponent } from './pages/form/form.component';
+import { PdfComponent } from './pages/pdf/pdf.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path:"list",
     component: ListComponent,
+  },
+  {
+    path:"pdf/:id",
+    component: PdfComponent,
   },
   {
     path:"form",
