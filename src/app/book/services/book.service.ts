@@ -20,6 +20,16 @@ export class BookService {
     )
   }
 
+  getBooksCompletedByClientToday(clientUserId: number): Observable<Book[]> {
+    const url = `${environment.apiURL}/books/completedBooksByClientToday?clientUserId=${clientUserId}`;
+    console.log('getBooks => ' + url);
+    return this.http.get<Book[]>(url).pipe(
+      tap((data: Book[]) => data),
+      catchError(err => throwError(() => err))
+    );
+  }
+  
+
   // getBookSlots(book: Book): Observable<Book[]> {
     
   //   console.log("getBookSlots => " + `${environment.apiURL}/books/availability`);

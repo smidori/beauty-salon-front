@@ -2,7 +2,15 @@
     display: flex;
     justify-content: space-between;
   }
-  
+
+  /* .custom-form-row  {
+    height: 20px; 
+  } */
+
+  /* .custom-form-field  {
+    height: 2px; 
+  } */
+
   .form-field {
     margin-right: 10px;
   }
@@ -23,3 +31,8 @@
   /* .custom-form-field .mat-form-field-wrapper .mat-mdc-text-field-wrapper {
     height: 40px;
   } */
+
+
+  .custom-input-number {
+    width: 17vh;
+  }

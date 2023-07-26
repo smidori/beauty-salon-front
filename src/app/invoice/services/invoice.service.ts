@@ -20,6 +20,8 @@ export class InvoiceService {
   }
 
   addInvoice(invoice: Invoice): Observable<Invoice>{
+    console.log('addInvoice => ' + `${environment.apiURL}/invoices`)
+    console.log('addInvoice invoice => ' + invoice)
     return this.http.post<Invoice>(`${environment.apiURL}/invoices`,invoice).pipe(
       tap((data: Invoice) => data),
       catchError(err => throwError(() => err))

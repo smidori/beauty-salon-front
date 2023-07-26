@@ -70,6 +70,7 @@ export class FormComponent implements OnInit {
 
   //actions that can be executed
   formAction(data: { value: Invoice, action: string }) {
+    console.log("Invoice formAction " + data.value)
     switch (data.action) {
       case "Create": {
         this.store.dispatch({ type: InvoiceActions.ADD_INVOICE_API, payload: data.value });

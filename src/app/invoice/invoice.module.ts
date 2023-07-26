@@ -1,3 +1,4 @@
+import { InvoiceEffects } from './state/invoice.effects';
 import { MaterialModule } from './../material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,6 +9,9 @@ import { InvoiceFormComponent } from './components/invoice-form/invoice-form.com
 import { CommandBarComponent } from './components/command-bar/command-bar.component';
 import { InvoiceRoutingModule } from './invoice-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { invoiceReducer } from './state/invoice.reducers';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 
 
@@ -24,6 +28,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     ReactiveFormsModule,
     InvoiceRoutingModule,
+    StoreModule.forFeature('invoiceState', invoiceReducer),
+    EffectsModule.forFeature([InvoiceEffects])
   ]
 })
 export class InvoiceModule { }

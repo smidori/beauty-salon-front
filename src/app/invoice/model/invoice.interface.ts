@@ -16,6 +16,7 @@ export interface Item {
     name: string;
     description: string;
     price: number;
+    itemType: string;
   }
 
 export interface Product extends Item{
