@@ -16,7 +16,12 @@
     <a mat-list-item [routerLink]="'/users'"> Users </a> -->
 <div class="spacer"></div>
     <a mat-list-item [routerLink]="'/treatments'"> Home </a>    
+    <!-- <span *ngIf="isAuthenticated">Hello, {{ name }}</span> -->
+    
     <span *ngIf="isAuthenticated">Hello, {{ name }}</span>
+    <!-- <ng-container *ngIf="userDetails$ | async as userDetails">
+        <span *ngIf="isAuthenticated">Hello, {{ userDetails?.firstName }}</span>
+      </ng-container> -->
     <a mat-list-item *ngIf="!isUserLoggedIn()" [routerLink]="'/login'">Login</a>
     <a mat-list-item *ngIf="isUserLoggedIn()"  (click)="logout()" class="logout-link" >Logout</a>
 </mat-toolbar>

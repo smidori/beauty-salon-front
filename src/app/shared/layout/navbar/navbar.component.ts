@@ -6,6 +6,7 @@ import { logout } from 'src/app/auth/state/auth.actions';
 import { selectIsAuthenticated, selectUserDetails } from 'src/app/auth/state/auth.selectors';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 import { AppState } from 'src/app/state/app.state';
+import { User } from 'src/app/user/models/user.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -15,22 +16,24 @@ import { AppState } from 'src/app/state/app.state';
 
 export class NavbarComponent implements OnInit {
   //isAuthenticated$: Observable<boolean>;
-  userDetails$ = this.store.select(selectUserDetails);
+  //userDetails$ = this.store.select(selectUserDetails);
   name = '';
   isAuthenticated = false;
   isAdmin = false;
-
+  //userDetails$!: Observable<any>;
+  //userDetails!: User;
+  
   constructor(private auth: AuthenticateService, private router: Router, private store: Store<AppState>) {
     console.log("constructor navbar");
   }
 
   ngOnInit() {
     console.log("ngOnInit navbar");
-    
     // Subscribe in the event to update the values of isAuthenticated e isAdmin
     this.auth.onAuthenticationChange().subscribe((isAuthenticated) => {
       this.isAuthenticated = this.auth.isAuthenticated();
       this.isAdmin = this.auth.isAdmin();
+      this.name = this.auth.name();
     });
 
     // default values of isAuthenticated e isAdmin

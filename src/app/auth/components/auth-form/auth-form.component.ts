@@ -25,9 +25,10 @@ export class AuthFormComponent implements OnInit {
       password: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      //email: ['', Validators.required, Validators.email],
       email: ['', [Validators.required, Validators.email]],
       gender: ['', Validators.required],
+      mobilePhone: ['', Validators.required],
+      homePhone: [''],
     })
 
   }
@@ -39,13 +40,13 @@ export class AuthFormComponent implements OnInit {
 
   submit() {
     console.log("submit title " + this.title)
-    if(this.title == "Login"){
+    if (this.title == "Login") {
       this.submitEmitter.emit(this.form.value);
-    }else{
+    } else {
       this.submitEmitter.emit(this.formRegister.value);
     }
-    
+
   }
 
-  
+
 }

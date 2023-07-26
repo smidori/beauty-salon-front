@@ -42,7 +42,11 @@ export class AuthEffects {
         ofType(AuthActions.CREATE_USER),
         mergeMap(((data: {type: string, payload: User}) => this.authService.register(data.payload)
           .pipe(
-            map(data => ({ type: AuthActions.SET_TOKEN, token: data.token })),
+            // map(data => ({ type: AuthActions.SET_TOKEN, token: data.token })),
+            map(data => {
+              this.store.dispatch(setUserDetails({ userDetails: data.userDetails }));
+              return { type: AuthActions.SET_TOKEN, token: data.token };
+            }),
             tap(() => {
               this.store.dispatch(setAuthentication({ isAuthenticated: true }));
               this.router.navigate(["treatments"]);

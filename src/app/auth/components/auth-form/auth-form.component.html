@@ -7,13 +7,13 @@
         </p>
         <p>
             <mat-form-field class="form-field">
-            <input type="text" name="username" matInput user="Username" placeholder="Username" formControlName="login">
+            <input type="text" name="username" matInput placeholder="Username" formControlName="login">
             </mat-form-field>
         </p>
 
         <p>
             <mat-form-field class="form-field">
-            <input type="password" name="password" matInput user="Password" placeholder="Password" formControlName="password">
+            <input type="password" name="password" matInput placeholder="Password" formControlName="password">
             </mat-form-field>
         </p>
         
@@ -36,23 +36,23 @@
         <p></p>
         <div class="form-row">
             <mat-form-field class="form-field">
-            <input matInput type="text" matInput user="First Name" placeholder="First Name"  formControlName="firstName" >
+            <input matInput type="text" matInput placeholder="First Name"  formControlName="firstName" required>
             </mat-form-field>
 
 
             <mat-form-field class="form-field">
-                <input type="text" matInput user="Last Name" placeholder="Last Name" formControlName="lastName" >
+                <input type="text" matInput placeholder="Last Name" formControlName="lastName" required>
             </mat-form-field>
         </div>
 
         <div class="form-row">
             <mat-form-field class="form-field">
-            <input type="text" matInput user="Email" placeholder="Email" formControlName="email" >
+            <input type="text" matInput placeholder="Email" formControlName="email" required>
             </mat-form-field>
 
             <mat-form-field class="form-field" >
                 <mat-label>Gender</mat-label>
-                <mat-select formControlName="gender">
+                <mat-select formControlName="gender" required>
                     <mat-option value="male">Male</mat-option>
                     <mat-option value="female">Female</mat-option>
                     <mat-option value="others">Others</mat-option>
@@ -63,10 +63,19 @@
 
         <div class="form-row">
             <mat-form-field class="form-field">
-            <input matInput type="text" matInput user="Username" placeholder="Username" formControlName="login" >
+            <input matInput type="text" matInput placeholder="Username" formControlName="login" required>
             </mat-form-field>
             <mat-form-field class="form-field">
-                <input type="password" matInput user="Password" placeholder="Password" formControlName="password">
+                <input type="password" matInput placeholder="Password" formControlName="password" required>
+            </mat-form-field>
+        </div>
+
+        <div class="form-row">
+            <mat-form-field class="form-field">
+            <input matInput type="text" matInput placeholder="Mobile Phone" formControlName="mobilePhone" required>
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <input type="text" matInput placeholder="Home Phone" formControlName="homePhone">
             </mat-form-field>
         </div>
 
