@@ -14,27 +14,27 @@ import { UserActions } from '../../state/user.actions';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit{
+export class ListComponent implements OnInit {
 
   users: ReadonlyArray<User> = [];
   users$ = this.store.select(selectUsers());
-  
-  headers:{headerName: string, fieldName: keyof User}[] = [
-    {headerName: "Id", fieldName: "id"},
-    {headerName: "First Name", fieldName: "firstName"},
-    {headerName: "Last Name", fieldName: "lastName"},
-    {headerName: "E-mail", fieldName: "email"},
-    {headerName: "Gender", fieldName: "gender"},
-    {headerName: "Mobile Phone", fieldName: "mobilePhone"},
-  ]  
-  
-  constructor(
-    private router: Router, 
-    private store: Store<AppState>,
-  ){}
 
-  ngOnInit(): void {  
-    this.store.dispatch({ type: UserActions.GET_USER_LIST});
+  headers: { headerName: string, fieldName: keyof User }[] = [
+    { headerName: "Id", fieldName: "id" },
+    { headerName: "First Name", fieldName: "firstName" },
+    { headerName: "Last Name", fieldName: "lastName" },
+    { headerName: "E-mail", fieldName: "email" },
+    { headerName: "Gender", fieldName: "gender" },
+    { headerName: "Mobile Phone", fieldName: "mobilePhone" },
+  ]
+
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+  ) { }
+
+  ngOnInit(): void {
+    this.store.dispatch({ type: UserActions.GET_USER_LIST });
     this.assignUsers();
   }
 
@@ -44,31 +44,26 @@ export class ListComponent implements OnInit{
     });
   }
 
-  selectUser(data: {user: User, action: TableActions}) {
-    switch(data.action) {
+  selectUser(data: { user: User, action: TableActions }) {
+    switch (data.action) {
       case TableActions.View: {
         this.router.navigate(['users', 'form', data.user.id]);
         return;
       }
       case TableActions.Delete: {
-        this.store.dispatch({type: UserActions.DELETE_USER_API, payload: data.user.id});
+        this.store.dispatch({ type: UserActions.DELETE_USER_API, payload: data.user.id });
         return;
       }
       default: ""
     }
-
-    //this.router.navigate(['users', 'form', data.user.id]);
   }
 
-  executeCommandBarAction(action: CommandBarActions){
-    switch(action){
-      case CommandBarActions.Create :{
-        this.router.navigate(["users","form"]);
+  executeCommandBarAction(action: CommandBarActions) {
+    switch (action) {
+      case CommandBarActions.Create: {
+        this.router.navigate(["users", "form"]);
         return;
       }
-      // case CommandBarActions.DeleteAll :{
-      //   return;
-      // }
       default: ""
     }
   }

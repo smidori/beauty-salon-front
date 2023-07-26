@@ -1,0 +1,42 @@
+
+<!-- <h2>{{selectedProduct ? "Update/View Product" : "Create Product"}}</h2> -->
+
+<form [formGroup]="form">
+    <div class="form-row">
+        <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name" required>
+        </mat-form-field>
+        
+        <mat-form-field class="form-field">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="Description" formControlName="description" required>
+        </mat-form-field>
+    </div>
+
+    <div class="form-row">
+        <mat-form-field class="form-field">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" placeholder="Price" formControlName="price" required>
+        </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Stock</mat-label>
+            <input matInput placeholder="Stock" formControlName="stock" required>
+        </mat-form-field>
+    </div>
+
+    <div class="button-group">
+        <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="emitAction()">
+                {{actionButtonLabel}}
+        </button>  
+        
+        <button  mat-raised-button color="warn" (click)="clear()">
+                Clear
+        </button> 
+    </div>
+    
+    
+    
+    <!-- <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button> -->
+</form>

@@ -10,9 +10,11 @@ import { User } from 'src/app/user/models/user.interface';
 import { UserActions } from 'src/app/user/state/user.actions';
 import { selectUsers } from 'src/app/user/state/user.selectors';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
-import { Invoice } from '../../model/invoice.interface';
+import { Invoice, Product } from '../../model/invoice.interface';
 import { InvoiceActions } from '../../state/invoice.action';
 import { selectInvoices, selectInvoice } from '../../state/invoice.selectors';
+import { selectProducts } from 'src/app/product/state/product.selectors';
+import { ProductActions } from 'src/app/product/state/product.actions';
 
 @Component({
   selector: 'app-form',
@@ -34,6 +36,11 @@ export class FormComponent implements OnInit {
 
   users: ReadonlyArray<User> = [];
   users$ = this.store.select(selectUsers());
+
+
+  products: ReadonlyArray<Product> = [];
+  products$ = this.store.select(selectProducts());
+
 
   constructor(
     private acRouter: ActivatedRoute,
@@ -65,7 +72,13 @@ export class FormComponent implements OnInit {
     this.store.dispatch({ type: UserActions.GET_USER_LIST });
     this.users$.subscribe((data) => {
       this.users = data;
-    })
+    });
+
+    //GET PRODUCT LIST - dispatch the action
+    this.store.dispatch({ type: ProductActions.GET_PRODUCT_LIST });
+    this.products$.subscribe((data) => {
+      this.products = data;
+    });
   }
 
   //actions that can be executed

@@ -21,6 +21,7 @@ import { TreatmentTypeModule } from './treatment-type/treatment-type.module';
 import { BookModule } from './book/book.module';
 import { InactivityService } from './core/services/inactivity.service';
 import { InvoiceModule } from './invoice/invoice.module';
+import { ProductModule } from './product/product.module';
 
 
 export function tokenGetter() {
@@ -46,6 +47,7 @@ export function tokenGetter() {
     AvailabilityModule,
     BookModule,
     InvoiceModule,
+    ProductModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([]),

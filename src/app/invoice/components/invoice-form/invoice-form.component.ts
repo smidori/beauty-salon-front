@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { User } from 'src/app/user/models/user.interface';
-import { Invoice } from '../../model/invoice.interface';
+import { Invoice, Product } from '../../model/invoice.interface';
 import { Store } from '@ngrx/store';
 import { BookActions } from 'src/app/book/state/book.action';
 import { AppState } from 'src/app/state/app.state';
@@ -20,6 +20,8 @@ export class InvoiceFormComponent implements OnInit {
   @Input() selectedInvoice: Invoice | null = null;
   @Input() actionButtonLabel: string = "Create";
   @Input() treatments: ReadonlyArray<Treatment> = [];
+  @Input() products: ReadonlyArray<Product> = [];
+
   @Input() users: ReadonlyArray<User> = [];
 
   // booksDone: ReadonlyArray<Book> = [];
@@ -30,9 +32,11 @@ export class InvoiceFormComponent implements OnInit {
 
   //properties
   invoiceForm: FormGroup;
+  productForm: FormGroup;
   selectedTreatment: Treatment | null = null;
 
   clientFormControl: FormControl;
+  
 
 
   //constructor
@@ -47,6 +51,10 @@ export class InvoiceFormComponent implements OnInit {
       date: [null],
       invoiceItems: this.fb.array([]),
     });
+
+    this.productForm = this.fb.group({
+      product: [null],
+    })
   }
 
   calculateTotalInvoice() {
@@ -142,7 +150,7 @@ export class InvoiceFormComponent implements OnInit {
   }
 
   //compare the objects
-  compareTreatmentObjects(object1: any, object2: any) {
+  compareObjects(object1: any, object2: any) {
     return object1 && object2 && object1.id == object2.id;
   }
 
@@ -191,10 +199,10 @@ export class InvoiceFormComponent implements OnInit {
       total: [treatment.price, Validators.required],
       book: [book],
       item: [treatment, Validators.required],
-      invoice: [null] // Inicializar com uma fatura existente, se necessário
+      invoice: [null] 
     });
 
-    // Adicionar listeners para recalcular o total quando houver alterações
+    // Add listeners to recalculate when there is any change
     newTreatmentFormGroup.get('subtotal')?.valueChanges.subscribe(() => {
       this.calculateTotal(newTreatmentFormGroup);
     });
@@ -213,31 +221,78 @@ export class InvoiceFormComponent implements OnInit {
 
   }
 
+  addProduct() {
+    const product = this.productForm.get('product')?.value;
+    console.log("-------- addProduct => " + JSON.stringify(product))
+    const treatments = this.invoiceForm.get('invoiceItems') as FormArray;
+    const newProductFormGroup = this.fb.group({
+      id: [null],
+      description: [product.description],
+      observation: [''],
+      worker: [null],
+      amount: [1, Validators.required],
+      subtotal: [product.price, Validators.required],
+      extra: [0],
+      discount: [0],
+      total: [product.price, Validators.required],
+      book: [null],
+      item: [product, Validators.required],
+      invoice: [null] 
+    });
 
-  // Método para calcular o campo "total" com base nos campos "subtotal", "extra" e "discount"
+    // Add listeners to recalculate when there is any change
+    newProductFormGroup.get('subtotal')?.valueChanges.subscribe(() => {
+      this.calculateProductTotal(newProductFormGroup);
+    });
+
+    newProductFormGroup.get('amount')?.valueChanges.subscribe(() => {
+      this.calculateProductTotal(newProductFormGroup);
+    });
+
+    newProductFormGroup.get('discount')?.valueChanges.subscribe(() => {
+      this.calculateProductTotal(newProductFormGroup);
+    });
+
+    treatments.push(newProductFormGroup);
+    this.calculateTotalInvoice();
+    console.log(this.invoiceForm.value);
+    this.productForm.get('product')?.setValue(null);
+
+  }
+
+
+  
+  // calculate the total for the item based on the fields "subtotal", "extra" e "discount"
+  calculateProductTotal(formGroup: FormGroup) {
+    const subtotal = formGroup.get('subtotal')?.value || 0;
+    const discount = formGroup.get('discount')?.value || 0;
+    const amount = formGroup.get('amount')?.value || 0;
+
+    const total = (subtotal * amount) - discount;
+
+    // update the total in the current invoiceItem
+    const totalControl = formGroup.get('total');
+    if (totalControl) {
+      totalControl.setValue(total);
+    }
+    this.calculateTotalInvoice();
+  }
+
+
+  // calculate the total for the item based on the fields "subtotal", "extra" e "discount"
   calculateTotal(formGroup: FormGroup) {
-    console.log("calculateTotal")
     const subtotal = formGroup.get('subtotal')?.value || 0;
     const extra = formGroup.get('extra')?.value || 0;
     const discount = formGroup.get('discount')?.value || 0;
 
     const total = subtotal + extra - discount;
 
-    // Atualizar o campo "total" no FormGroup do array com o novo valor calculado
+    // update the total in the current invoiceItem
     const totalControl = formGroup.get('total');
     if (totalControl) {
       totalControl.setValue(total);
-
-      // const totalForm = this.invoiceForm.get('total') ? this.invoiceForm.get('total')?.value : 0;
-      // console.log("totalForm.value => " + this.invoiceForm.get('total')?.value);
-      // console.log("totalForm typeof totalForm => " + typeof totalForm);
-      // console.log("totalForm typeof total => " + typeof total);
-      // this.invoiceForm.get('total')?.setValue( totalForm + total);      
-
-      // console.log("totalForm => " + totalForm + total);
     }
     this.calculateTotalInvoice();
-  
   }
 
   get itemOfInvoiceItemsFormArray(): FormArray {

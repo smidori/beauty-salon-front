@@ -26,7 +26,6 @@ export class ListComponent implements OnInit{
     { headerName: "Date", fieldName: "date" },
     { headerName: "Total", fieldName: "total" },
     { headerName: "Observation", fieldName: "observation" },
-    { headerName: "Items", fieldName: "items" },
   ];
   
   
