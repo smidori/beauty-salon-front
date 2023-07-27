@@ -1,4 +1,5 @@
 <h4>{{selectedBook ? "Update/View Book" : "Select the treatment and the day"}}</h4>
+
 <div *ngIf="!selectedBook">
   <form [formGroup]="searchForm">
     <div class="form-row">
@@ -49,7 +50,7 @@
             </ng-container>
           </div>
         </div>
-        <div *ngIf="getBookSlotsSize(bookSlots) == 0">
+        <div *ngIf="searchCompleted && getBookSlotsSize(bookSlots) === 0">
           <h3>Sorry, there is no availability for this criteria</h3>
         </div>
       </div>
@@ -105,7 +106,5 @@
       </div>
     
   </form>
-  
-
-  
 </div>
+

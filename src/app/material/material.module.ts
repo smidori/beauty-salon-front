@@ -16,12 +16,8 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from '@angular/m
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
-//import { MAT_DATE_LOCALE } from '@angular/material/core'
-
-//import { MatDatepickerModule} from '@angular/material/datepicker';
-//import { MAT_DATE_FORMATS } from '@angular/material/core';
-
+import { MatSortModule } from '@angular/material/sort';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -43,6 +39,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatRadioModule,
     MatMenuModule,
     MatButtonToggleModule,
+    MatSortModule,
+    MatTooltipModule
 
   ],
   exports: [
@@ -61,7 +59,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatMomentDateModule,
     MatRadioModule,
     MatMenuModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSortModule,
+    MatTooltipModule
   ],
   providers: [
     //{ provide: MAT_DATE_LOCALE, useValue: 'en-IE' }

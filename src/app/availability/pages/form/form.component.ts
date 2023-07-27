@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, tap } from 'rxjs';
 import { Availability } from '../../models/availability.interface';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { selectTreatments } from 'src/app/treatment/state/treatment.selectors';
 import { selectUsers } from 'src/app/user/state/user.selectors';
 import { User } from 'src/app/user/models/user.interface';
 import { UserActions } from 'src/app/user/state/user.actions';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-form',
@@ -30,15 +31,13 @@ export class FormComponent implements OnInit {
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
 
-  test$ = this.store.select(selectAvailabilities());
-
-  users: ReadonlyArray<User> = [];
-  users$ = this.store.select(selectUsers());
+  users: User[] = [];
 
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
-    private router: Router) {
+    private router: Router,
+    private userService: UserService) {
 
     //properties
     const id = this.acRouter.snapshot.params['id'];
@@ -62,10 +61,20 @@ export class FormComponent implements OnInit {
     });
 
     //GET USERS LIST - dispatch the action
-    this.store.dispatch({ type: UserActions.GET_USER_LIST });
-    this.users$.subscribe((data) => {
-      this.users = data;
-    })
+    this.loadUsersByRole('WORKER');
+  }
+
+  //load the users, that will be used as a filter
+  loadUsersByRole(role: string) {
+    this.userService.getUsersByRole(role).pipe(
+      tap(users => {
+        this.users = users
+      }),
+      catchError(error => {
+        console.error('Error loading users by role: ' + role, error);
+        return [];
+      })
+    ).subscribe();
   }
 
   //actions that can be executed

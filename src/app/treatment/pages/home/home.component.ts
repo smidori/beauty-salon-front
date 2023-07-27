@@ -7,6 +7,7 @@ import { TreatmentActions } from '../../state/treatment.actions';
 import { TableActions } from '../../enums/table-actions.enum';
 import { selectTreatments } from '../../state/treatment.selectors';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
+import { ScrollService } from 'src/app/core/services/scroll-service.service';
 
 @Component({
   selector: 'app-home',
@@ -16,8 +17,9 @@ import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 export class HomeComponent implements OnInit {
 
   
-  treatmentsGroupedByType: { [key: string]: Treatment[] } = {};
 
+  
+  treatmentsGroupedByType: { [key: string]: Treatment[] } = {};
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
   headers:{headerName: string, fieldName: keyof Treatment}[] = [
@@ -29,7 +31,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router, 
-    private store: Store<AppState>){}
+    private store: Store<AppState>,
+    private scrollService: ScrollService){}
 
   ngOnInit(): void {
     this.store.dispatch({type: TreatmentActions.GET_TREATMENT_LIST})
@@ -38,6 +41,17 @@ export class HomeComponent implements OnInit {
       this.treatments = data;
       this.assignTreatments();
     })
+
+    this.scrollService.scrollToSection$.subscribe((section) => { 
+      this.scrollToSection(section);
+    });
+  }
+
+  scrollToSection(sectionId: string) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   

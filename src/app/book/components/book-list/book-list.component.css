@@ -1,0 +1,15 @@
+.form-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-field {
+  flex: 1;
+  margin: 10px;
+  width: 100%;
+}
+
+.custom-table
+.custom-row:nth-child(odd) {
+  background-color: #E0E0E0  /* #BFDDF3; */
+}

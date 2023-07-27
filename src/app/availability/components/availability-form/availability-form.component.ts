@@ -36,6 +36,10 @@ export class AvailabilityFormComponent implements OnInit {
     });
   }
 
+  fixTimeFormat(time: string){
+    const [hours, minutes] = time.split(":");
+    return `${hours}:${minutes}:00`;
+  }
 
   ngOnInit(): void {
     this.checkAction();
@@ -65,6 +69,10 @@ export class AvailabilityFormComponent implements OnInit {
 
   //send an action
   emitAction() {
+    this.form.get('hourStartTime')?.setValue(this.fixTimeFormat(this.form.get('hourStartTime')?.value));
+    this.form.get('hourFinishTime')?.setValue(this.fixTimeFormat(this.form.get('hourFinishTime')?.value));
+
+    
     this.action.emit({ value: this.form.value, action: this.actionButtonLabel })
   }
 

@@ -1,19 +1,16 @@
-import { BookSearchParams } from './../../model/bookSearchParams.interface';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DateFilterFn } from '@angular/material/datepicker';
+import { Store } from '@ngrx/store';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { AppState } from 'src/app/state/app.state';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { User } from 'src/app/user/models/user.interface';
+import { BookStatus, bookStatusLabels } from '../../model/book-status.enum';
 import { Book, BookAvailableResponse } from '../../model/book.interface';
-import { AppState } from 'src/app/state/app.state';
-import { Store } from '@ngrx/store';
 import { BookActions } from '../../state/book.action';
 import { selectSlots } from '../../state/book.selectors';
-import { take, switchMap, interval } from 'rxjs';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
-import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { DateFilterFn } from '@angular/material/datepicker';
-import { BookStatus, bookStatusLabels } from '../../model/book-status.enum';
+import { BookSearchParams } from './../../model/bookSearchParams.interface';
 
 @Component({
   selector: 'book-form',
@@ -41,13 +38,15 @@ export class BookFormComponent implements OnInit {
   bookSlots$ = this.store.select(selectSlots());
 
   searchCompleted = false; // used to control when show the results
-  
-  //periodo to do the agenda from tomorrow til 1 year ahead
+
+  //period to do the agenda from tomorrow til 1 year ahead
   minDate = new Date(new Date().setDate(new Date().getDate() + 1));
   maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1)); //limit the date for 1 year in advance
 
   isSlotSelected: boolean = false;
   bookStatus = BookStatus;
+  selectedBookSlot: any = null;
+  selectedSlotKey: number = 0;
 
   //constructor
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
@@ -56,7 +55,6 @@ export class BookFormComponent implements OnInit {
       userId: [null],
       userName: [null],
       dateBook: [null],
-      //treatments: [[]],
       startTimeBook: [null],
       finishTimeBook: [null],
       treatment: [null],
@@ -69,7 +67,7 @@ export class BookFormComponent implements OnInit {
     });
 
     this.bookForm = this.fb.group({
-      id:[null],
+      id: [null],
       treatmentId: [null],
       dateBook: [null],
       startTimeBook: [''],
@@ -81,10 +79,11 @@ export class BookFormComponent implements OnInit {
       clientUserFirstName: [null],
       clientUserLastName: [null],
       clientUserId: [null],
-      observation:[''],
-      status:[''],
-      createdDate:[null],
-    });    
+      observation: [''],
+      status: [''],
+      createdDate: [null],
+    });
+
   }
 
   ngOnInit(): void {
@@ -117,12 +116,17 @@ export class BookFormComponent implements OnInit {
     };
 
     this.store.dispatch({ type: BookActions.GET_BOOK_SLOT_LIST, payload: bs });
-    
+
     this.bookSlots$.subscribe((data) => {
       this.bookSlots = data;
-      this.searchCompleted = true;
+
+      setTimeout(() => {
+        this.searchCompleted = true;
+      }, 500);
+
     })
   }
+
 
   //create the booking
   booking() {
@@ -133,15 +137,15 @@ export class BookFormComponent implements OnInit {
     this.bookForm.get('finishTimeBook')?.setValue(bookDetails.finishTimeBook);
     this.bookForm.get('workerUserId')?.setValue(bookDetails.userId);
     this.bookForm.get('treatmentName')?.setValue(this.searchForm.get('treatment')?.value.name);
-    if(this.actionButtonLabel==='Create'){
+    if (this.actionButtonLabel === 'Create') {
       this.bookForm.get('status')?.setValue('BOOKED');
     }
 
     console.log("------- booking this.bookForm => " + JSON.stringify(this.bookForm.value));
-  
+
     this.emitAction();
   }
-  updateStatus(){
+  updateStatus() {
     this.emitAction();
   }
 
@@ -154,8 +158,6 @@ export class BookFormComponent implements OnInit {
   getBookSlotsSize(bookSlots: any): number {
     return Object.keys(bookSlots).length;
   }
-
-  
 
   //check if is update or create
   checkAction() {
@@ -192,22 +194,10 @@ export class BookFormComponent implements OnInit {
     this.searchForm.reset();
   }
 
-
-  //expandedItems: string[] = [];
-  selectedBookSlot: any = null;
-
-  //selectedSlotKey: string = '';
-  selectedSlotKey: number = 0;
-
   //select the time
   selectSlotKey(slotKey: number) {
     this.selectedBookSlot = null;
     this.selectedSlotKey = slotKey;
-    const element = document.getElementById('mySelect'); 
-    if (element) {
-      console.log("element =====> " + element + " used to force to close the panel of date ")
-      element.dispatchEvent(new Event('click'));
-    }
   }
 
 
@@ -216,20 +206,6 @@ export class BookFormComponent implements OnInit {
     this.selectedBookSlot = bookSlot;
   }
 
-
-  // toggleExpand(slotKey: string) {
-  //   if (this.isExpanded(slotKey)) {
-  //     this.expandedItems = this.expandedItems.filter(item => item !== slotKey);
-  //   } else {
-  //     this.expandedItems.push(slotKey);
-  //   }
-  // }
-
-  // isExpanded(slotKey: string): boolean {
-  //   return this.expandedItems.includes(slotKey);
-  // }
-
-  
   //don't let the sunday be selected
   sundayFilter: DateFilterFn<Date | null> = (timestamp: Date | null): boolean => {
     if (!timestamp) {
@@ -243,13 +219,10 @@ export class BookFormComponent implements OnInit {
   getBookStatusValues(): string[] {
     return Object.keys(bookStatusLabels);
   }
-  
+
   // get the name in enum BookStatus
   getStatusName(statusValue: string): string {
     return bookStatusLabels[statusValue];
   }
-  
-  
+
 }
-
-

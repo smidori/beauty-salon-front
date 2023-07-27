@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Book, BookAvailableResponse } from '../model/book.interface';
-import { BookSearchParams } from '../model/bookSearchParams.interface';
+import { BookFilterParams, BookSearchParams } from '../model/bookSearchParams.interface';
 
 
 @Injectable({
@@ -20,6 +20,7 @@ export class BookService {
     )
   }
 
+  
   getBooksCompletedByClientToday(clientUserId: number): Observable<Book[]> {
     const url = `${environment.apiURL}/books/completedBooksByClientToday?clientUserId=${clientUserId}`;
     console.log('getBooks => ' + url);
@@ -38,6 +39,13 @@ export class BookService {
   //     catchError(err => throwError(err))
   //   );
   // }
+
+  getBooksByFilter(book: BookFilterParams): Observable<Book[]> {
+    return this.http.post<Book[]>(`${environment.apiURL}/books/withFilters`, book).pipe(
+      tap((data: Book[]) => data),
+      catchError(err => throwError(() => err))
+    );
+  }
 
   getBookSlots(book: BookSearchParams): Observable<BookAvailableResponse> {
     console.log("getBookSlots => " + `${environment.apiURL}/books/availability`);

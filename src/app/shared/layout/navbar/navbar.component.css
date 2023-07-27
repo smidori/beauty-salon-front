@@ -21,3 +21,15 @@
   .logout-link {
     text-decoration: underline; /* Adiciona o sublinhado */
   }
+
+h2 {
+  font-family: cursive;
+}
+
+.links a {
+ font-family: cursive;
+}
+
+.address {
+  font-size: smaller;
+}

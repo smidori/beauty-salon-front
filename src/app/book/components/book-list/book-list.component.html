@@ -1,48 +1,113 @@
-<table mat-table [dataSource]="books" class="mat-elevation-z8">
-    <!-- Data -->
-    <ng-container *ngFor="let item of headers" [matColumnDef]="item.fieldName">
-        <th mat-header-cell *matHeaderCellDef>
-            {{ item.headerName }}
-        </th>
-        <td mat-cell *matCellDef="let element">
+<div id="pdf">
+    <div>
+        <form [formGroup]="searchForm">
+            <div class="form-container">
 
-            <!-- <ng-container *ngIf="item.fieldName === 'user' && item.userName">
-                {{ getFullName(element[item.fieldName], item.userName) }}
-            </ng-container> -->
-            <ng-container *ngIf="item.fieldName === 'dateBook' ">
-                {{ element[item.fieldName] | date: 'dd/MM/yyyy' }}
-            </ng-container>
+                <mat-form-field class="form-field">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dateBook">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
 
-            <!-- <ng-container *ngIf="item.fieldName === 'startTimeBook' || item.fieldName === 'finishTimeBook'">
-                {{ element[item.fieldName] | date: 'dd/MM/yyyy' }}
-            </ng-container> -->
 
-            <ng-container *ngIf="item.fieldName === 'status'">
-                            {{ getStatusName(element[item.fieldName]) }}
-            </ng-container>
-           
-            <ng-container *ngIf=" !( item.fieldName === 'dateBook' || item.fieldName === 'status')
+                <mat-form-field class="form-field">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="bookStatus">
+                        <mat-option value="BOOKED">Booked</mat-option>
+                        <mat-option value="IN_SERVICE">In Service</mat-option>
+                        <mat-option value="COMPLETED">Completed</mat-option>
+                        <mat-option value="CANCELLED">Cancelled</mat-option>
+                        <mat-option value="BILLED">Billed</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+                <mat-form-field class="form-field">
+                    <mat-label>Client</mat-label>
+                    <mat-select formControlName="clientId">
+                        <mat-option *ngFor="let user of clients" [value]="user.id">{{ user.firstName
+                            }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+
+                <mat-form-field class="form-field">
+                    <mat-label>Professional</mat-label>
+                    <mat-select formControlName="workerId">
+                        <mat-option *ngFor="let user of workers" [value]="user.id">{{ user.firstName
+                            }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="form-field">
+                    <button mat-raised-button color="primary" (click)="searchBooksByFilter()">Search</button>
+                    &nbsp;
+                    <button mat-raised-button color="warn" (click)="clearSearch()">Clear</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="button-group">
+        <button mat-raised-button color="primary" (click)="generatePDF()">Generate PDF</button>
+    </div>
+
+
+
+
+    <table mat-table [dataSource]="books" class="mat-elevation-z8 custom-table">
+        <!-- Data -->
+        <ng-container *ngFor="let item of headers" [matColumnDef]="item.fieldName">
+            <th mat-header-cell *matHeaderCellDef>
+                {{ item.headerName }}
+            </th>
+            <td mat-cell *matCellDef="let element">
+
+                <ng-container *ngIf="item.fieldName === 'dateBook' ">
+                    {{ element[item.fieldName] | date: 'dd/MM/yyyy' }}
+                </ng-container>
+
+                <ng-container *ngIf="item.fieldName === 'status'">
+                    {{ getStatusName(element[item.fieldName]) }}
+                </ng-container>
+
+                <ng-container *ngIf=" !( item.fieldName === 'dateBook' || item.fieldName === 'status')
                                  ">
-                {{ element[item.fieldName] }}
-            </ng-container> 
-        </td>
-    </ng-container>
+                    {{ element[item.fieldName] }}
+                </ng-container>
+            </td>
+        </ng-container>
 
-    <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef="">
-            Actions
-        </th>
-        <td mat-cell *matCellDef="let element">
-            <button (click)="selectBook(element,0)" mat-raised-button color="primary">
-                <mat-icon>pageview</mat-icon> View
-            </button>
-            &nbsp;
-            <button (click)="selectBook(element, 1)" mat-raised-button color="warn" *ngIf="element['status'] === 'BOOKED'">
-                <mat-icon>delete</mat-icon> Delete
-            </button>
-        </td>
-    </ng-container>
+        <ng-container matColumnDef="actions" class="my-ng-container">
+            <th mat-header-cell *matHeaderCellDef="">
+                Actions
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <!-- <button (click)="selectBook(element,0)" mat-raised-button color="primary">
+                    <mat-icon>pageview</mat-icon> 
+                </button>
+                &nbsp;
+                <button (click)="selectBook(element, 1)" mat-raised-button color="warn"
+                    *ngIf="element['status'] === 'BOOKED'">
+                    <mat-icon>delete</mat-icon>
+                </button> -->
 
-    <tr mat-header-row *matHeaderRowDef="headerFields"></tr>
-    <tr mat-row *matRowDef="let row; columns: headerFields"></tr>
-</table>
+                <button mat-icon-button color="primary" (click)="selectBook(element,0)" >
+                    <mat-icon>visibility</mat-icon>
+                </button>
+
+                <button mat-icon-button color="warn" (click)="selectBook(element, 1)" *ngIf="element['status'] === 'BOOKED'" >
+                    <mat-icon>delete_outline</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="headerFields"></tr>
+        <tr class="custom-row" mat-row *matRowDef="let row; columns: headerFields"></tr>
+    </table>
+
+
+</div>
+
+

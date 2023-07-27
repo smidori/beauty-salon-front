@@ -16,13 +16,12 @@ import { UserLogin } from '../../models/user.interface';
 })
 export class LoginComponent{
   error$ = this.store.select(selectError());
-  
-
+ 
   constructor(private store: Store, 
               private authService: AuthenticateService, 
               private router: Router, 
               private _snackBar: MatSnackBar) {
-    console.log("!!!!!!!!!!!!!!! executing constructor of login.component !!!!!!!!")
+    
     this.checkJWT();
     this.getError();
   }

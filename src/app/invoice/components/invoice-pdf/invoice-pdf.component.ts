@@ -63,25 +63,25 @@ export class InvoicePdfComponent implements OnInit {
 
 
   generatePDF() {
-    // Obtenha o elemento HTML que deseja converter para PDF
+    // Get the element to converte to PDF
     const element = document.getElementById('invoice-pdf');
-  
-    
-    // Use html2canvas para converter o elemento HTML em uma imagem
+      
+    // Use html2canvas to convert element HTML to an image
     if(element){
       html2canvas(element).then((canvas) => {
         const imgWidth = 100; // Largura da imagem no PDF
         const imgHeight = (imgWidth / canvas.width) * canvas.height;
 
+        //generate a image
         const imgData = canvas.toDataURL('image/png');
     
-        // Crie um novo documento PDF
+        // generate a pdf
         const pdf = new jsPDF.default('p', 'mm', 'a4');
     
-        // Adicione a imagem ao PDF
+        // Add the page to pdf
         pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
     
-        // Salve ou abra o PDF
+        //save to pdf
         pdf.save('invoice.pdf');
       });
     }

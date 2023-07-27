@@ -19,6 +19,14 @@ export class UserService {
     )
   }
 
+  getUsersByRole(role: string): Observable<User[]>{
+    console.log('getUsersByRole => ' + `${environment.apiURL}/users/role/${role}`)
+    return this.http.get<User[]>(`${environment.apiURL}/users/role/${role}`).pipe(
+      tap((data: User[]) => data),
+      catchError(err => throwError(() => err))
+    )
+  }
+
   addUser(user: User): Observable<User>{
     return this.http.post<User>(`${environment.apiURL}/users`,user).pipe(
       tap((data: User) => data),

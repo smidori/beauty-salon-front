@@ -4,24 +4,27 @@
     </mat-toolbar>
 </p> -->
 <mat-toolbar color="primary">
-<span>Beauty Salon</span>
-    <button  mat-raised-button color="primary"[routerLink]="'/treatments'">Treatments</button>
+    <h2>Beauty Salon</h2>
+    <div class="spacer"></div>
+    <div *ngIf="!isAuthenticated" class="links">
+        <a mat-list-item [routerLink]="'/treatments/home'" (click)="onAnchorClick('home')"> Home </a>
+        <a mat-list-item [routerLink]="'/treatments/home'" (click)="onAnchorClick('treatments')">Treatments</a>
+        <a mat-list-item [routerLink]="'/treatments/home'" (click)="onAnchorClick('about_us')">About Us</a>
+        <a><mat-icon>phone_in_talk</mat-icon>1234-5678</a>
+        <a class="address"><mat-icon>location_on</mat-icon> 30-34 Westmoreland St</a>
+    </div>
+    <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/treatments'">Treatments</button>
     <button *ngIf="isAdmin" mat-raised-button color="primary"[routerLink]="'/treatment-types'">Treatment types</button>
     <button *ngIf="isAdmin" mat-raised-button color="primary"[routerLink]="'/products'">Products</button>
     <button *ngIf="isAuthenticated && isAdmin" mat-raised-button color="primary"[routerLink]="'/users'">Users</button>
     <button *ngIf="isAdmin" mat-raised-button color="primary"[routerLink]="'/availabilities'">Availabilities</button>
     <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/books'">Books</button>
-    <button *ngIf="isAdmin" mat-raised-button color="primary"[routerLink]="'/invoices'">Invoices</button>
-    <!-- <a mat-list-item [routerLink]="'/treatments'"> Treatments </a>
-    <a mat-list-item [routerLink]="'/users'"> Users </a> -->
-<div class="spacer"></div>
-    <a mat-list-item [routerLink]="'/treatments'"> Home </a>    
-    <!-- <span *ngIf="isAuthenticated">Hello, {{ name }}</span> -->
+    <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/invoices'">Invoices</button>
+
+    <div class="spacer"></div>
+        
     
     <span *ngIf="isAuthenticated">Hello, {{ name }}</span>
-    <!-- <ng-container *ngIf="userDetails$ | async as userDetails">
-        <span *ngIf="isAuthenticated">Hello, {{ userDetails?.firstName }}</span>
-      </ng-container> -->
     <a mat-list-item *ngIf="!isUserLoggedIn()" [routerLink]="'/login'">Login</a>
     <a mat-list-item *ngIf="isUserLoggedIn()"  (click)="logout()" class="logout-link" >Logout</a>
 </mat-toolbar>

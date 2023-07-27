@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, catchError, tap } from 'rxjs';
 import { AppState } from 'src/app/state/app.state';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { TreatmentActions } from 'src/app/treatment/state/treatment.actions';
@@ -15,6 +15,7 @@ import { InvoiceActions } from '../../state/invoice.action';
 import { selectInvoices, selectInvoice } from '../../state/invoice.selectors';
 import { selectProducts } from 'src/app/product/state/product.selectors';
 import { ProductActions } from 'src/app/product/state/product.actions';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-form',
@@ -34,9 +35,7 @@ export class FormComponent implements OnInit {
 
   test$ = this.store.select(selectInvoices());
 
-  users: ReadonlyArray<User> = [];
-  users$ = this.store.select(selectUsers());
-
+  clients: User[] = [];
 
   products: ReadonlyArray<Product> = [];
   products$ = this.store.select(selectProducts());
@@ -45,7 +44,8 @@ export class FormComponent implements OnInit {
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
-    private router: Router) {
+    private router: Router,
+    private userService: UserService) {
 
     //properties
     const id = this.acRouter.snapshot.params['id'];
@@ -69,16 +69,26 @@ export class FormComponent implements OnInit {
     });
 
     //GET USERS LIST - dispatch the action
-    this.store.dispatch({ type: UserActions.GET_USER_LIST });
-    this.users$.subscribe((data) => {
-      this.users = data;
-    });
+    this.loadUsersByRole('CLIENT');
 
     //GET PRODUCT LIST - dispatch the action
     this.store.dispatch({ type: ProductActions.GET_PRODUCT_LIST });
     this.products$.subscribe((data) => {
       this.products = data;
     });
+  }
+
+  //load the specific users
+  loadUsersByRole(role: string) {
+    this.userService.getUsersByRole(role).pipe(
+      tap(users => {
+          this.clients = users;
+      }),
+      catchError(error => {
+        console.error('Error loading users by role: ' + role, error);
+        return [];
+      })
+    ).subscribe();
   }
 
   //actions that can be executed

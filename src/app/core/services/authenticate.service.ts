@@ -14,6 +14,7 @@ export class AuthenticateService {
   private authenticationSubject = new Subject<boolean>();
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router) { }
+ 
   //call the endpoint to login in the system
   login(data: { login: string, password: string }): Observable<any> {
 
@@ -69,7 +70,7 @@ export class AuthenticateService {
     localStorage.setItem('userDetails', '');
 
     this.authenticationSubject.next(this.isAuthenticated());
-    this.router.navigate(['/login']);
+    this.router.navigate(['/treatments/home']);
   }
 
   //to subscribe in the authentication changes 

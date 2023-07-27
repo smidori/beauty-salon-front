@@ -17,7 +17,7 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
-  on(setToken, (state, { token }) => { return {...state, token}}),
+  on(setToken, (state, { token }) => { return {...state, token, error: null}}),
   on(setError, (state, { error }) => { return {...state, error}}),
   on(setAuthentication, (state,{isAuthenticated}) => {return {...state, isAuthenticated}}),
   on(logout, (state) => ({ ...state, token: "", userDetails: null, isAuthenticated: false })),

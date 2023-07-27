@@ -18,7 +18,7 @@ export class InvoiceFormComponent implements OnInit {
   @Input() actionButtonLabel: string = "Create";
   @Input() treatments: ReadonlyArray<Treatment> = [];
   @Input() products: ReadonlyArray<Product> = [];
-  @Input() users: ReadonlyArray<User> = [];
+  @Input() clients: User[] = [];
 
   //send data to page
   @Output() action = new EventEmitter();
@@ -35,6 +35,7 @@ export class InvoiceFormComponent implements OnInit {
   //constructor
   constructor(private fb: FormBuilder, private bookService: BookService, private store: Store<AppState>) {
     this.clientFormControl = this.fb.control(null, Validators.required);
+    this.clientFormControl.setValue(null);
 
     this.invoiceForm = this.fb.group({
       id: [null],

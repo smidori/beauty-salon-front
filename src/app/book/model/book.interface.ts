@@ -44,3 +44,8 @@ export interface BookDetailsDTO {
     startTimeBook: string;
     finishTimeBook: string;
 }
+
+
+export interface BookWithIndex extends Book {
+    [key: string]: any;
+  }

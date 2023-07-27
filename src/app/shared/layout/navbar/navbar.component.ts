@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { logout } from 'src/app/auth/state/auth.actions';
 import { selectIsAuthenticated, selectUserDetails } from 'src/app/auth/state/auth.selectors';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
+import { ScrollService } from 'src/app/core/services/scroll-service.service';
 import { AppState } from 'src/app/state/app.state';
 import { User } from 'src/app/user/models/user.interface';
 
@@ -23,8 +24,13 @@ export class NavbarComponent implements OnInit {
   //userDetails$!: Observable<any>;
   //userDetails!: User;
   
-  constructor(private auth: AuthenticateService, private router: Router, private store: Store<AppState>) {
+  constructor(private auth: AuthenticateService, private router: Router, private store: Store<AppState>,
+    private scrollService: ScrollService) {
     console.log("constructor navbar");
+  }
+
+  onAnchorClick(section: string) {
+    this.scrollService.scrollToSection(section);
   }
 
   ngOnInit() {

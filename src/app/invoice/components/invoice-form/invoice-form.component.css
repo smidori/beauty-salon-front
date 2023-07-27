@@ -1,38 +1,34 @@
 .form-row {
-    display: flex;
-    justify-content: space-between;
-  }
+  display: flex;
+  justify-content: space-between;
+}
 
-  /* .custom-form-row  {
-    height: 20px; 
-  } */
+.form-field {
+  margin-right: 10px;
+}
 
-  /* .custom-form-field  {
-    height: 2px; 
-  } */
+.button-group {
+  display: flex;
+  gap: 10px;
+}
 
-  .form-field {
-    margin-right: 10px;
-  }
-  
-  .button-group {
-    display: flex;
-    gap: 10px;
-  }
-  
-  /* .full-width {
-    width: 100%;
-  } */
-  
-  .custom-datepicker {
-    width: 213px; /* Defina o tamanho desejado aqui */
-  }
-  
-  /* .custom-form-field .mat-form-field-wrapper .mat-mdc-text-field-wrapper {
-    height: 40px;
-  } */
+.custom-datepicker {
+  width: 213px; /* Defina o tamanho desejado aqui */
+}
 
+.custom-input-number {
+  width: 17vh;
+}
 
-  .custom-input-number {
-    width: 17vh;
-  }
+.form-row {
+  display: flex;
+  align-items: center;
+}
+
+.form-field {
+  flex: 1;
+}
+
+.add-button {
+  float: right;
+}

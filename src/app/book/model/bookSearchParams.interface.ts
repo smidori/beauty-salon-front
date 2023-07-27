@@ -6,3 +6,11 @@ export interface BookSearchParams {
     treatment: Treatment;
     dateBook: string;
 }    
+
+
+export interface BookFilterParams {
+    dateBook: string | null;
+    status: string | null;
+    clientId: number | null;
+    workerId: number | null;
+}

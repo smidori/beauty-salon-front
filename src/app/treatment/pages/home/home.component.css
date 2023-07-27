@@ -1,3 +1,29 @@
+.homePage {
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.image-home {
+  min-height: 69vh;
+  min-width: 69vh;
+  background-image: url('../../../images/beauty_salon_space.jpg');
+  background-position: center center;
+  opacity: 0.5;
+}
+
+.text-home p{
+  font-size: 18px;
+  font-family: cursive;
+  color: #333;  
+  text-align: center;
+  margin: 20px 0;
+}
+
+.description {
+  margin: 10px 0;
+  line-height: 1;
+}
+
 .container {
   padding: 10px; 
 }
