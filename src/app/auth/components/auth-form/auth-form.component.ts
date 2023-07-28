@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-auth-form',
@@ -13,7 +14,7 @@ export class AuthFormComponent implements OnInit {
   form: FormGroup;
   formRegister: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private snackBar: MatSnackBar) {
     this.form = this.fb.group({
       login: ['', Validators.required],
       password: ['', Validators.required],
@@ -23,6 +24,7 @@ export class AuthFormComponent implements OnInit {
     this.formRegister = this.fb.group({
       login: ['', Validators.required],
       password: ['', Validators.required],
+      confirmPassword: ['', [Validators.required]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -36,6 +38,22 @@ export class AuthFormComponent implements OnInit {
 
 
   ngOnInit(): void {
+  }
+
+  //check if they are equal
+  passwordsMatch(): boolean {
+    const password = this.formRegister.get('password')?.value;
+    const confirmPassword = this.formRegister.get('confirmPassword')?.value;
+    return password === confirmPassword;
+  }
+  //check onBlur
+  checkPasswordsMatch() {
+    if (this.formRegister.get('password')?.value && this.formRegister.get('confirmPassword')?.value && !this.passwordsMatch()) {
+      this.formRegister.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+      this.snackBar.open('Passwords do not match', 'Dismiss', {
+        duration: 2000 
+      });
+    } 
   }
 
   submit() {

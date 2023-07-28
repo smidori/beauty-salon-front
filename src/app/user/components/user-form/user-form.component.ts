@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../models/user.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-form',
@@ -13,7 +14,8 @@ export class UserFormComponent implements OnInit{
   @Output() action = new EventEmitter();
   form: FormGroup;
 
-  constructor(private fb: FormBuilder){
+  constructor(private fb: FormBuilder,
+    private snackBar: MatSnackBar){
     this.form = this.fb.group({
       id:[null],
       firstName: ['', Validators.required],
@@ -21,19 +23,30 @@ export class UserFormComponent implements OnInit{
       email: ['', [Validators.required, Validators.email]],
       login: ['', Validators.required],
       password: ['', Validators.required],
+      confirmPassword: ['', [Validators.required]],
       gender: ['', Validators.required],
       role: ['', Validators.required],
       mobilePhone: [''],
       homePhone: [''],
     });
-
-
-    // this.form.get('mobilePhone')?.setValidators(this.phoneValidator(this.form));
-    // this.form.get('mobilePhone')?.valueChanges.subscribe((value) => {
-    //   this.form.get('mobilePhone')?.setValue(this.formatPhoneNumber(value), { emitEvent: false });
-    // });
   }
-  
+
+  //check if they are equal
+  passwordsMatch(): boolean {
+    const password = this.form.get('password')?.value;
+    const confirmPassword = this.form.get('confirmPassword')?.value;
+    return password === confirmPassword;
+  }
+  //check onBlur
+  checkPasswordsMatch() {
+    if (this.form.get('password')?.value && this.form.get('confirmPassword')?.value && !this.passwordsMatch()) {
+      this.form.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+      this.snackBar.open('Passwords do not match', 'Dismiss', {
+        duration: 2000 
+      });
+    } 
+  }
+
   // phoneValidator(control: FormControl): { [key: string]: any } | null {
   //   const phoneRegex = /^(\d{2})(\d{4,5})(\d{4})$/; // Formato (00)00000-0000 ou (00)0000-0000
   //   const phoneValue = control.value;

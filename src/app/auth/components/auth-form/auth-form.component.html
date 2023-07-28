@@ -2,27 +2,29 @@
     <mat-card-title>{{title}}</mat-card-title>
     <mat-card-content *ngIf="title == 'Login'">
         <form [formGroup]="form" (ngSubmit)="submit()">
-        <p *ngIf="error" class="error">
-            {{ error }}
-        </p>
-        <p>
-            <mat-form-field class="form-field">
-            <input type="text" name="username" matInput placeholder="Username" formControlName="login">
-            </mat-form-field>
-        </p>
+            <p *ngIf="error" class="error">
+                {{ error }}
+            </p>
+            <p>
+                <mat-form-field class="form-field">
+                    <input type="text" name="username" matInput placeholder="Username" formControlName="login">
+                </mat-form-field>
+            </p>
 
-        <p>
-            <mat-form-field class="form-field">
-            <input type="password" name="password" matInput placeholder="Password" formControlName="password">
-            </mat-form-field>
-        </p>
-        
-        <div class="button">
-            <button type="submit" [disabled]="form.invalid" mat-button>{{title}}</button>
-        </div>
-        <!-- <p *ngIf="title == 'Login'" class="link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Create account</p> -->
-        <button mat-raised-button color="primary" *ngIf="title === 'Login'" [routerLink]="['/register']" routerLinkActive="router-link-active" > Create account </button>
-        
+            <p>
+                <mat-form-field class="form-field">
+                    <input type="password" name="password" matInput placeholder="Password" formControlName="password">
+                </mat-form-field>
+            </p>
+
+
+            <div class="button">
+                <button type="submit" [disabled]="form.invalid" mat-button>{{title}}</button>
+            </div>
+            <!-- <p *ngIf="title == 'Login'" class="link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Create account</p> -->
+            <button mat-raised-button color="primary" *ngIf="title === 'Login'" [routerLink]="['/register']"
+                routerLinkActive="router-link-active"> Create account </button>
+
         </form>
     </mat-card-content>
 
@@ -30,66 +32,78 @@
 
     <mat-card-content *ngIf="title == 'Register'">
         <form [formGroup]="formRegister" (ngSubmit)="submit()">
-        <p *ngIf="error" class="error">
-            {{ error }}
-        </p>
-        <p></p>
-        <div class="form-row">
-            <mat-form-field class="form-field">
-            <input matInput type="text" matInput placeholder="First Name"  formControlName="firstName" required>
-            </mat-form-field>
+            <p *ngIf="error" class="error">
+                {{ error }}
+            </p>
+            <p></p>
+            <div class="form-row">
+                <mat-form-field class="form-field">
+                    <input matInput type="text" matInput placeholder="First Name" formControlName="firstName" required>
+                </mat-form-field>
 
 
-            <mat-form-field class="form-field">
-                <input type="text" matInput placeholder="Last Name" formControlName="lastName" required>
-            </mat-form-field>
-        </div>
+                <mat-form-field class="form-field">
+                    <input type="text" matInput placeholder="Last Name" formControlName="lastName" required>
+                </mat-form-field>
+            </div>
 
-        <div class="form-row">
-            <mat-form-field class="form-field">
-            <input type="text" matInput placeholder="Email" formControlName="email" required>
-            </mat-form-field>
+            <div class="form-row">
+                <mat-form-field class="form-field">
+                    <input type="text" matInput placeholder="Email" formControlName="email" required>
+                </mat-form-field>
 
-            <mat-form-field class="form-field" >
-                <mat-label>Gender</mat-label>
-                <mat-select formControlName="gender" required>
-                    <mat-option value="male">Male</mat-option>
-                    <mat-option value="female">Female</mat-option>
-                    <mat-option value="others">Others</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+                <mat-form-field class="form-field">
+                    <mat-label>Gender</mat-label>
+                    <mat-select formControlName="gender" required>
+                        <mat-option value="male">Male</mat-option>
+                        <mat-option value="female">Female</mat-option>
+                        <mat-option value="others">Others</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
 
-        <div class="form-row">
-            <mat-form-field class="form-field">
-            <input matInput type="text" matInput placeholder="Username" formControlName="login" required>
-            </mat-form-field>
-            <mat-form-field class="form-field">
-                <input type="password" matInput placeholder="Password" formControlName="password" required>
-            </mat-form-field>
-        </div>
+            <div class="form-row">
+                <mat-form-field class="form-field">
+                    <input matInput type="text" matInput placeholder="Username" formControlName="login" required>
+                </mat-form-field>
+            </div>
 
-        <div class="form-row">
-            <mat-form-field class="form-field">
-            <input matInput type="text" matInput placeholder="Mobile Phone" formControlName="mobilePhone" required>
-            </mat-form-field>
-            <mat-form-field class="form-field">
-                <input type="text" matInput placeholder="Home Phone" formControlName="homePhone">
-            </mat-form-field>
-        </div>
+            <div class="form-row">
+                <mat-form-field class="form-field">
+                    <input type="password" matInput placeholder="Password" formControlName="password" required
+                        (blur)="checkPasswordsMatch()">
+                </mat-form-field>
 
-        
-        
-        <div class="button">
-            <button type="submit" [disabled]="formRegister.invalid" mat-button>{{title}}</button>
-            
-        </div>
-        
-        <!-- <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p> -->
+                <mat-form-field class="form-field">
+                    <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword"
+                        (blur)="checkPasswordsMatch()" required>
+                </mat-form-field>
+            </div>
 
-        <button mat-raised-button color="primary" *ngIf="title === 'Register'" [routerLink]="['/login']" routerLinkActive="router-link-active" > Sign In </button>
-        
+            <div class="form-row">
+                <mat-form-field class="form-field">
+                    <input matInput type="text" matInput placeholder="Mobile Phone" formControlName="mobilePhone"
+                        required>
+                </mat-form-field>
+                <mat-form-field class="form-field">
+                    <input type="text" matInput placeholder="Home Phone" formControlName="homePhone">
+                </mat-form-field>
+            </div>
+
+
+
+            <div class="button">
+                <button type="submit" [disabled]="formRegister.invalid || !passwordsMatch()"
+                    mat-button>{{title}}</button>
+
+            </div>
+
+            <!-- <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p> -->
+
+            <button mat-raised-button color="primary" *ngIf="title === 'Register'" [routerLink]="['/login']"
+                routerLinkActive="router-link-active"> Sign In </button>
+
         </form>
     </mat-card-content>
 </mat-card>

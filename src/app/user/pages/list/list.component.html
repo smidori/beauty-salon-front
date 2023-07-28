@@ -1,6 +1,5 @@
 <command-bar menuTitle="Users" (action)="executeCommandBarAction($event)"></command-bar>
 
 <div class="container">
-  <h2>User list</h2>
   <users-list [users]="users" [headers]="headers" (user)="selectUser($event)"></users-list>
 </div>

@@ -25,6 +25,6 @@
         
     
     <span *ngIf="isAuthenticated">Hello, {{ name }}</span>
-    <a mat-list-item *ngIf="!isUserLoggedIn()" [routerLink]="'/login'">Login</a>
+    <a mat-list-item *ngIf="!isUserLoggedIn()" [routerLink]="'/login'">Login/Register</a>
     <a mat-list-item *ngIf="isUserLoggedIn()"  (click)="logout()" class="logout-link" >Logout</a>
 </mat-toolbar>

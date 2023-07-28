@@ -1,31 +1,36 @@
 .container {
   display: flex;
-  background-color: #1C1C1C	;
-  height: 60px;
+  justify-content: center;
+  background-color: #1C1C1C;
+  width: 100%;
+  position: relative;
+  height: 55px;
 }
 
-.div1 {
-  flex: 60%;
-  text-align: left;
+.button {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 50px;
+  z-index: 1;
+  margin-left: 10px;
 }
 
-.div2 {
-  flex: 40%;
-  text-align: left;
-  align-items: center; /* Centraliza verticalmente os elementos */
-  margin: 15px;
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+button {
+  margin-right: 10px;
 }
 
 h2 {
+  margin: 0;
   font-family: cursive;
   color: whitesmoke;
 }
-
-
-/* styles.css */
-.custom-toolbar {
-  background-color: #1C1C1C	; 
-  /* #13293D; */
-}
-
-

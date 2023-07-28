@@ -1,0 +1,16 @@
+table, th, td {
+    height: 3px;
+  }
+  
+  .custom-tr {
+    min-height: 30px;
+    height: 30px;
+  }
+  
+  .custom-button-table {
+    height: 20px;
+  }
+  
+  .custom-tr:nth-child(odd) {
+    background-color: #E0E0E0  /* #BFDDF3; */
+  }

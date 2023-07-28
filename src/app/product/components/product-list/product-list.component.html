@@ -20,15 +20,15 @@
             Actions
         </th>
         <td mat-cell *matCellDef="let element">
-            <button class="custom-button-table" (click)="selectProduct(element,0)" mat-raised-button color="primary">
-                <mat-icon>pageview</mat-icon> View
+            <button class="custom-button-table" (click)="selectProduct(element,0)" mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
             </button>
             &nbsp;
-            <button class="custom-button-table" (click)="selectProduct(element, 1)" mat-raised-button color="warn">
-                <mat-icon>delete</mat-icon> Delete
+            <button class="custom-button-table" (click)="selectProduct(element, 1)" mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
             </button>
         </td>
     </ng-container>
-    <tr class="custom-tr" mat-header-row *matHeaderRowDef="headerFields"></tr>
+    <tr mat-header-row *matHeaderRowDef="headerFields"></tr>
     <tr class="custom-tr" mat-row *matRowDef="let row; columns: headerFields"></tr>
 </table>

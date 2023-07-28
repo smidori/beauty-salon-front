@@ -30,9 +30,9 @@
         <tr *ngFor="let item of invoice?.invoiceItems">
           <td>{{ item.description }}</td>
           <td>{{ item.amount }}</td>
-          <td>{{ item.subtotal | currency: 'EUR' }}</td>
-          <td>{{ item.extra | currency: 'EUR' }}</td>
-          <td>{{ item.discount | currency: 'EUR' }}</td>
+          <td class="text-right">{{ item.subtotal | currency: 'EUR' }}</td>
+          <td class="text-right">{{ item.extra | currency: 'EUR' }}</td>
+          <td class="text-right">{{ item.discount | currency: 'EUR' }}</td>
           <td class="text-right">{{ item.total | currency: 'EUR' }}</td>
         </tr>
         <tr *ngIf="invoice?.total">

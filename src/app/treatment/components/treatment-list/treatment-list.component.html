@@ -18,20 +18,20 @@
     </ng-container>
 
     <!-- Actions -->
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="actions" >
         <th mat-header-cell *matHeaderCellDef="">
-            Actions
+            <span *ngIf="isAdmin">Actions</span>
         </th>
         <td mat-cell *matCellDef="let element">
-            <button class="custom-button-table" (click)="selectTreatment(element,0)" mat-raised-button color="primary">
-                <mat-icon>pageview</mat-icon> View
+            <button *ngIf="isAdmin" class="custom-button-table" (click)="selectTreatment(element,0)" mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
             </button>
             &nbsp;
-            <button class="custom-button-table" (click)="selectTreatment(element, 1)" mat-raised-button color="warn">
-                <mat-icon>delete</mat-icon> Delete
+            <button *ngIf="isAdmin" class="custom-button-table" (click)="selectTreatment(element, 1)" mat-icon-button color="warn">
+                <mat-icon>delete</mat-icon>
             </button>
         </td>
     </ng-container>
-    <tr class="custom-tr" mat-header-row *matHeaderRowDef="headerFields"></tr>
+    <tr mat-header-row *matHeaderRowDef="headerFields"></tr>
     <tr class="custom-tr" mat-row *matRowDef="let row; columns: headerFields"></tr>
 </table>

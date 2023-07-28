@@ -32,12 +32,22 @@
             <mat-label>Login</mat-label>
             <input matInput placeholder="Login" formControlName="login" required>
         </mat-form-field>
+    </div>
 
+    <div class="form-row">
         <mat-form-field class="form-field">
             <mat-label>Password</mat-label>
-            <input matInput type="password" placeholder="Password" formControlName="password" required>
+            <input matInput type="password" placeholder="Password" formControlName="password" 
+            (blur)="checkPasswordsMatch()" required>
         </mat-form-field>
+
+        <mat-form-field class="form-field">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword" 
+            (blur)="checkPasswordsMatch()" required>
+          </mat-form-field>
     </div>
+
     <div class="form-row">
         <mat-form-field class="form-field">
             <mat-label>Mobile Phone</mat-label>
@@ -61,13 +71,13 @@
     </div>
 
     <div class="button-group">
-        <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="emitAction()">
+        <button mat-raised-button color="primary" [disabled]="form.invalid || !passwordsMatch()" (click)="emitAction()">
                 {{actionButtonLabel}}
         </button>  
         
-        <button  mat-raised-button color="warn" (click)="clear()">
+        <!-- <button  mat-raised-button color="warn" (click)="clear()">
                 Clear
-        </button> 
+        </button>  -->
     </div>
     
     

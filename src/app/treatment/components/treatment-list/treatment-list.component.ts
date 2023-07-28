@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { Treatment } from '../../models/treatment.interface';
 import { TableActions } from 'src/app/user/enums/table-actions.enum';
 import { TreatmentType } from '../../models/treatment-type.interface';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 
 @Component({
   selector: 'treatment-list',
@@ -18,11 +19,15 @@ export class TreatmentListComponent implements OnInit{
   
   //variables
   headerFields:string[] = [];
+  isAdmin = false;
+  isClient = false;
 
-  constructor() {}
+  constructor(private auth:AuthenticateService) {}
   
   ngOnInit(): void {
     this.getHeaderFields();
+    this.isAdmin = this.auth.isAdmin();
+    this.isClient = this.auth.isClient();
   }
 
   //assign the values to the header fields and the actions

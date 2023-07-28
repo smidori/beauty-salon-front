@@ -1,39 +1,17 @@
+<div class="container">  
+    <div class="button">  
+      <button  mat-raised-button color="primary" *ngIf="isVisibleCreate"
+        (click)="emitAction(0)">
+          <mat-icon>fiber_new</mat-icon> Create
+      </button>
+      &nbsp;
+      <button  mat-raised-button color="primary" *ngIf="isVisibleList"
+        (click)="emitAction(1)">
+          <mat-icon>list</mat-icon> List
+      </button>  
+     </div>
 
-<div class="container">
-  
-  <div class="div2">
-    <!-- <mat-toolbar class="custom-toolbar" > -->
-    <!-- <button mat-stroked-button color="primary" -->
-  
-    <button  mat-raised-button color="primary" *ngIf="isVisibleCreate"
-      (click)="emitAction(0)">
-        <mat-icon>fiber_new</mat-icon> Create
-    </button>
-    &nbsp;
-    <button  mat-raised-button color="primary" *ngIf="isVisibleList"
-      (click)="emitAction(1)">
-        <mat-icon>list</mat-icon> List
-    </button>
-  
-  <!-- </mat-toolbar> -->
-  </div>
-  <div class="div1">
-    <h2> {{ menuTitle }} </h2>
-  </div>
+     <div class="title">
+      <h2> {{ menuTitle }} </h2>
+     </div>
 </div>
-
-<!-- <mat-toolbar>
-    <h1> {{ menuTitle }} &nbsp;&nbsp;&nbsp;&nbsp;</h1> 
-    <h3> Create &nbsp;&nbsp;</h3> 
-    <h3> List &nbsp;&nbsp;</h3> 
-
-    <button mat-raised-button color="primary"
-      (click)="emitAction(0)">
-        <mat-icon>fiber_new</mat-icon> Create
-    </button>
-    &nbsp;
-    <button  mat-raised-button color="primary"
-      (click)="emitAction(1)">
-        <mat-icon>list</mat-icon> List
-    </button>
-</mat-toolbar> -->

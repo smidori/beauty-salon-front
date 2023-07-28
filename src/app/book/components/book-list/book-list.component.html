@@ -94,17 +94,17 @@
                     <mat-icon>delete</mat-icon>
                 </button> -->
 
-                <button mat-icon-button color="primary" (click)="selectBook(element,0)" >
+                <button class="custom-button-table" mat-icon-button color="primary" (click)="selectBook(element,0)" >
                     <mat-icon>visibility</mat-icon>
                 </button>
 
-                <button mat-icon-button color="warn" (click)="selectBook(element, 1)" *ngIf="element['status'] === 'BOOKED'" >
-                    <mat-icon>delete_outline</mat-icon>
+                <button class="custom-button-table" mat-icon-button color="warn" (click)="selectBook(element, 1)" *ngIf="element['status'] === 'BOOKED'" >
+                    <mat-icon>delete</mat-icon>
                 </button>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="headerFields"></tr>
-        <tr class="custom-row" mat-row *matRowDef="let row; columns: headerFields"></tr>
+        <tr class="custom-tr custom-row" mat-row *matRowDef="let row; columns: headerFields"></tr>
     </table>
 
 
