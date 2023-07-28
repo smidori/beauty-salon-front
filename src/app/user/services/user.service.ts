@@ -1,4 +1,4 @@
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -8,6 +8,9 @@ import { User } from '../models/user.interface';
   providedIn: 'root'
 })
 export class UserService {
+
+  private errorSubject = new Subject<string>();
+
 
   constructor(private http: HttpClient) { }
 
@@ -43,7 +46,15 @@ export class UserService {
 
   deleteUser(id:number): Observable<User>{
     return this.http.delete<User>(`${environment.apiURL}/users/${id}`).pipe(
-      catchError(err => throwError(() => err))
+      //catchError(err => throwError(() => err))
+      catchError((err) => {
+        this.errorSubject.next(err.error.message);
+        return throwError(() => err);
+      })    
     )
+  }
+
+  onError() {
+    return this.errorSubject.asObservable();
   }
 }

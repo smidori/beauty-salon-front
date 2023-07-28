@@ -69,7 +69,8 @@ export class InvoicePdfComponent implements OnInit {
     // Use html2canvas to convert element HTML to an image
     if(element){
       html2canvas(element).then((canvas) => {
-        const imgWidth = 100; // Largura da imagem no PDF
+        //const imgWidth = 100; // Largura da imagem no PDF
+        const imgWidth = 150; 
         const imgHeight = (imgWidth / canvas.width) * canvas.height;
 
         //generate a image

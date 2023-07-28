@@ -7,6 +7,7 @@ import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum
 import { AppState } from 'src/app/state/app.state';
 import { ProductActions } from '../../state/product.actions';
 import { selectProduct } from '../../state/product.selectors';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 
 @Component({
   selector: 'app-form',
@@ -17,13 +18,15 @@ export class FormComponent implements OnInit {
   
   //properties
   menuTitle: string = 'Create Product';
+
   product$: Observable<Product | undefined>;
   product: Product | null = null;
 
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
-    private router: Router) {
+    private router: Router,
+    private auth: AuthenticateService) {
 
     //get id from the url
     const id = this.acRouter.snapshot.params['id'];
@@ -41,7 +44,8 @@ export class FormComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
 
   //actions that can be executed

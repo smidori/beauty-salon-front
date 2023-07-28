@@ -11,6 +11,7 @@ import { Book, BookAvailableResponse } from '../../model/book.interface';
 import { BookActions } from '../../state/book.action';
 import { selectSlots } from '../../state/book.selectors';
 import { BookSearchParams } from './../../model/bookSearchParams.interface';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 
 @Component({
   selector: 'book-form',
@@ -47,9 +48,14 @@ export class BookFormComponent implements OnInit {
   bookStatus = BookStatus;
   selectedBookSlot: any = null;
   selectedSlotKey: number = 0;
+  isClient: boolean = false;
 
   //constructor
-  constructor(private fb: FormBuilder, private store: Store<AppState>) {
+  constructor(private fb: FormBuilder, private store: Store<AppState>,
+    private auth: AuthenticateService) {
+    
+    this.isClient = this.auth.isClient();
+
     this.searchForm = this.fb.group({
       id: [null],
       userId: [null],
@@ -103,6 +109,8 @@ export class BookFormComponent implements OnInit {
     ).subscribe(() => {
       this.searchSlots();
     });
+
+    this.isClient = this.auth.isClient();
   }
 
   //search the available time for this treatment and date

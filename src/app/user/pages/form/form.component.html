@@ -1,5 +1,6 @@
 <!-- <app-user-form [selectedUser]="user" (action)="formAction($event)"></app-user-form> -->
-<!-- <app-user-command-bar (action)="executeCommandBarAction($event)"></app-user-command-bar> -->
+<command-bar [menuTitle]="menuTitle" (action)="executeCommandBarAction($event)"></command-bar>
+
 <div class="container">
     <app-user-form [selectedUser]="user" (action)="formAction($event)"></app-user-form>
 </div>

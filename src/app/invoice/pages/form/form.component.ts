@@ -2,20 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, catchError, tap } from 'rxjs';
+import { ProductActions } from 'src/app/product/state/product.actions';
+import { selectProducts } from 'src/app/product/state/product.selectors';
 import { AppState } from 'src/app/state/app.state';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { TreatmentActions } from 'src/app/treatment/state/treatment.actions';
 import { selectTreatments } from 'src/app/treatment/state/treatment.selectors';
 import { User } from 'src/app/user/models/user.interface';
-import { UserActions } from 'src/app/user/state/user.actions';
-import { selectUsers } from 'src/app/user/state/user.selectors';
+import { UserService } from 'src/app/user/services/user.service';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 import { Invoice, Product } from '../../model/invoice.interface';
 import { InvoiceActions } from '../../state/invoice.action';
-import { selectInvoices, selectInvoice } from '../../state/invoice.selectors';
-import { selectProducts } from 'src/app/product/state/product.selectors';
-import { ProductActions } from 'src/app/product/state/product.actions';
-import { UserService } from 'src/app/user/services/user.service';
+import { selectInvoice, selectInvoices } from '../../state/invoice.selectors';
 
 @Component({
   selector: 'app-form',

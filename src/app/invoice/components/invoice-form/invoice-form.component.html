@@ -1,10 +1,8 @@
-<h2>{{ selectedInvoice ? "Update/View Invoice" : "Create Invoice" }}</h2>
-
 <form [formGroup]="invoiceForm">
 
   <!-- Select a client for new invoice -->
   <div class="form-row custom-form-row" *ngIf="!selectedInvoice">
-    <mat-form-field class="form-field custom-form-field">
+    <mat-form-field class="form-field custom-form-field custom-one-field">
       <mat-label>Client</mat-label>
       <mat-select formControlName="client">
         <mat-option *ngFor="let user of clients" [value]="user">{{ user.firstName }} {{ user.lastName }}</mat-option>
@@ -70,14 +68,14 @@
   <!-- PRODUCTS -->
   <form [formGroup]="productForm">
     <div class="form-row">
-      <mat-form-field class="form-field">
+      <mat-form-field class="form-field custom-one-field">
         <mat-label>Products</mat-label>
         <mat-select formControlName="product" [compareWith]="compareObjects">
           <mat-option *ngFor="let product of products" [value]="product">{{ product.name
             }}</mat-option>
         </mat-select>
       </mat-form-field>      
-      <button mat-icon-button color="primary" (click)="addProduct()" class="add-button"
+      <button mat-icon-button color="primary" (click)="addProduct()" [disabled]="!productForm.get('product')?.value" class="add-button"
         matTooltip="Add Product" matTooltipPosition="right" >
         <mat-icon>add_box</mat-icon>
       </button>
@@ -101,7 +99,6 @@
   </ng-container>
 
   <div class="button-group">
-    <!-- Your other buttons ... -->
     <button mat-raised-button color="primary" [disabled]="(!hasInvoiceItems() || invoiceForm.get('client')?.invalid)" (click)="emitAction()">
       {{ actionButtonLabel }}
     </button>

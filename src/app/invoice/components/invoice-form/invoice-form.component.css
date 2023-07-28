@@ -20,12 +20,12 @@
   width: 17vh;
 }
 
-.form-row {
+/* .form-row {
   display: flex;
   align-items: center;
-}
+} */
 
-.form-field {
+.custom-one-field {
   flex: 1;
 }
 

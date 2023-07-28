@@ -1,6 +1,5 @@
-<command-bar (action)="executeCommandBarAction($event)"></command-bar>
+<command-bar menuTitle="Treatment Type" (action)="executeCommandBarAction($event)"></command-bar>
 
 <div class="container">
-    <h2>Treatment Type list</h2>
     <treatment-type-list [treatmentTypes]="treatmentTypes" [headers]="headers" (treatmentType)="selectTreatmentType($event)"></treatment-type-list>
  </div>

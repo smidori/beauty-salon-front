@@ -9,6 +9,8 @@ import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 export class CommandBarComponent implements OnInit{
   @Output() action = new EventEmitter<CommandBarActions>();
   @Input() menuTitle = '';
+  @Input() isVisibleCreate = true;
+  @Input() isVisibleList = true;
   
 
   ngOnInit(): void {

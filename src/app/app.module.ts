@@ -22,6 +22,7 @@ import { BookModule } from './book/book.module';
 import { InactivityService } from './core/services/inactivity.service';
 import { InvoiceModule } from './invoice/invoice.module';
 import { ProductModule } from './product/product.module';
+import { DecimalSeparatorDirective } from './decimal-separator.directive';
 
 
 export function tokenGetter() {
@@ -31,6 +32,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
+    DecimalSeparatorDirective,
   ],
   imports: [
     BrowserModule,

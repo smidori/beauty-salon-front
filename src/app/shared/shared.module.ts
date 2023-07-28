@@ -7,18 +7,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { CommandBarComponent } from './components/command-bar/command-bar.component';
 import { MaterialModule } from '../material/material.module';
+import { DecimalSeparatorDirective } from './directives/decimal-separator.directive';
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
     FooterComponent,
-    CommandBarComponent
+    CommandBarComponent,
+    DecimalSeparatorDirective
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
-    CommandBarComponent
+    CommandBarComponent,
+    DecimalSeparatorDirective
+
   ],
   imports: [
     CommonModule,

@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
 
 @Component({
-  selector: 'product-command-bar',
+  selector: 'delete-product-command-bar',
   templateUrl: './command-bar.component.html',
   styleUrls: ['./command-bar.component.css']
 })

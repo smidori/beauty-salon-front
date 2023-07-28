@@ -1,3 +1,4 @@
+import { BookFilterParams } from './../model/bookSearchParams.interface';
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
@@ -16,10 +17,23 @@ export class BookEffects {
     ) { }
 
 
+    // getBooks$ = createEffect(() => {
+    //     return this.actions$.pipe(
+    //         ofType(BookActions.GET_BOOK_LIST),
+    //         mergeMap(() => this.bookService.getBooks()
+    //             .pipe(
+    //                 map(books => ({ type: BookActions.SET_BOOK_LIST, books })),
+    //                 catchError(() => EMPTY)
+    //             ))
+    //     )
+    // }, { dispatch: true }
+    // );
+
     getBooks$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(BookActions.GET_BOOK_LIST),
-            mergeMap(() => this.bookService.getBooks()
+            mergeMap((data: {type:string, payload: BookFilterParams}) => 
+                this.bookService.getBooksByFilter(data.payload)
                 .pipe(
                     map(books => ({ type: BookActions.SET_BOOK_LIST, books })),
                     catchError(() => EMPTY)
@@ -27,6 +41,7 @@ export class BookEffects {
         )
     }, { dispatch: true }
     );
+
 
     getBookSlots$ = createEffect(() => {
         return this.actions$.pipe(

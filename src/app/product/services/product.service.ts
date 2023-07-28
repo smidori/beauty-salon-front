@@ -1,4 +1,4 @@
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -9,6 +9,9 @@ import { Product } from 'src/app/invoice/model/invoice.interface';
   providedIn: 'root'
 })
 export class ProductService {
+
+  private errorSubject = new Subject<string>();
+
 
   constructor(private http: HttpClient) { }
 
@@ -36,7 +39,14 @@ export class ProductService {
 
   deleteProduct(id:number): Observable<Product>{
     return this.http.delete<Product>(`${environment.apiURL}/products/${id}`).pipe(
-      catchError(err => throwError(() => err))
+      //catchError(err => throwError(() => err))
+      catchError((err) => {
+        this.errorSubject.next(err.error.message);
+        return throwError(() => err);
+      })    
     )
+  }
+  onError() {
+    return this.errorSubject.asObservable();
   }
 }

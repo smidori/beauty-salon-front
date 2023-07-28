@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap, catchError, throwError } from 'rxjs';
+import { Observable, tap, catchError, throwError, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Book, BookAvailableResponse } from '../model/book.interface';
 import { BookFilterParams, BookSearchParams } from '../model/bookSearchParams.interface';
@@ -10,16 +10,23 @@ import { BookFilterParams, BookSearchParams } from '../model/bookSearchParams.in
   providedIn: 'root'
 })
 export class BookService {
+  private errorSubject = new Subject<string>();
 
   constructor(private http: HttpClient) { }
-  getBooks(): Observable<Book[]> {
-    console.log('getBooks => ' + `${environment.apiURL}/books`)
-    return this.http.get<Book[]>(`${environment.apiURL}/books`).pipe(
+  // getBooks(): Observable<Book[]> {
+  //   console.log('getBooks => ' + `${environment.apiURL}/books`)
+  //   return this.http.get<Book[]>(`${environment.apiURL}/books`).pipe(
+  //     tap((data: Book[]) => data),
+  //     catchError(err => throwError(() => err))
+  //   )
+  // }
+
+  getBooksByFilter(book: BookFilterParams): Observable<Book[]> {
+    return this.http.post<Book[]>(`${environment.apiURL}/books/withFilters`, book).pipe(
       tap((data: Book[]) => data),
       catchError(err => throwError(() => err))
-    )
+    );
   }
-
   
   getBooksCompletedByClientToday(clientUserId: number): Observable<Book[]> {
     const url = `${environment.apiURL}/books/completedBooksByClientToday?clientUserId=${clientUserId}`;
@@ -40,12 +47,7 @@ export class BookService {
   //   );
   // }
 
-  getBooksByFilter(book: BookFilterParams): Observable<Book[]> {
-    return this.http.post<Book[]>(`${environment.apiURL}/books/withFilters`, book).pipe(
-      tap((data: Book[]) => data),
-      catchError(err => throwError(() => err))
-    );
-  }
+  
 
   getBookSlots(book: BookSearchParams): Observable<BookAvailableResponse> {
     console.log("getBookSlots => " + `${environment.apiURL}/books/availability`);
@@ -76,9 +78,15 @@ export class BookService {
 
   deleteBook(id:number): Observable<Book>{
     return this.http.delete<Book>(`${environment.apiURL}/books/${id}`).pipe(
-      catchError(err => throwError(() => err))
+      catchError((err) => {
+        this.errorSubject.next(err.error.message);
+        return throwError(() => err);
+      })  
     )
   }
 
+  onError() {
+    return this.errorSubject.asObservable();
+  }
 }
 

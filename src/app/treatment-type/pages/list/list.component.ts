@@ -7,6 +7,8 @@ import { selectTreatmentTypes } from '../../state/treatment-type.selectors';
 import { TreatmentTypeActions } from '../../state/treatment-type.actions';
 import { TableActions } from 'src/app/shared/enums/table-actions.enum';
 import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
+import { TreatmentTypeService } from '../../services/treatment-type.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -26,11 +28,20 @@ export class ListComponent implements OnInit{
 
   constructor(
     private router: Router, 
-    private store: Store<AppState>){}
+    private store: Store<AppState>,
+    private treatmentTypeService: TreatmentTypeService,
+    private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
     this.store.dispatch({type: TreatmentTypeActions.GET_TREATMENT_TYPE_LIST})
     this.assignTreatmentTypes();
+    this.treatmentTypeService.onError().subscribe((error) => {
+      if (error) {
+        this.snackBar.open(error, 'Dismiss', {
+          duration: 5000, // Close after 5 seconds 
+        });
+      }
+    });
   }
 
   assignTreatmentTypes() {

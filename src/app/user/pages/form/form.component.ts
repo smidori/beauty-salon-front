@@ -7,6 +7,7 @@ import { AppState } from 'src/app/state/app.state';
 import { UserActions, clearUserError } from '../../state/user.actions';
 import { selectError, selectUser } from '../../state/user.selectors';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
 //import { AppState } from 'src/app/state/app.state';
 
 
@@ -17,6 +18,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit{
+  menuTitle: string = 'Create User';
+
   user$: Observable<User | undefined>;
   user: User | null = null;
   //error: string | null;
@@ -24,16 +27,17 @@ export class FormComponent implements OnInit{
 
   constructor(private acRouter: ActivatedRoute, 
               private store: Store<AppState>,
-              private snackBar: MatSnackBar){
+              private snackBar: MatSnackBar,
+              private router: Router){
     //initialize the variables
     const id = this.acRouter.snapshot.params['id'];
-    //this.error = "TESTE DE ERRO PARA VER COMO FICA";
+    
     this.error$ = this.store.select(selectError);
     this.user$ = this.store.select(selectUser(id));
     this.user$.subscribe(d => {
       if (d) {
+        this.menuTitle = "Update User";
         this.user = d;
-        console.log("loaded user id => " + this.user?.id);
       }
     });        
   }
@@ -42,8 +46,8 @@ export class FormComponent implements OnInit{
     this.error$.subscribe((error) => {
       if (error) {
         this.snackBar.open(error, 'Dismiss', {
-          duration: 5000, // Define a duração do Snackbar em milissegundos (opcional)
-          panelClass: ['snackbar-error'] // Adiciona uma classe CSS personalizada para estilizar o Snackbar (opcional)
+          duration: 5000, // Close after 5 seconds 
+          panelClass: ['snackbar-error'] // css
         });
       }
     });
@@ -64,5 +68,19 @@ export class FormComponent implements OnInit{
       default: ""
     }
   }
-  
+
+  //navigate to the page
+  executeCommandBarAction(action: CommandBarActions) {
+    switch (action) {
+      case CommandBarActions.Create: {
+        this.router.navigate(["users", "form"]);
+        return;
+      }
+      case CommandBarActions.List: {
+        this.router.navigate(["users", "list"]);
+        return;
+      }
+      default: ""
+    }
+  }
 }

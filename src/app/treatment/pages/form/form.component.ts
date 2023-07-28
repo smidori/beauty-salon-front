@@ -20,6 +20,7 @@ export class FormComponent implements OnInit {
   
   //properties
   menuTitle: string = 'Create Treatment';
+
   treatment$: Observable<Treatment | undefined>;
   treatment: Treatment | null = null;
 

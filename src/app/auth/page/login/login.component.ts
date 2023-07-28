@@ -34,11 +34,12 @@ export class LoginComponent{
   getError() {
     this.error$.subscribe(data => {
       if(data) {
-        this._snackBar.open(data.message, "Error");
+        this._snackBar.open(data.message, "Dismiss",{
+          duration: 5000, // Close after 5 seconds 
+        });
       }
     })
   }
-  
 
   checkJWT() {
     if(this.authService.isAuthenticated()) {

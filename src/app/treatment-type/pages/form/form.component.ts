@@ -14,6 +14,7 @@ import { selectTreatmentType } from '../../state/treatment-type.selectors';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+  menuTitle: string = 'Create Treatment Type';
   treatmentType$: Observable<TreatmentType | undefined>;
   treatmentType: TreatmentType | null = null;
 
@@ -26,6 +27,7 @@ export class FormComponent implements OnInit {
     this.treatmentType$ = this.store.select(selectTreatmentType(id));
     this.treatmentType$.subscribe(d => {
       if (d) {
+        this.menuTitle = "Update Treatment Type";
         this.treatmentType = d;
       }
     });

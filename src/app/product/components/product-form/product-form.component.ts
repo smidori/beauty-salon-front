@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Product } from 'src/app/invoice/model/invoice.interface';
+import { DecimalSeparatorDirective } from '../../../shared/directives/decimal-separator.directive'; 
+
 
 @Component({
   selector: 'product-form',

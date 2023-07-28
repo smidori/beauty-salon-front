@@ -1,6 +1,5 @@
-<command-bar (action)="executeCommandBarAction($event)"></command-bar>
+<command-bar menuTitle="Books" (action)="executeCommandBarAction($event)"></command-bar>
 
 <div class="container">
-    <h2>Book list</h2>
     <book-list [books]="books" [headers]="headers" (book)="selectBook($event)"></book-list>
  </div>

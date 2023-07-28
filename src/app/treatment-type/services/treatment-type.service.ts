@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 //import { TreatmentType } from 'src/app/treatment/models/treatment-type.interface';
 import { environment } from 'src/environments/environment';
 import { TreatmentType } from '../models/treatment-type.interface';
@@ -9,6 +9,8 @@ import { TreatmentType } from '../models/treatment-type.interface';
   providedIn: 'root'
 })
 export class TreatmentTypeService {
+
+  private errorSubject = new Subject<string>();
 
   constructor(private http: HttpClient) { }
 
@@ -36,7 +38,15 @@ export class TreatmentTypeService {
 
   deleteTreatmentType(id:number): Observable<TreatmentType>{
     return this.http.delete<TreatmentType>(`${environment.apiURL}/treatment-types/${id}`).pipe(
-      catchError(err => throwError(() => err))
+      //catchError(err => throwError(() => err))
+      catchError((err) => {
+        this.errorSubject.next(err.error.message);
+        return throwError(() => err);
+      })
     )
+  }
+
+  onError() {
+    return this.errorSubject.asObservable();
   }
 }

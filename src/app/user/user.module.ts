@@ -13,26 +13,28 @@ import { UserEffects } from './state/user.effects';
 import { userReducer } from './state/user.reducers';
 import { UserRoutingModule } from './user-routing.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { SharedModule } from "../shared/shared.module";
 
 
 @NgModule({
-  declarations: [
-    FormComponent, 
-    ListComponent,
-    UserListComponent,
-    UserFormComponent,
-    UserCommandBarComponent,
-  ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    UserRoutingModule,
-    StoreModule.forFeature('userState', userReducer),
-    EffectsModule.forFeature([UserEffects])
-  ],
-  providers: [ 
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } } 
- ],
+    declarations: [
+        FormComponent,
+        ListComponent,
+        UserListComponent,
+        UserFormComponent,
+        UserCommandBarComponent,
+    ],
+    providers: [
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline' } }
+    ],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        UserRoutingModule,
+        StoreModule.forFeature('userState', userReducer),
+        EffectsModule.forFeature([UserEffects]),
+        SharedModule
+    ]
 })
 export class UserModule { }

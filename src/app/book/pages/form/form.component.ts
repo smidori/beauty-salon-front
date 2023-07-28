@@ -20,6 +20,8 @@ import { selectBooks, selectBook } from '../../state/book.selectors';
   styleUrls: ['./form.component.css']
 })
 export class FormComponent implements OnInit {
+  menuTitle: string = 'Create Book';
+
   book$: Observable<Book | undefined>;
   book: Book | null = null;
   
@@ -37,6 +39,7 @@ export class FormComponent implements OnInit {
     this.book$ = this.store.select(selectBook(id));
     this.book$.subscribe(d => {
       if (d) {
+        this.menuTitle = "Update Book";
         this.book = d;
       }
     });

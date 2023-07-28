@@ -9,6 +9,9 @@ import { TableActions } from '../../enums/table-actions.enum';
 import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 import { TreatmentType } from '../../models/treatment-type.interface';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
+import { UserService } from 'src/app/user/services/user.service';
+import { TreatmentService } from '../../services/treatment.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list',
@@ -18,7 +21,8 @@ import { AuthenticateService } from 'src/app/core/services/authenticate.service'
 export class ListComponent implements OnInit{
   treatments: ReadonlyArray<Treatment> = [];
   treatments$ = this.store.select(selectTreatments());
-  // isAdmin = false;
+  isVisibleCreate = false;
+  isVisibleList = false;
 
   //headers used to show in the list 
   headers: { headerName: string, fieldName: keyof Treatment, treatmentTypeName?: keyof TreatmentType }[] = [
@@ -33,12 +37,24 @@ export class ListComponent implements OnInit{
   constructor(
     private router: Router, 
     private store: Store<AppState>,
-    private authService: AuthenticateService){}
+    private authService: AuthenticateService,
+    private treatmentService: TreatmentService,
+    private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
     this.store.dispatch({type: TreatmentActions.GET_TREATMENT_LIST})
     this.assignTreatments();
-    // this.isAdmin = this.authService.isAdmin();
+
+    this.treatmentService.onError().subscribe((error) => {
+      if (error) {
+        this.snackBar.open(error, 'Dismiss', {
+          duration: 5000, // Close after 5 seconds 
+        });
+      }
+    });
+
+    this.isVisibleCreate = this.authService.isAdmin();
+    this.isVisibleList = this.authService.isAdmin();
   }
 
   //assign the treatments from the service to the variable

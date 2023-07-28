@@ -1,6 +1,6 @@
 <!-- <div *ngIf="isAdmin"></div> -->
 
-<product-command-bar menuTitle="Product list" (action)="executeCommandBarAction($event)"></product-command-bar>
+<command-bar menuTitle="Products" (action)="executeCommandBarAction($event)"></command-bar>
 
 <div class="container">
     <product-list [products]="products" [headers]="headers" (product)="selectProduct($event)"></product-list>

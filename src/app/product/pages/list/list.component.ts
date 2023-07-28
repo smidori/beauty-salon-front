@@ -8,6 +8,8 @@ import { AppState } from 'src/app/state/app.state';
 import { ProductActions } from '../../state/product.actions';
 import { selectProducts } from '../../state/product.selectors';
 import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
+import { ProductService } from '../../services/product.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list',
@@ -31,11 +33,21 @@ export class ListComponent implements OnInit{
   constructor(
     private router: Router, 
     private store: Store<AppState>,
-    private authService: AuthenticateService){}
+    private authService: AuthenticateService,
+    private productService: ProductService,
+    private snackBar: MatSnackBar){}
 
   ngOnInit(): void {
     this.store.dispatch({type: ProductActions.GET_PRODUCT_LIST})
     this.assignProducts();
+    
+    this.productService.onError().subscribe((error) => {
+      if (error) {
+        this.snackBar.open(error, 'Dismiss', {
+          duration: 5000, // Close after 5 seconds 
+        });
+      }
+    });
     // this.isAdmin = this.authService.isAdmin();
   }
 

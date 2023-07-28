@@ -1,16 +1,17 @@
 .container {
+  padding: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 
-/* CSS para o parágrafo de erro */
+/* CSS erro */
 .error {
-  color: red; /* Define a cor do texto como vermelho */
-  font-size: 14px; /* Define o tamanho da fonte como 14 pixels */
-  font-weight: bold; /* Define o peso da fonte como negrito */
-  margin-top: 5px; /* Define uma margem superior de 5 pixels */
+  color: red; 
+  font-size: 14px; 
+  font-weight: bold; 
+  margin-top: 5px; 
 }
 
 

@@ -85,8 +85,8 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Status</mat-label>
-      <mat-select formControlName="status">
-        <mat-option *ngFor="let status of getBookStatusValues()" [value]="status">
+      <mat-select formControlName="status" >
+        <mat-option *ngFor="let status of getBookStatusValues()" [value]="status" [disabled]="isClient">
           {{ getStatusName(status) }}
         </mat-option>
       </mat-select>

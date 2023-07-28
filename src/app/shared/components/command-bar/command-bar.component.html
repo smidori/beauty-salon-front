@@ -5,12 +5,12 @@
     <!-- <mat-toolbar class="custom-toolbar" > -->
     <!-- <button mat-stroked-button color="primary" -->
   
-    <button  mat-raised-button color="primary"
+    <button  mat-raised-button color="primary" *ngIf="isVisibleCreate"
       (click)="emitAction(0)">
         <mat-icon>fiber_new</mat-icon> Create
     </button>
     &nbsp;
-    <button  mat-raised-button color="primary"
+    <button  mat-raised-button color="primary" *ngIf="isVisibleList"
       (click)="emitAction(1)">
         <mat-icon>list</mat-icon> List
     </button>

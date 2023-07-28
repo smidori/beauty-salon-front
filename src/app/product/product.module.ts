@@ -32,7 +32,8 @@ import { productReducer } from './state/product.reducers';
     SharedModule,
     StoreModule.forFeature('productState', productReducer),
     EffectsModule.forFeature([ProductEffects]),
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class ProductModule { }

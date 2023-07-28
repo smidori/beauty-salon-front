@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { Book, BookAvailableResponse } from "../model/book.interface";
-import { BookSearchParams } from "../model/bookSearchParams.interface";
+import { BookFilterParams, BookSearchParams } from "../model/bookSearchParams.interface";
 
 export enum BookActions{
     GET_BOOK_LIST = '[Book] Get Book list',
@@ -18,8 +18,12 @@ export enum BookActions{
 }
 
 
+// export const getBookList = createAction(
+//     BookActions.GET_BOOK_LIST
+// );
+
 export const getBookList = createAction(
-    BookActions.GET_BOOK_LIST
+    BookActions.GET_BOOK_LIST,props<{book:BookFilterParams}>()
 );
 
 export const setBookList = createAction(

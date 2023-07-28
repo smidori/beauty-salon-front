@@ -8,6 +8,7 @@ import { TableActions } from '../../enums/table-actions.enum';
 import { Invoice } from '../../model/invoice.interface';
 import { InvoiceActions } from '../../state/invoice.action';
 import { selectInvoices } from '../../state/invoice.selectors';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 
 
 @Component({
@@ -20,6 +21,9 @@ export class ListComponent implements OnInit{
   invoices: ReadonlyArray<Invoice> = [];
   invoices$ = this.store.select(selectInvoices());
   
+  isVisibleCreate = false;
+  isVisibleList = false;
+
   
   headers: { headerName: string, fieldName: keyof Invoice, userName?: (keyof User)[] }[] = [
     { headerName: "Client", fieldName: "client", userName: ["firstName", "lastName"] },    
@@ -32,11 +36,16 @@ export class ListComponent implements OnInit{
   constructor(
     private router: Router, 
     private store: Store<AppState>,
+    private auth: AuthenticateService,
+
   ){}
 
   ngOnInit(): void {  
     this.store.dispatch({ type: InvoiceActions.GET_INVOICE_LIST});
     this.assignInvoices();
+
+    this.isVisibleCreate = !this.auth.isClient();
+    this.isVisibleList = !this.auth.isClient();
   }
 
   assignInvoices() {

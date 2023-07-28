@@ -14,26 +14,28 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { PdfComponent } from './pages/pdf/pdf.component';
 import { InvoicePdfComponent } from './components/invoice-pdf/invoice-pdf.component';
+import { SharedModule } from "../shared/shared.module";
 
 
 
 @NgModule({
-  declarations: [
-    ListComponent,
-    FormComponent,
-    InvoiceListComponent,
-    InvoiceFormComponent,
-    CommandBarComponent,
-    PdfComponent,
-    InvoicePdfComponent,
-  ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    InvoiceRoutingModule,
-    StoreModule.forFeature('invoiceState', invoiceReducer),
-    EffectsModule.forFeature([InvoiceEffects])
-  ]
+    declarations: [
+        ListComponent,
+        FormComponent,
+        InvoiceListComponent,
+        InvoiceFormComponent,
+        CommandBarComponent,
+        PdfComponent,
+        InvoicePdfComponent,
+    ],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        InvoiceRoutingModule,
+        StoreModule.forFeature('invoiceState', invoiceReducer),
+        EffectsModule.forFeature([InvoiceEffects]),
+        SharedModule
+    ]
 })
 export class InvoiceModule { }

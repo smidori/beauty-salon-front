@@ -202,7 +202,6 @@ export class InvoiceFormComponent implements OnInit {
   //add product to invoice item
   addProduct() {
     const product = this.productForm.get('product')?.value;
-    console.log("-------- addProduct => " + JSON.stringify(product))
     const treatments = this.invoiceForm.get('invoiceItems') as FormArray;
     const newProductFormGroup = this.fb.group({
       id: [null],

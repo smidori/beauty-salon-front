@@ -91,6 +91,32 @@ export class AuthenticateService {
     return false;
   }
 
+  isWorker(): boolean {
+    if (this.isAuthenticated()) {
+      const userDetails: any = localStorage.getItem('userDetails') ?? '';
+      if (userDetails) {
+        const userDetailsObj = JSON.parse(userDetails);
+        if (userDetailsObj?.role === 'WORKER') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  isClient(): boolean {
+    if (this.isAuthenticated()) {
+      const userDetails: any = localStorage.getItem('userDetails') ?? '';
+      if (userDetails) {
+        const userDetailsObj = JSON.parse(userDetails);
+        if (userDetailsObj?.role === 'CLIENT') {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   name(): string {
     if (this.isAuthenticated()) {
       const userDetails: any = localStorage.getItem('userDetails') ?? '';

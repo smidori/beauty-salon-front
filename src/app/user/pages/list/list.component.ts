@@ -7,6 +7,8 @@ import { selectUsers } from '../../state/user.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
 import { UserActions } from '../../state/user.actions';
+import { UserService } from '../../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -31,11 +33,20 @@ export class ListComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store<AppState>,
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.store.dispatch({ type: UserActions.GET_USER_LIST });
     this.assignUsers();
+    this.userService.onError().subscribe((error) => {
+      if (error) {
+        this.snackBar.open(error, 'Dismiss', {
+          duration: 5000, // Close after 5 seconds 
+        });
+      }
+    });
   }
 
   assignUsers() {

@@ -1,5 +1,5 @@
 <!-- <product-command-bar [menuTitle]="menuTitle" (action)="executeCommandBarAction($event)"></product-command-bar> -->
-<product-command-bar (action)="executeCommandBarAction($event)"></product-command-bar>
+<command-bar [menuTitle]="menuTitle" (action)="executeCommandBarAction($event)"></command-bar>
 <div class="container">
     <product-form [selectedProduct]="product" (action)="formAction($event)"></product-form>
 </div>

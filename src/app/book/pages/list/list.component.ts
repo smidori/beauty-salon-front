@@ -1,3 +1,4 @@
+import { BookFilterParams } from './../../model/bookSearchParams.interface';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -8,6 +9,8 @@ import { User } from 'src/app/user/models/user.interface';
 import { Book } from '../../model/book.interface';
 import { BookActions } from '../../state/book.action';
 import { selectBooks } from '../../state/book.selectors';
+import { BookService } from '../../services/book.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list',
@@ -35,11 +38,29 @@ export class ListComponent implements OnInit{
   constructor(
     private router: Router, 
     private store: Store<AppState>,
+    private bookService: BookService,
+    private snackBar: MatSnackBar
   ){}
 
   ngOnInit(): void {  
-    this.store.dispatch({ type: BookActions.GET_BOOK_LIST});
+    //this.store.dispatch({ type: BookActions.GET_BOOK_LIST});
+    const filterParams: BookFilterParams = {
+      dateBook: null, //will be replaced in the back end depends on the logged user
+      status: null,
+      clientId: null, //will be replaced in the back end depends on the logged user
+      workerId: null, //will be replaced in the back end depends on the logged user
+    };
+    this.store.dispatch({ type: BookActions.GET_BOOK_LIST, payload: filterParams });
+
     this.assignBooks();
+
+    this.bookService.onError().subscribe((error) => {
+      if (error) {
+        this.snackBar.open(error, 'Dismiss', {
+          duration: 5000, // Close after 5 seconds 
+        });
+      }
+    });
   }
 
   assignBooks() {

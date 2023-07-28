@@ -1,13 +1,15 @@
 import { Availability } from './../models/availability.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AvailabilityService {
+  
+  private errorSubject = new Subject<string>();
 
   constructor(private http: HttpClient) { }
   getAvailabilities(): Observable<Availability[]> {
@@ -35,8 +37,15 @@ export class AvailabilityService {
 
   deleteAvailability(id:number): Observable<Availability>{
     return this.http.delete<Availability>(`${environment.apiURL}/availabilities/${id}`).pipe(
-      catchError(err => throwError(() => err))
+      catchError((err) => {
+        this.errorSubject.next(err.error.message);
+        return throwError(() => err);
+      }) 
     )
+  }
+  
+  onError() {
+    return this.errorSubject.asObservable();
   }
 
 }
