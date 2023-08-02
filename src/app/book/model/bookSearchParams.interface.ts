@@ -10,7 +10,7 @@ export interface BookSearchParams {
 
 export interface BookFilterParams {
     dateBook: string | null;
-    status: string | null;
+    bookStatus: string | null;
     clientId: number | null;
     workerId: number | null;
 }

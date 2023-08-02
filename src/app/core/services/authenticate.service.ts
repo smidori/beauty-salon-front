@@ -128,4 +128,15 @@ export class AuthenticateService {
     return '';
   }
 
+  userId():number|null {
+    if (this.isAuthenticated()) {
+      const userDetails: any = localStorage.getItem('userDetails') ?? '';
+      if (userDetails) {
+        const userDetailsObj = JSON.parse(userDetails);
+        return userDetailsObj.id
+      }
+    }
+    return null;
+    
+  }
 }

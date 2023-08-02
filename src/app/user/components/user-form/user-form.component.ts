@@ -1,7 +1,9 @@
+import { UserService } from 'src/app/user/services/user.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../models/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-user-form',
@@ -9,13 +11,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent implements OnInit{
-  @Input() selectedUser: User | null = null;
+  //@Input() selectedUser: User | null = null;
+  @Input() selectedUserId: number | undefined;
   @Input() actionButtonLabel : string = "Create";
   @Output() action = new EventEmitter();
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
-    private snackBar: MatSnackBar){
+    private snackBar: MatSnackBar,
+    private userService: UserService){
     this.form = this.fb.group({
       id:[null],
       firstName: ['', Validators.required],
@@ -64,20 +68,42 @@ export class UserFormComponent implements OnInit{
   }
 
   checkAction() {
-    if(this.selectedUser) {
+    //console.log("this.selectedUser => " + JSON.stringify(this.selectedUser))
+    // if(this.selectedUser) {
+    //   this.actionButtonLabel = "Update";
+    //   this.patchDataValues()
+    // }
+    if(this.selectedUserId != null) {
       this.actionButtonLabel = "Update";
-      this.patchDataValues()
+      
+      this.userService.getUserById(this.selectedUserId).pipe(
+        catchError(error => {
+          return throwError(() => 'Error to loading the user by id + ' + this.selectedUserId);
+        })
+      ).subscribe(
+        (user: User) => {
+          //console.log("user => " + JSON.stringify(user))
+          //this.user = user;
+          this.form.patchValue(user);
+          this.form.get('confirmPassword')?.setValue(user.password)
+        }
+      );
+
+
+
+      
+      //this.patchDataValues()
     }
   }
 
-  patchDataValues () {
+//   patchDataValues () {
 
-    if(this.selectedUser){
-      console.log(JSON.stringify("user => " + this.selectedUser.firstName));
-      this.form.patchValue(this.selectedUser);
-    }
+//     if(this.selectedUser){
+//       console.log(JSON.stringify("user => " + this.selectedUser.firstName));
+//       this.form.patchValue(this.selectedUser);
+//     }
     
- }
+//  }
 
   emitAction() {
     this.action.emit({value: this.form.value, action: this.actionButtonLabel})

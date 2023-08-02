@@ -22,6 +22,14 @@ export class UserService {
     )
   }
 
+  getUserById(id: number): Observable<User>{
+    console.log('getUserById => ' + `${environment.apiURL}/users/${id}`)
+    return this.http.get<User>(`${environment.apiURL}/users/${id}`).pipe(
+      tap((data: User) => data),
+      catchError(err => throwError(() => err))
+    )
+  }
+
   getUsersByRole(role: string): Observable<User[]>{
     console.log('getUsersByRole => ' + `${environment.apiURL}/users/role/${role}`)
     return this.http.get<User[]>(`${environment.apiURL}/users/role/${role}`).pipe(

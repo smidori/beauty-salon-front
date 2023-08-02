@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
@@ -27,6 +27,7 @@ export class InvoiceFormComponent implements OnInit {
   invoiceForm: FormGroup;
   productForm: FormGroup;
   selectedTreatment: Treatment | null = null;
+  productsWithStock:Product[] = [];
 
   clientFormControl: FormControl;
 
@@ -49,6 +50,8 @@ export class InvoiceFormComponent implements OnInit {
     this.productForm = this.fb.group({
       product: [null],
     })
+
+    
   }
 
   ngOnInit(): void {
@@ -59,6 +62,18 @@ export class InvoiceFormComponent implements OnInit {
         this.loadBooksForClient(client.id); //Load books from this client for this current date
       }
     });
+  }
+
+  //call the methods to filter the products with stock
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['products']) {
+      this.filterProducts();
+    }
+  }
+
+  //filter products that has stock > 0
+  private filterProducts() {
+    this.productsWithStock = this.products.filter(product => product.stock > 0);
   }
 
   calculateTotalInvoice() {
@@ -167,7 +182,7 @@ export class InvoiceFormComponent implements OnInit {
     const treatments = this.invoiceForm.get('invoiceItems') as FormArray;
     const newTreatmentFormGroup = this.fb.group({
       id: [null],
-      description: [treatment.description],
+      description: [treatment.name],
       observation: [''],
       worker: [null],
       amount: [1, Validators.required],
@@ -205,7 +220,7 @@ export class InvoiceFormComponent implements OnInit {
     const treatments = this.invoiceForm.get('invoiceItems') as FormArray;
     const newProductFormGroup = this.fb.group({
       id: [null],
-      description: [product.description],
+      description: [product.name],
       observation: [''],
       worker: [null],
       amount: [1, Validators.required],
@@ -238,7 +253,9 @@ export class InvoiceFormComponent implements OnInit {
 
   }
 
-
+  generateOptions(stock: number): number[] {
+    return Array.from({ length: stock }, (_, i) => i + 1);
+  }
 
   // calculate the total for the item based on the fields "subtotal", "extra" e "discount"
   calculateProductTotal(formGroup: FormGroup) {

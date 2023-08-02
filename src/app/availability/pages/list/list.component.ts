@@ -32,7 +32,7 @@ export class ListComponent implements OnInit{
     // { headerName: "S", fieldName: "saturday" },
     
     { headerName: "Start Date", fieldName: "startDate" },
-    //{ headerName: "Finish Date", fieldName: "finishDate" }, //não exibir na list para ter sempre 1 nulo que é o atual
+    { headerName: "Finish Date", fieldName: "finishDate" }, //não exibir na list para ter sempre 1 nulo que é o atual
     { headerName: "Treatments", fieldName: "treatments" },
     { headerName: "Start Time", fieldName: "hourStartTime" },
     { headerName: "Finish Time", fieldName: "hourFinishTime" },

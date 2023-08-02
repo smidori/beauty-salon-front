@@ -23,7 +23,7 @@
                 {{ getFullName(element[item.fieldName], item.userName) }}
             </ng-container>
 
-            <ng-container *ngIf="item.fieldName === 'startDate' || item.fieldName === 'finishDate'">
+            <ng-container *ngIf="item.fieldName === 'startDate' || item.fieldName === 'finishDate' ">
                 {{ element[item.fieldName] | date: 'dd/MM/yyyy' }}
             </ng-container>
 

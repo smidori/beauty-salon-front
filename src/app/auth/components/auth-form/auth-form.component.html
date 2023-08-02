@@ -7,12 +7,14 @@
             </p>
             <p>
                 <mat-form-field class="form-field">
+                    <mat-label>Username</mat-label>
                     <input type="text" name="username" matInput placeholder="Username" formControlName="login">
                 </mat-form-field>
             </p>
 
             <p>
                 <mat-form-field class="form-field">
+                    <mat-label>Password</mat-label>
                     <input type="password" name="password" matInput placeholder="Password" formControlName="password">
                 </mat-form-field>
             </p>
@@ -38,17 +40,20 @@
             <p></p>
             <div class="form-row">
                 <mat-form-field class="form-field">
+                    <mat-label>First Name</mat-label>
                     <input matInput type="text" matInput placeholder="First Name" formControlName="firstName" required>
                 </mat-form-field>
 
 
                 <mat-form-field class="form-field">
+                    <mat-label>Last Name</mat-label>
                     <input type="text" matInput placeholder="Last Name" formControlName="lastName" required>
                 </mat-form-field>
             </div>
 
             <div class="form-row">
                 <mat-form-field class="form-field">
+                    <mat-label>E-mail</mat-label>
                     <input type="text" matInput placeholder="Email" formControlName="email" required>
                 </mat-form-field>
 
@@ -65,17 +70,20 @@
 
             <div class="form-row">
                 <mat-form-field class="form-field">
+                    <mat-label>Username</mat-label>
                     <input matInput type="text" matInput placeholder="Username" formControlName="login" required>
                 </mat-form-field>
             </div>
 
             <div class="form-row">
                 <mat-form-field class="form-field">
+                    <mat-label>Password</mat-label>
                     <input type="password" matInput placeholder="Password" formControlName="password" required
                         (blur)="checkPasswordsMatch()">
                 </mat-form-field>
 
                 <mat-form-field class="form-field">
+                    <mat-label>Confirm Password</mat-label>
                     <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword"
                         (blur)="checkPasswordsMatch()" required>
                 </mat-form-field>
@@ -83,11 +91,13 @@
 
             <div class="form-row">
                 <mat-form-field class="form-field">
-                    <input matInput type="text" matInput placeholder="Mobile Phone" formControlName="mobilePhone"
+                    <mat-label>Mobile Phone</mat-label>
+                    <input matInput type="text" appPhoneNumber placeholder="Mobile Phone" formControlName="mobilePhone"
                         required>
                 </mat-form-field>
                 <mat-form-field class="form-field">
-                    <input type="text" matInput placeholder="Home Phone" formControlName="homePhone">
+                    <mat-label>Home Phone</mat-label>
+                    <input type="text" matInput appPhoneNumber placeholder="Home Phone" formControlName="homePhone">
                 </mat-form-field>
             </div>
 

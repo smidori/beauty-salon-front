@@ -1,6 +1,7 @@
 <!-- <app-user-form [selectedUser]="user" (action)="formAction($event)"></app-user-form> -->
-<command-bar [menuTitle]="menuTitle" (action)="executeCommandBarAction($event)"></command-bar>
+<command-bar [menuTitle]="menuTitle" [isVisibleCreate]="isVisibleCreate" [isVisibleList]="isVisibleList" (action)="executeCommandBarAction($event)"></command-bar>
 
 <div class="container">
-    <app-user-form [selectedUser]="user" (action)="formAction($event)"></app-user-form>
+    <!-- <app-user-form [selectedUser]="user" (action)="formAction($event)"></app-user-form> -->
+    <app-user-form [selectedUserId]="userId" (action)="formAction($event)"></app-user-form>
 </div>

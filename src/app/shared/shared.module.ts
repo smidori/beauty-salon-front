@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { CommandBarComponent } from './components/command-bar/command-bar.component';
 import { MaterialModule } from '../material/material.module';
 import { DecimalSeparatorDirective } from './directives/decimal-separator.directive';
+import { UserRoutingModule } from '../user/user-routing.module';
+import { PhoneNumberDirective } from './directives/phone-number.directive';
 
 
 @NgModule({
@@ -15,21 +17,22 @@ import { DecimalSeparatorDirective } from './directives/decimal-separator.direct
     NavbarComponent,
     FooterComponent,
     CommandBarComponent,
-    DecimalSeparatorDirective
+    DecimalSeparatorDirective,
+    PhoneNumberDirective
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
     CommandBarComponent,
-    DecimalSeparatorDirective
-
+    DecimalSeparatorDirective,
+    PhoneNumberDirective
   ],
   imports: [
     CommonModule,
     MatButtonModule,
     MatToolbarModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
   ]
 })
 export class SharedModule { }

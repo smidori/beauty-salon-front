@@ -21,6 +21,8 @@
     <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/books'">Books</button>
     <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/invoices'">Invoices</button>
 
+    <button *ngIf="isAuthenticated" mat-raised-button color="primary" (click)="editUserDetails()">MyAccount</button>
+
     <div class="spacer"></div>
         
     

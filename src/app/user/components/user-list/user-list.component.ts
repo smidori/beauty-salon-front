@@ -1,6 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { User } from 'src/app/user/models/user.interface';
 import { TableActions } from '../../enums/table-actions.enum';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 
 
 @Component({
@@ -13,8 +14,11 @@ export class UserListComponent implements OnInit {
   @Input() users: ReadonlyArray<User> = [];
   @Output() user = new EventEmitter<{user: User, action:TableActions}>();
   headerFields:string[] = [];
+  loggedUserId: number | null;
 
-  constructor() {}
+  constructor(auth: AuthenticateService) {
+    this.loggedUserId = auth.userId();
+  }
   
   ngOnInit(): void {
     this.getHeaderFields();

@@ -11,6 +11,8 @@ import { BookActions } from '../../state/book.action';
 import { selectBooks } from '../../state/book.selectors';
 import { BookService } from '../../services/book.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
+import { BookStatus } from '../../model/book-status.enum';
 
 @Component({
   selector: 'app-list',
@@ -39,17 +41,31 @@ export class ListComponent implements OnInit{
     private router: Router, 
     private store: Store<AppState>,
     private bookService: BookService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthenticateService
   ){}
 
   ngOnInit(): void {  
     //this.store.dispatch({ type: BookActions.GET_BOOK_LIST});
     const filterParams: BookFilterParams = {
       dateBook: null, //will be replaced in the back end depends on the logged user
-      status: null,
+      bookStatus: null,
       clientId: null, //will be replaced in the back end depends on the logged user
       workerId: null, //will be replaced in the back end depends on the logged user
     };
+    // const currentDate = new Date();
+    // var today = currentDate.toLocaleDateString('en-IE');
+
+    const currentDate = new Date();
+    var today = currentDate.toISOString();
+
+    if(this.authService.isAdmin()){  
+      filterParams.dateBook = today;
+    }else if(this.authService.isWorker()){
+      filterParams.dateBook = today;
+    }else{//client
+      filterParams.bookStatus = BookStatus.BOOKED;
+    }
     this.store.dispatch({ type: BookActions.GET_BOOK_LIST, payload: filterParams });
 
     this.assignBooks();

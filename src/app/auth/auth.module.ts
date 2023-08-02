@@ -13,6 +13,7 @@ import { CoreModule } from '../core/core.module';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './state/auth.effects';
 import { authReducer } from './state/auth.reducers';
+import { SharedModule } from '../shared/shared.module';
 
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
@@ -36,6 +37,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
+    SharedModule,
     StoreModule.forFeature('authState', authReducer, {metaReducers}),
     EffectsModule.forFeature([AuthEffects]),
   ]

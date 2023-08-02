@@ -39,13 +39,30 @@
               </mat-form-field>
             </ng-container>
 
-            <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Product'">
+            <!-- <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Product'">
               <mat-form-field class="form-field custom-input-number">
                 <mat-label>Amount</mat-label>
                 <input matInput formControlName="amount" type="number">
               </mat-form-field>
+            </ng-container> -->
+            <!-- <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Product'">
+              <mat-form-field class="form-field custom-input-number">
+                <mat-label>Amount</mat-label>
+                <mat-select formControlName="amount">
+                  <mat-option *ngFor="let option of getFormGroup(itemGroup).get('item')?.value.stock" [value]="option">{{ option }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container> -->
+            <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Product'">
+              <mat-form-field class="form-field custom-input-number">
+                <mat-label>Amount</mat-label>
+                <mat-select formControlName="amount">
+                  <mat-option *ngFor="let option of generateOptions(getFormGroup(itemGroup).get('item')?.value.stock)" [value]="option">{{ option }}</mat-option>
+                </mat-select>
+              </mat-form-field>
             </ng-container>
-
+            
+            
             <mat-form-field class="form-field custom-input-number">
               <mat-label>Discount</mat-label>
               <input matInput formControlName="discount" type="number">
@@ -71,7 +88,7 @@
       <mat-form-field class="form-field custom-one-field">
         <mat-label>Products</mat-label>
         <mat-select formControlName="product" [compareWith]="compareObjects">
-          <mat-option *ngFor="let product of products" [value]="product">{{ product.name
+          <mat-option *ngFor="let product of productsWithStock" [value]="product">{{ product.name
             }}</mat-option>
         </mat-select>
       </mat-form-field>      

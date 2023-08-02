@@ -9,6 +9,8 @@ import { AppState } from 'src/app/state/app.state';
 import { UserActions } from '../../state/user.actions';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { map } from 'rxjs';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 
 
 @Component({
@@ -20,6 +22,10 @@ export class ListComponent implements OnInit {
 
   users: ReadonlyArray<User> = [];
   users$ = this.store.select(selectUsers());
+  
+  isVisibleCreate = false;
+  isVisibleList = false;
+  menuTitle = "My Account";
 
   headers: { headerName: string, fieldName: keyof User }[] = [
     { headerName: "Id", fieldName: "id" },
@@ -34,8 +40,15 @@ export class ListComponent implements OnInit {
     private router: Router,
     private store: Store<AppState>,
     private userService: UserService,
-    private snackBar: MatSnackBar
-  ) { }
+    private snackBar: MatSnackBar,
+    private auth: AuthenticateService
+  ) { 
+    if(auth.isAdmin()){
+      this.isVisibleCreate = true;
+      this.isVisibleList = true;
+      this.menuTitle = "Users"
+    }
+  }
 
   ngOnInit(): void {
     this.store.dispatch({ type: UserActions.GET_USER_LIST });
@@ -50,9 +63,18 @@ export class ListComponent implements OnInit {
   }
 
   assignUsers() {
-    this.users$.subscribe((data) => {
-      this.users = data;
-    });
+    if(this.auth.isAdmin()){
+      this.users$.subscribe((data) => {
+        this.users = data;
+      });
+    }else{
+      this.users$.pipe(
+        map((users) => users.filter((user) => user.id === this.auth.userId()))
+      ).subscribe((filteredUsers) => {
+        this.users = filteredUsers;
+      });
+    }
+    
   }
 
   selectUser(data: { user: User, action: TableActions }) {

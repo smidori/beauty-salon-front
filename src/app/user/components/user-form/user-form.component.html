@@ -29,8 +29,8 @@
 
     <div class="form-row">
         <mat-form-field class="form-field">
-            <mat-label>Login</mat-label>
-            <input matInput placeholder="Login" formControlName="login" required>
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" formControlName="login" required>
         </mat-form-field>
     </div>
 
@@ -51,12 +51,12 @@
     <div class="form-row">
         <mat-form-field class="form-field">
             <mat-label>Mobile Phone</mat-label>
-            <input matInput placeholder="Mobile Phone" formControlName="mobilePhone" required>
+            <input matInput type="text" appPhoneNumber placeholder="Mobile Phone" formControlName="mobilePhone" required>
         </mat-form-field>
 
         <mat-form-field class="form-field">
             <mat-label>Home Phone</mat-label>
-            <input matInput placeholder="Home Phone" formControlName="homePhone">
+            <input matInput type="text" appPhoneNumber placeholder="Home Phone" formControlName="homePhone">
         </mat-form-field>
     </div>
     <div class="form-row">

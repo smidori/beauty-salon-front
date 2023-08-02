@@ -3,12 +3,13 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }
 import { TableActions } from 'src/app/shared/enums/table-actions.enum';
 import { User } from 'src/app/user/models/user.interface';
 import { Book } from '../../model/book.interface';
-import { bookStatusLabels } from '../../model/book-status.enum';
+import { BookStatus, bookStatusLabels } from '../../model/book-status.enum';
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/user/services/user.service';
 import { catchError, tap } from 'rxjs';
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 
 @Component({
   selector: 'book-list',
@@ -25,7 +26,10 @@ export class BookListComponent implements OnInit{
   clients: User[] = [];
   searchForm: FormGroup;
   
-  constructor(private fb:FormBuilder, private userService: UserService,private bookService: BookService) {
+  constructor(private fb:FormBuilder, 
+    private userService: UserService,
+    private bookService: BookService,
+    private authService: AuthenticateService) {
 
     this.searchForm = this.fb.group({
       dateBook: [null],
@@ -33,6 +37,17 @@ export class BookListComponent implements OnInit{
       clientId : [null],
       bookStatus: [null],
     });
+
+
+    const currentDate = new Date();
+    var today = currentDate.toISOString();
+
+    if(this.authService.isAdmin() || this.authService.isWorker()){  
+      this.searchForm.get('dateBook')?.setValue(today);
+    }else{//client
+      this.searchForm.get('bookStatus')?.setValue(BookStatus.BOOKED);;
+    }
+
 
     this.loadUsersByRole("CLIENT");
     this.loadUsersByRole("WORKER");

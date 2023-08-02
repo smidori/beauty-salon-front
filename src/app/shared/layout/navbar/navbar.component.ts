@@ -65,4 +65,10 @@ export class NavbarComponent implements OnInit {
     return this.auth.isAuthenticated();
   }
 
+  editUserDetails() {
+    const userId = this.auth.userId();
+    this.router.navigate(['users', 'form', userId]);    
+    return;
+  }
+
 }
