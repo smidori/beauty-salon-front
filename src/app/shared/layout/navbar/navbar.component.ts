@@ -16,6 +16,7 @@ import { User } from 'src/app/user/models/user.interface';
 })
 
 export class NavbarComponent implements OnInit {
+  
   //isAuthenticated$: Observable<boolean>;
   //userDetails$ = this.store.select(selectUserDetails);
   name = '';

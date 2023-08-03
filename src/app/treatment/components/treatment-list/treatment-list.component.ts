@@ -3,6 +3,8 @@ import { Treatment } from '../../models/treatment.interface';
 import { TableActions } from 'src/app/user/enums/table-actions.enum';
 import { TreatmentType } from '../../models/treatment-type.interface';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'treatment-list',
@@ -22,7 +24,7 @@ export class TreatmentListComponent implements OnInit{
   isAdmin = false;
   isClient = false;
 
-  constructor(private auth:AuthenticateService) {}
+  constructor(private auth:AuthenticateService, private dialog:MatDialog) {}
   
   ngOnInit(): void {
     this.getHeaderFields();
@@ -39,5 +41,19 @@ export class TreatmentListComponent implements OnInit{
   //get the treatment that was selected
   selectTreatment(treatment: Treatment, action:TableActions) {
     this.treatment.emit({treatment,action})
+  }
+
+  //modal delete confirmation
+  openDeleteConfirmationDialog(treatment: Treatment, action:TableActions): void {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '400px',
+      data: 'Are you sure you want to delete this item?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectTreatment(treatment, action)
+      }
+    });
   }
 }

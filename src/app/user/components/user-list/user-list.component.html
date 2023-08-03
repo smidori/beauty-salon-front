@@ -15,7 +15,7 @@
                 <mat-icon>edit</mat-icon>
             </button>
             &nbsp;
-            <button class="custom-button-table" (click)="selectUser(element, 1)" [disabled]="loggedUserId == element.id"
+            <button class="custom-button-table" (click)="openDeleteConfirmationDialog(element, 1)" [disabled]="loggedUserId == element.id"
               mat-icon-button color="warn">
                 <mat-icon>delete</mat-icon> 
             </button>

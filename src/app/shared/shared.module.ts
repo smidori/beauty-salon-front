@@ -10,6 +10,8 @@ import { MaterialModule } from '../material/material.module';
 import { DecimalSeparatorDirective } from './directives/decimal-separator.directive';
 import { UserRoutingModule } from '../user/user-routing.module';
 import { PhoneNumberDirective } from './directives/phone-number.directive';
+import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -18,14 +20,16 @@ import { PhoneNumberDirective } from './directives/phone-number.directive';
     FooterComponent,
     CommandBarComponent,
     DecimalSeparatorDirective,
-    PhoneNumberDirective
+    PhoneNumberDirective,
+    DialogConfirmComponent
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
     CommandBarComponent,
     DecimalSeparatorDirective,
-    PhoneNumberDirective
+    PhoneNumberDirective,
+    DialogConfirmComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +37,8 @@ import { PhoneNumberDirective } from './directives/phone-number.directive';
     MatToolbarModule,
     RouterModule,
     MaterialModule,
+    MatDialogModule,
+    MatButtonModule,
   ]
 })
 export class SharedModule { }

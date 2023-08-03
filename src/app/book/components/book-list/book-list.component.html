@@ -98,7 +98,7 @@
                     <mat-icon>edit</mat-icon>
                 </button>
 
-                <button class="custom-button-table" mat-icon-button color="warn" (click)="selectBook(element, 1)" *ngIf="element['status'] === 'BOOKED'" >
+                <button class="custom-button-table" mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element, 1)" *ngIf="element['status'] === 'BOOKED'" >
                     <mat-icon>delete</mat-icon>
                 </button>
             </td>

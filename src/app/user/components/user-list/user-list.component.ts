@@ -2,6 +2,8 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { User } from 'src/app/user/models/user.interface';
 import { TableActions } from '../../enums/table-actions.enum';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
+import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm/dialog-confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -15,8 +17,9 @@ export class UserListComponent implements OnInit {
   @Output() user = new EventEmitter<{user: User, action:TableActions}>();
   headerFields:string[] = [];
   loggedUserId: number | null;
+  
 
-  constructor(auth: AuthenticateService) {
+  constructor(auth: AuthenticateService, private dialog: MatDialog) {
     this.loggedUserId = auth.userId();
   }
   
@@ -33,4 +36,16 @@ export class UserListComponent implements OnInit {
     this.user.emit({user,action})
   }
 
+  openDeleteConfirmationDialog(user: User, action:TableActions): void {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '400px',
+      data: 'Are you sure you want to delete this item?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectUser(user, action)
+      }
+    });
+  }
 }

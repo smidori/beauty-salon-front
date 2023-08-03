@@ -27,7 +27,7 @@
                 <mat-icon>edit</mat-icon>
             </button>
             &nbsp;
-            <button *ngIf="isAdmin" class="custom-button-table" (click)="selectTreatment(element, 1)" mat-icon-button color="warn">
+            <button *ngIf="isAdmin" class="custom-button-table" (click)="openDeleteConfirmationDialog(element, 1)" mat-icon-button color="warn">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>

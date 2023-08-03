@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Product } from 'src/app/invoice/model/invoice.interface';
+import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm/dialog-confirm.component';
 import { TableActions } from 'src/app/shared/enums/table-actions.enum';
 
 @Component({
@@ -18,7 +20,7 @@ export class ProductListComponent implements OnInit{
   //variables
   headerFields:string[] = [];
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
   
   ngOnInit(): void {
     this.getHeaderFields();
@@ -33,5 +35,19 @@ export class ProductListComponent implements OnInit{
   //get the product that was selected
   selectProduct(product: Product, action:TableActions) {
     this.product.emit({product,action})
+  }
+
+  //modal delete confirmation
+  openDeleteConfirmationDialog(product: Product, action:TableActions): void {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '400px',
+      data: 'Are you sure you want to delete this item?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectProduct(product, action)
+      }
+    });
   }
 }

@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { TreatmentType } from '../../models/treatment-type.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm/dialog-confirm.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'treatment-type-form',
@@ -39,7 +41,6 @@ export class TreatmentTypeFormComponent {
       this.form.patchValue(this.selectedTreatmentType);
     }
   }
-
   emitAction() {
     console.log("treatmentType => " + JSON.stringify(this.form.value));
     this.action.emit({ value: this.form.value, action: this.actionButtonLabel })

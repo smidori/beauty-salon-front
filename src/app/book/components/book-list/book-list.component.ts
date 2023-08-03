@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/user/services/user.service';
 import { catchError, tap } from 'rxjs';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'book-list',
@@ -29,7 +31,8 @@ export class BookListComponent implements OnInit{
   constructor(private fb:FormBuilder, 
     private userService: UserService,
     private bookService: BookService,
-    private authService: AuthenticateService) {
+    private authService: AuthenticateService,
+    private dialog: MatDialog) {
 
     this.searchForm = this.fb.group({
       dateBook: [null],
@@ -105,6 +108,20 @@ export class BookListComponent implements OnInit{
     this.book.emit({book,action})
   }
 
+  //modal delete confirmation
+  openDeleteConfirmationDialog(book: Book, action:TableActions): void {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '400px',
+      data: 'Are you sure you want to delete this item?'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectBook(book, action)
+      }
+    });
+  }
+
   // get the values from enum BookStatus 
   getBookStatusValues(): string[] {
     return Object.keys(bookStatusLabels);
@@ -141,5 +158,5 @@ export class BookListComponent implements OnInit{
       });
     }
   }
-  
+
 }

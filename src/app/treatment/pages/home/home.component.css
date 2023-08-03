@@ -6,7 +6,7 @@
 .image-home {
   min-height: 69vh;
   min-width: 69vh;
-  background-image: url('../../../images/beauty_salon_space.jpg');
+  background-image: url('../../../../assets/images/beauty_salon_space.jpg');
   background-position: center center;
   opacity: 0.5;
 }
