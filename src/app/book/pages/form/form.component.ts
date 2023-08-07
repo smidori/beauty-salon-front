@@ -11,9 +11,10 @@ import { User } from 'src/app/user/models/user.interface';
 import { UserActions } from 'src/app/user/state/user.actions';
 import { selectUsers } from 'src/app/user/state/user.selectors';
 import { Book } from '../../model/book.interface';
-import { BookActions } from '../../state/book.action';
-import { selectBooks, selectBook } from '../../state/book.selectors';
+import { BookActions, clearBookError } from '../../state/book.action';
+import { selectBooks, selectBook, selectError } from '../../state/book.selectors';
 import { UserService } from 'src/app/user/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form',
@@ -32,11 +33,15 @@ export class FormComponent implements OnInit {
   users: ReadonlyArray<User>=[];
   users$ = this.store.select(selectUsers());  
 
+  error$: Observable<string | null>;
+
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
     private router: Router,
-    private userService: UserService) {
+    private userService: UserService,
+    private snackBar: MatSnackBar) {
+      
     const id = this.acRouter.snapshot.params['id'];
     this.book$ = this.store.select(selectBook(id));
     this.book$.subscribe(d => {
@@ -45,6 +50,7 @@ export class FormComponent implements OnInit {
         this.book = d;
       }
     });
+    this.error$ = this.store.select(selectError);
   }
 
 
@@ -62,6 +68,14 @@ export class FormComponent implements OnInit {
     //   this.users = data;
     // })
     this.loadUsersByRole('CLIENT');
+
+    this.error$.subscribe((error) => {
+      if (error) {
+        this.snackBar.open(error, 'Dismiss', {
+          duration: 5000, // Close after 5 seconds 
+        });
+      }
+    });
   }
 
   //load the specific users
@@ -78,15 +92,13 @@ export class FormComponent implements OnInit {
   }
 
   formAction(data: { value: Book, action: string }) {
-    console.log("******************* formAction from pages BOOK ******************" )
+    this.store.dispatch(clearBookError());
     switch (data.action) {
       case "Create": {
-        console.log("*********** create book => " + JSON.stringify(data.value));
         this.store.dispatch({ type: BookActions.ADD_BOOK_API, payload: data.value });
         return;
       }
       case "Update": {
-        console.log("*********** update book => " + JSON.stringify(data.value));
         this.store.dispatch({ type: BookActions.UPDATE_BOOK_API, payload: data.value });
         return;
       }

@@ -70,7 +70,6 @@ export class FormComponent implements OnInit {
 
     this.error$.subscribe((error) => {
       if (error) {
-        console.log("*******error availabi********")
         this.snackBar.open(error, 'Dismiss', {
           duration: 5000, // Close after 5 seconds 
         });

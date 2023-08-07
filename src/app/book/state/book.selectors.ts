@@ -36,3 +36,7 @@ export const selectSlots = () => createSelector(
     }
   );
   
+  export const selectError = createSelector(
+    selectBookState,
+    (state: BookState) => state.error
+  );

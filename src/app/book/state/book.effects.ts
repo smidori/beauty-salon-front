@@ -2,7 +2,7 @@ import { BookFilterParams } from './../model/bookSearchParams.interface';
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { mergeMap, map, catchError, EMPTY, tap } from "rxjs";
+import { mergeMap, map, catchError, EMPTY, tap, of } from "rxjs";
 import { Book } from "../model/book.interface";
 import { BookService } from "../services/book.service";
 import { BookActions } from "./book.action";
@@ -63,7 +63,8 @@ export class BookEffects {
                 .pipe(
                     map(books => ({ type: BookActions.ADD_BOOK_STATE, book: data.payload })),
                     tap(() => this.router.navigate(["books"])),
-                    catchError(() => EMPTY)
+                    //catchError(() => EMPTY)
+                    catchError((error) => of({ type: BookActions.ADD_BOOK_ERROR, error: error.error.message }))
                 ))
         )
     }, { dispatch: true })
@@ -94,4 +95,6 @@ export class BookEffects {
             ))
         )
     })
+
+    
 }

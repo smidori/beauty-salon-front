@@ -7,6 +7,8 @@ export enum BookActions{
     SET_BOOK_LIST = '[Book] Set Book list',
     ADD_BOOK_API = '[Book] Add Book api',
     ADD_BOOK_STATE = '[Book] Add Book state',
+    ADD_BOOK_ERROR = '[Book] Add Book error',
+    CLEAR_BOOK_ERROR = '[Book] Clear Book Error',
     UPDATE_BOOK_API = '[Book] Update Book api',
     UPDATE_BOOK_STATE = '[Book] Update Book state',
     DELETE_BOOK_API = '[Book] Delete Book api',
@@ -53,3 +55,12 @@ export const updateBookState = createAction(
 export const deleteBookState = createAction(
     BookActions.DELETE_BOOK_STATE, props<{bookId: number}>()
 )
+
+export const addBookError = createAction(
+    BookActions.ADD_BOOK_ERROR,
+    props<{ error: any }>()
+);
+
+export const clearBookError = createAction(
+    BookActions.CLEAR_BOOK_ERROR
+);
