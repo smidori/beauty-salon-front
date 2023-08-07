@@ -2,123 +2,113 @@
 
   <!-- Select a client for new invoice -->
   <div class="form-row custom-form-row" *ngIf="!selectedInvoice">
-    <mat-form-field class="form-field custom-form-field custom-one-field">
-      <mat-label>Client</mat-label>
-      <mat-select formControlName="client">
-        <mat-option *ngFor="let user of clients" [value]="user">{{ user.firstName }} {{ user.lastName }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field class="form-field custom-form-field custom-one-field">
+    <mat-label>Client</mat-label>
+    <mat-select formControlName="client">
+    <mat-option *ngFor="let user of clients" [value]="user">{{ user.firstName }} {{ user.lastName }}</mat-option>
+    </mat-select>
+  </mat-form-field>
   </div>
 
   <ng-container *ngIf="hasInvoiceItems()">
-    <div formArrayName="invoiceItems">
-      <ng-container *ngFor="let itemGroup of invoiceItemsFormArray.controls; let i = index">
-        <mat-card class="item-card" [formGroup]="getFormGroup(itemGroup)">
-          <mat-card-header>
-            <!-- <mat-card-title>Invoice Item {{ i + 1 }}</mat-card-title> -->
-            <button mat-icon-button (click)="removeTreatment(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <p *ngIf="getFormGroup(itemGroup)?.get('item')">
-              <b>{{getFormGroup(itemGroup).get('item')?.value.itemType}}: </b>{{
-              getFormGroup(itemGroup).get('item')?.value.name }}
-              <br /><b>Description: </b>{{ getFormGroup(itemGroup).get('item')?.value.description }}
-            </p>
-          </mat-card-header>
+  <div formArrayName="invoiceItems">
+    <ng-container *ngFor="let itemGroup of invoiceItemsFormArray.controls; let i = index">
+    <mat-card class="item-card" [formGroup]="getFormGroup(itemGroup)">
+      <mat-card-header>
+      <!-- <mat-card-title>Invoice Item {{ i + 1 }}</mat-card-title> -->
+      <button mat-icon-button (click)="removeTreatment(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <p *ngIf="getFormGroup(itemGroup)?.get('item')">
+        <b>{{getFormGroup(itemGroup).get('item')?.value.itemType}}: </b>{{
+        getFormGroup(itemGroup).get('item')?.value.name }}
+        <br /><b>Description: </b>{{ getFormGroup(itemGroup).get('item')?.value.description }}
+      </p>
+      </mat-card-header>
 
-          <mat-card-content>
-            <mat-form-field class="form-field custom-input-number">
-              <mat-label>Subtotal</mat-label>
-              <input matInput formControlName="subtotal" type="number">
-            </mat-form-field>
+      <mat-card-content>
+      <mat-form-field class="form-field custom-input-number">
+        <mat-label>Subtotal</mat-label>
+        <input matInput formControlName="subtotal" type="number">
+      </mat-form-field>
 
-            <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Treatment'">
-              <mat-form-field class="form-field custom-input-number">
-                <mat-label>Extra</mat-label>
-                <input matInput formControlName="extra" type="number">
-              </mat-form-field>
-            </ng-container>
-
-            <!-- <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Product'">
-              <mat-form-field class="form-field custom-input-number">
-                <mat-label>Amount</mat-label>
-                <input matInput formControlName="amount" type="number">
-              </mat-form-field>
-            </ng-container> -->
-            <!-- <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Product'">
-              <mat-form-field class="form-field custom-input-number">
-                <mat-label>Amount</mat-label>
-                <mat-select formControlName="amount">
-                  <mat-option *ngFor="let option of getFormGroup(itemGroup).get('item')?.value.stock" [value]="option">{{ option }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </ng-container> -->
-            <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Product'">
-              <mat-form-field class="form-field custom-input-number">
-                <mat-label>Amount</mat-label>
-                <mat-select formControlName="amount">
-                  <mat-option *ngFor="let option of generateOptions(getFormGroup(itemGroup).get('item')?.value.stock)" [value]="option">{{ option }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </ng-container>
-            
-            
-            <mat-form-field class="form-field custom-input-number">
-              <mat-label>Discount</mat-label>
-              <input matInput formControlName="discount" type="number">
-            </mat-form-field>
-
-            <mat-form-field class="form-field custom-input-number">
-              <mat-label>Total</mat-label>
-              <input matInput formControlName="total" type="number" required>
-            </mat-form-field>
-
-            <mat-form-field class="form-field custom-form-field">
-              <mat-label>Observation</mat-label>
-              <input matInput formControlName="observation">
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
+      <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Treatment'">
+        <mat-form-field class="form-field custom-input-number">
+        <mat-label>Extra</mat-label>
+        <input matInput formControlName="extra" type="number">
+        </mat-form-field>
       </ng-container>
-    </div>
+
+      <ng-container *ngIf="getFormGroup(itemGroup).get('item')?.value.itemType === 'Product'">
+        <mat-form-field class="form-field custom-input-number">
+        <mat-label>Amount</mat-label>
+        <mat-select formControlName="amount">
+          <mat-option *ngFor="let option of generateOptions(getFormGroup(itemGroup).get('item')?.value.stock)" [value]="option">{{ option }}</mat-option>
+        </mat-select>
+        </mat-form-field>
+      </ng-container>
+      
+      
+      <mat-form-field class="form-field custom-input-number">
+        <mat-label>Discount</mat-label>
+        <input matInput formControlName="discount" type="number">
+      </mat-form-field>
+
+      <mat-form-field class="form-field custom-input-number">
+        <mat-label>Total</mat-label>
+        <input matInput formControlName="total" type="number" required>
+      </mat-form-field>
+
+      <mat-form-field class="form-field custom-form-field">
+        <mat-label>Observation</mat-label>
+        <input matInput formControlName="observation">
+      </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+    </ng-container>
+  </div>
   </ng-container>
   <!-- PRODUCTS -->
   <form [formGroup]="productForm">
-    <div class="form-row">
-      <mat-form-field class="form-field custom-one-field">
-        <mat-label>Products</mat-label>
-        <mat-select formControlName="product" [compareWith]="compareObjects">
-          <mat-option *ngFor="let product of productsWithStock" [value]="product">{{ product.name
-            }}</mat-option>
-        </mat-select>
-      </mat-form-field>      
-      <button mat-icon-button color="primary" (click)="addProduct()" [disabled]="!productForm.get('product')?.value" class="add-button"
-        matTooltip="Add Product" matTooltipPosition="right" >
-        <mat-icon>add_box</mat-icon>
-      </button>
-    </div>
+  <div class="form-row">
+    <mat-form-field class="form-field custom-one-field">
+    <mat-label>Products</mat-label>
+    <mat-select formControlName="product" [compareWith]="compareObjects">
+      <mat-option *ngFor="let product of productsWithStock" [value]="product">{{ product.name
+      }}</mat-option>
+    </mat-select>
+    </mat-form-field>      
+    <button mat-icon-button color="primary" (click)="addProduct()" [disabled]="!productForm.get('product')?.value" class="add-button"
+    matTooltip="Add Product" matTooltipPosition="right" >
+    <mat-icon>add_box</mat-icon>
+    </button>
+  </div>
   </form>
   <!-- PRODUCTS -->
 
   <ng-container *ngIf="!selectedInvoice">
-    <div class="form-row">
-      <!-- Display total and observation fields when creating a new invoice -->
-      <mat-form-field class="form-field" appearance="outline">
-        <mat-label>Total</mat-label>
-        <input matInput formControlName="total" type="number" readonly>
-      </mat-form-field>
+  <div class="form-row">
+    <!-- Display total and observation fields when creating a new invoice -->
+    <mat-form-field class="form-field" appearance="outline">
+    <mat-label>Total</mat-label>
+    <input matInput formControlName="total" type="number" readonly>
+    </mat-form-field>
 
-      <mat-form-field class="form-field" appearance="outline">
-        <mat-label>Observation</mat-label>
-        <input matInput placeholder="Observation" formControlName="observation">
-      </mat-form-field>
-    </div>
+    <mat-form-field class="form-field custom-one-field" appearance="outline">
+    <mat-label>Observation</mat-label>
+    <input matInput placeholder="Observation" formControlName="observation">
+    </mat-form-field>
+  </div>
   </ng-container>
 
   <div class="button-group">
-    <button mat-raised-button color="primary" [disabled]="(!hasInvoiceItems() || invoiceForm.get('client')?.invalid)" (click)="emitAction()">
-      {{ actionButtonLabel }}
-    </button>
+        <button mat-raised-button color="primary" [disabled]="(!hasInvoiceItems() || invoiceForm.get('client')?.invalid)" (click)="emitAction()">
+          {{ actionButtonLabel }}
+        </button>
+        &nbsp;
+        <button  mat-raised-button color="warn" (click)="onCancel()">
+                Cancel
+        </button>
   </div>
 
 </form>

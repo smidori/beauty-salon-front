@@ -12,6 +12,11 @@ import { catchError, tap } from 'rxjs';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm/dialog-confirm.component';
+import { BookActions } from '../../state/book.action';
+import { AppState } from 'src/app/state/app.state';
+import { Store } from '@ngrx/store';
+import { selectBooks } from '../../state/book.selectors';
+import { BookFilterParams } from '../../model/bookSearchParams.interface';
 
 @Component({
   selector: 'book-list',
@@ -21,18 +26,23 @@ import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm
 export class BookListComponent implements OnInit{
   @Input() headers: Array<{ headerName: string, fieldName: keyof Book, userName?: (keyof User)[] }> = []
   @Input() books: ReadonlyArray<Book> = [];
-  @Output() book = new EventEmitter<{book: Book, action:TableActions}>();
+  @Output() book = new EventEmitter<{obj: any, action:TableActions}>();
+  
+  //@Output() searchBooks = new EventEmitter<{book: BookFilterParams, action:TableActions}>();
+
   headerFields:string[] = [];
 
   workers: User[] = [];
   clients: User[] = [];
   searchForm: FormGroup;
+  books$ = this.store.select(selectBooks());
   
   constructor(private fb:FormBuilder, 
     private userService: UserService,
     private bookService: BookService,
     private authService: AuthenticateService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private store: Store<AppState>) {
 
     this.searchForm = this.fb.group({
       dateBook: [null],
@@ -57,16 +67,39 @@ export class BookListComponent implements OnInit{
   }
 
   //search the book using the filter in the screen
-  searchBooksByFilter(){
-    this.bookService.getBooksByFilter(this.searchForm.value).subscribe(
-      (books) => {
-          this.books = books;
-      },
-      (error) => {
-        console.error('Error loading books: ', error);
-      }
-    );
+  // searchBooksByFilter(){
+  //   this.bookService.getBooksByFilter(this.searchForm.value).subscribe(
+  //     (books) => {
+  //         this.books = books;
+  //     },
+  //     (error) => {
+  //       console.error('Error loading books: ', error);
+  //     }
+  //   );
+  // }
+
+  //worked
+  // searchBooksByFilter(){
+  //   this.store.dispatch({ type: BookActions.GET_BOOK_LIST, payload: this.searchForm.value });
+  //   this.books$.subscribe((data) => {
+  //     this.books = data;
+  //   });
+  // }
+
+  searchBooksByFilter(action:TableActions) {
+
+    var obj: BookFilterParams = {
+      dateBook: this.searchForm.get('dateBook')?.value, 
+      bookStatus: this.searchForm.get('bookStatus')?.value, 
+      clientId: this.searchForm.get('clientId')?.value,  
+      workerId: this.searchForm.get('workerId')?.value,  
+    };
+
+    //this.book.emit({book,action});
+    this.book.emit({obj,action});
+
   }
+
   //clear the filter parameters
   clearSearch(){
     this.searchForm.reset();
@@ -104,8 +137,12 @@ export class BookListComponent implements OnInit{
     this.headerFields.push("actions");
   }
 
-  selectBook(book: Book, action:TableActions) {
-    this.book.emit({book,action})
+  // selectBook(book: Book, action:TableActions) {
+  //   this.book.emit({book,action})
+  // }
+
+  executeActionBook(obj: any, action:TableActions) {
+    this.book.emit({obj,action})
   }
 
   //modal delete confirmation
@@ -117,7 +154,7 @@ export class BookListComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.selectBook(book, action)
+        this.executeActionBook(book, action)
       }
     });
   }

@@ -6,6 +6,8 @@ export enum AvailabilityActions{
     SET_AVAILABILITY_LIST = '[Availability] Set Availability list',
     ADD_AVAILABILITY_API = '[Availability] Add Availability api',
     ADD_AVAILABILITY_STATE = '[Availability] Add Availability state',
+    ADD_AVAILABILITY_ERROR = '[Availability] Add Availability error',
+    CLEAR_AVAILABILITY_ERROR = '[Availability] Clear Availability Error',
     UPDATE_AVAILABILITY_API = '[Availability] Update Availability api',
     UPDATE_AVAILABILITY_STATE = '[Availability] Update Availability state',
     DELETE_AVAILABILITY_API = '[Availability] Delete Availability api',
@@ -35,3 +37,13 @@ export const updateAvailabilityState = createAction(
 export const deleteAvailabilityState = createAction(
     AvailabilityActions.DELETE_AVAILABILITY_STATE, props<{availabilityId: number}>()
 )
+
+
+export const addAvailabilityError = createAction(
+    AvailabilityActions.ADD_AVAILABILITY_ERROR,
+    props<{ error: any }>()
+);
+
+export const clearAvailabilityError = createAction(
+    AvailabilityActions.CLEAR_AVAILABILITY_ERROR
+);

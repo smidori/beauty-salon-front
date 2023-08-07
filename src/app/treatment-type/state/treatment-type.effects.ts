@@ -46,7 +46,7 @@ export class TreatmentTypeEffects{
             this.treatmentTypeService.updateTreatmentType(data.payload.id, data.payload)
             .pipe(
                 map(treatmentTypes => ({type: TreatmentTypeActions.UPDATE_TREATMENT_TYPE_STATE, treatmentType: data.payload})),
-                tap(() => this.router.navigate(["treatmentTypes"])),
+                tap(() => this.router.navigate(["treatment-types"])),
                 catchError(() => EMPTY)
             ))
         )

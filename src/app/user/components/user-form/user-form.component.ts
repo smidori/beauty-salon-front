@@ -4,7 +4,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { User } from '../../models/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, throwError } from 'rxjs';
-
+import { AuthenticateService } from 'src/app/core/services/authenticate.service';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
@@ -16,16 +17,20 @@ export class UserFormComponent implements OnInit{
   @Input() actionButtonLabel : string = "Create";
   @Output() action = new EventEmitter();
   form: FormGroup;
+  isAdmin = false;
 
   constructor(private fb: FormBuilder,
     private snackBar: MatSnackBar,
-    private userService: UserService){
+    private userService: UserService,
+    private auth: AuthenticateService,
+    private location: Location){
     this.form = this.fb.group({
       id:[null],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       login: ['', Validators.required],
+      //login: [{ value: '', disabled: this.actionButtonLabel == "Update" }, [Validators.required]],
       password: ['', Validators.required],
       confirmPassword: ['', [Validators.required]],
       gender: ['', Validators.required],
@@ -33,6 +38,28 @@ export class UserFormComponent implements OnInit{
       mobilePhone: [''],
       homePhone: [''],
     });
+  }
+
+  ngOnInit(): void {
+    this.checkAction();
+    this.isAdmin = this.auth.isAdmin();
+  }
+
+  checkAction() {
+    if(this.selectedUserId != null) {
+      this.actionButtonLabel = "Update";
+      
+      this.userService.getUserById(this.selectedUserId).pipe(
+        catchError(error => {
+          return throwError(() => 'Error to loading the user by id + ' + this.selectedUserId);
+        })
+      ).subscribe(
+        (user: User) => {
+          this.form.patchValue(user);
+          this.form.get('confirmPassword')?.setValue(user.password)
+        }
+      );      
+    }
   }
 
   //check if they are equal
@@ -51,60 +78,6 @@ export class UserFormComponent implements OnInit{
     } 
   }
 
-  // phoneValidator(control: FormControl): { [key: string]: any } | null {
-  //   const phoneRegex = /^(\d{2})(\d{4,5})(\d{4})$/; // Formato (00)00000-0000 ou (00)0000-0000
-  //   const phoneValue = control.value;
-
-  //   if (phoneValue && !phoneRegex.test(phoneValue)) {
-  //     const formattedValue = phoneValue.replace(phoneRegex, '($1)$2-$3');
-  //     control.setValue(formattedValue, { emitEvent: false }); // Atualiza o valor formatado no campo
-  //   }
-
-  //   return null; // Retorno nulo significa que a validação passou com sucesso
-  // }
-
-  ngOnInit(): void {
-    this.checkAction();
-  }
-
-  checkAction() {
-    //console.log("this.selectedUser => " + JSON.stringify(this.selectedUser))
-    // if(this.selectedUser) {
-    //   this.actionButtonLabel = "Update";
-    //   this.patchDataValues()
-    // }
-    if(this.selectedUserId != null) {
-      this.actionButtonLabel = "Update";
-      
-      this.userService.getUserById(this.selectedUserId).pipe(
-        catchError(error => {
-          return throwError(() => 'Error to loading the user by id + ' + this.selectedUserId);
-        })
-      ).subscribe(
-        (user: User) => {
-          //console.log("user => " + JSON.stringify(user))
-          //this.user = user;
-          this.form.patchValue(user);
-          this.form.get('confirmPassword')?.setValue(user.password)
-        }
-      );
-
-
-
-      
-      //this.patchDataValues()
-    }
-  }
-
-//   patchDataValues () {
-
-//     if(this.selectedUser){
-//       console.log(JSON.stringify("user => " + this.selectedUser.firstName));
-//       this.form.patchValue(this.selectedUser);
-//     }
-    
-//  }
-
   emitAction() {
     this.action.emit({value: this.form.value, action: this.actionButtonLabel})
   }
@@ -112,4 +85,9 @@ export class UserFormComponent implements OnInit{
   clear() {
     this.form.reset();
  }
+ 
+ //cancel the register
+ onCancel() {
+  this.location.back();
+}
 }

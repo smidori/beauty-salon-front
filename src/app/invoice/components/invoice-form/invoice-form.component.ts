@@ -6,6 +6,7 @@ import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { User } from 'src/app/user/models/user.interface';
 import { Invoice, Product } from '../../model/invoice.interface';
 import { BookService } from './../../../book/services/book.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'invoice-form',
@@ -34,7 +35,9 @@ export class InvoiceFormComponent implements OnInit {
 
 
   //constructor
-  constructor(private fb: FormBuilder, private bookService: BookService, private store: Store<AppState>) {
+  constructor(private fb: FormBuilder, private bookService: BookService, 
+    private store: Store<AppState>,
+    private location:Location) {
     this.clientFormControl = this.fb.control(null, Validators.required);
     this.clientFormControl.setValue(null);
 
@@ -309,6 +312,11 @@ export class InvoiceFormComponent implements OnInit {
   //convert control to formGroup
   getItemFormGroup(control: AbstractControl): FormGroup {
     return control as FormGroup;
+  }
+
+  //cancel the register
+  onCancel() {
+    this.location.back();
   }
 
 }

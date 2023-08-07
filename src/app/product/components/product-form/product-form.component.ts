@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Product } from 'src/app/invoice/model/invoice.interface';
 import { DecimalSeparatorDirective } from '../../../shared/directives/decimal-separator.directive'; 
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ProductFormComponent {
   selectedProductTypeId: number | undefined;
 
   //constructor
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private location:Location) {
     this.form = this.fb.group({
       id: [null],
       name: ['', Validators.required],
@@ -66,4 +67,7 @@ export class ProductFormComponent {
     this.form.reset();
   }
 
+  onCancel() {
+    this.location.back();
+  }
 }

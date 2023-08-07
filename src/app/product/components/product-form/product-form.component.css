@@ -1,0 +1,11 @@
+.form-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .form-field {
+    margin-right: 10px;
+  }
+.custom-one-field {
+    flex: 1;
+  }

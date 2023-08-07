@@ -18,3 +18,8 @@ export const selectAvailability = (id: number) => createSelector(
         return availability;
     }
 );
+
+export const selectError = createSelector(
+    selectAvailabilityState,
+    (state: AvailabilityState) => state.error
+  );

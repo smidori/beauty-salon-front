@@ -1,6 +1,16 @@
 <h4>{{selectedBook ? "Update/View Book" : "Select the treatment and the day"}}</h4>
 
 <div *ngIf="!selectedBook">
+  <form [formGroup]="bookForm">
+    <div class="form-row custom-form-row" *ngIf="!isClient">
+      <mat-form-field class="form-field custom-form-field custom-one-field">
+        <mat-label>Client</mat-label>
+        <mat-select formControlName="clientUserId" required>
+          <mat-option *ngFor="let user of users" [value]="user.id">{{ user.firstName }} {{ user.lastName }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
   <form [formGroup]="searchForm">
     <div class="form-row">
       <mat-form-field class="form-field">
@@ -38,9 +48,10 @@
   
           <div *ngFor="let slotKey of bookSlots | keys">
             <ng-container *ngIf="resultForm.get('selectedSlotKey')?.value === slotKey">
-              <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} ({{
-                bookSlots[slotKey]['dateBook']}}) </p>
-              <p>Select de Professional: </p>
+              <!-- <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} ({{
+                bookSlots[slotKey]['dateBook']}}) </p> -->
+              <p>Duration: {{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} </p>
+              <p>Select the Professional: </p>
               <mat-radio-group formControlName="selectedBookSlot" required>
                 <mat-radio-button *ngFor="let bookSlot of toArray(bookSlots[selectedSlotKey]['bookDetails'])"
                   [value]="bookSlot" (click)="selectBookSlot(bookSlot)">
@@ -55,7 +66,8 @@
         </div>
       </div>
     </ng-container>
-    <form [formGroup]="bookForm">    
+    <form [formGroup]="bookForm">
+            
     <ng-container *ngIf="this.selectedBookSlot !== null">
       <div class="form-row">
         <mat-form-field class="example-full-width" appearance="outline" style="width: 100%;">

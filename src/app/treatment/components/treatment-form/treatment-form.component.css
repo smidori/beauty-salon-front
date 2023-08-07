@@ -26,4 +26,6 @@
     display: flex;
     gap: 10px;
   }
-  
+  .custom-one-field {
+    flex: 1;
+  }

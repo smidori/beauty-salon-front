@@ -6,14 +6,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppState } from 'src/app/state/app.state';
 import { Store } from '@ngrx/store';
 import { TreatmentActions } from 'src/app/treatment/state/treatment.actions';
-import { AvailabilityActions } from '../../state/availability.action';
+import { AvailabilityActions, clearAvailabilityError } from '../../state/availability.action';
 import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
-import { selectAvailabilities, selectAvailability } from '../../state/availability.selectors';
+import { selectAvailabilities, selectAvailability, selectError } from '../../state/availability.selectors';
 import { selectTreatments } from 'src/app/treatment/state/treatment.selectors';
-import { selectUsers } from 'src/app/user/state/user.selectors';
 import { User } from 'src/app/user/models/user.interface';
 import { UserActions } from 'src/app/user/state/user.actions';
 import { UserService } from 'src/app/user/services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form',
@@ -32,16 +32,20 @@ export class FormComponent implements OnInit {
   treatments$ = this.store.select(selectTreatments());
 
   users: User[] = [];
+  error$: Observable<string | null>;
 
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
     private router: Router,
-    private userService: UserService) {
+    private userService: UserService,
+    private snackBar: MatSnackBar,) {
 
     //properties
     const id = this.acRouter.snapshot.params['id'];
     this.availability$ = this.store.select(selectAvailability(id));
+    
+    this.error$ = this.store.select(selectError);
 
     //subscribe the availability$
     this.availability$.subscribe(data => {
@@ -62,6 +66,16 @@ export class FormComponent implements OnInit {
 
     //GET USERS LIST - dispatch the action
     this.loadUsersByRole('WORKER');
+
+
+    this.error$.subscribe((error) => {
+      if (error) {
+        console.log("*******error availabi********")
+        this.snackBar.open(error, 'Dismiss', {
+          duration: 5000, // Close after 5 seconds 
+        });
+      }
+    });
   }
 
   //load the users, that will be used as a filter
@@ -79,6 +93,7 @@ export class FormComponent implements OnInit {
 
   //actions that can be executed
   formAction(data: { value: Availability, action: string }) {
+    this.store.dispatch(clearAvailabilityError());
     switch (data.action) {
       case "Create": {
         this.store.dispatch({ type: AvailabilityActions.ADD_AVAILABILITY_API, payload: data.value });

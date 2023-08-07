@@ -27,11 +27,18 @@
         </mat-form-field>
     </div>
 
-    <div class="form-row">
+    <div class="form-row" *ngIf="!(actionButtonLabel == 'Update')">
         <mat-form-field class="form-field">
             <mat-label>Username</mat-label>
-            <input matInput placeholder="Username" formControlName="login" required>
+            <input matInput placeholder="Username" formControlName="login" required >
         </mat-form-field>
+    </div>
+
+    <div class="form-row" *ngIf="actionButtonLabel == 'Update'">
+        <mat-form-field class="form-field">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" [value]="form.get('login')?.value" readonly>
+          </mat-form-field>
     </div>
 
     <div class="form-row">
@@ -51,15 +58,15 @@
     <div class="form-row">
         <mat-form-field class="form-field">
             <mat-label>Mobile Phone</mat-label>
-            <input matInput type="text" appPhoneNumber placeholder="Mobile Phone" formControlName="mobilePhone" required>
+            <input matInput type="text" appPhoneNumber placeholder="Mobile Phone" minlength="6" formControlName="mobilePhone" required>
         </mat-form-field>
 
         <mat-form-field class="form-field">
             <mat-label>Home Phone</mat-label>
-            <input matInput type="text" appPhoneNumber placeholder="Home Phone" formControlName="homePhone">
+            <input matInput type="text" appPhoneNumber placeholder="Home Phone"  formControlName="homePhone">
         </mat-form-field>
     </div>
-    <div class="form-row">
+    <div class="form-row" *ngIf="isAdmin">
         <mat-form-field class="form-field">
             <mat-label>Role</mat-label>
             <mat-select formControlName="role">
@@ -74,7 +81,10 @@
         <button mat-raised-button color="primary" [disabled]="form.invalid || !passwordsMatch()" (click)="emitAction()">
                 {{actionButtonLabel}}
         </button>  
-        
+        &nbsp;
+        <button  mat-raised-button color="warn" (click)="onCancel()">
+                Cancel
+        </button> 
         <!-- <button  mat-raised-button color="warn" (click)="clear()">
                 Clear
         </button>  -->

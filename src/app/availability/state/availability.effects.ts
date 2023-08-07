@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AvailabilityService } from "../services/availability.service";
 import { Router } from "@angular/router";
 import { AvailabilityActions } from "./availability.action";
-import { EMPTY, catchError, map, mergeMap, tap } from "rxjs";
+import { EMPTY, catchError, map, mergeMap, of, tap } from "rxjs";
 import { Availability } from '../models/availability.interface';
 
 @Injectable()
@@ -34,10 +34,12 @@ export class AvailabilityEffects {
                 .pipe(
                     map(availabilities => ({ type: AvailabilityActions.ADD_AVAILABILITY_STATE, availability: data.payload })),
                     tap(() => this.router.navigate(["availabilities"])),
-                    catchError(() => EMPTY)
+                    //catchError(() => EMPTY)
+                    catchError((error) => of({ type: AvailabilityActions.ADD_AVAILABILITY_ERROR, error: error.error.message }))
                 ))
         )
     }, { dispatch: true })
+
 
     updateAvailability$ = createEffect(() => {
          return this.actions$.pipe(
@@ -47,7 +49,9 @@ export class AvailabilityEffects {
             .pipe(
                 map(availabilities => ({type: AvailabilityActions.UPDATE_AVAILABILITY_STATE, availability: data.payload})),
                 tap(() => this.router.navigate(["availabilities"])),
-                catchError(() => EMPTY)
+                //catchError(() => EMPTY)
+                catchError((error) => of({ type: AvailabilityActions.ADD_AVAILABILITY_ERROR, error: error.error.message }))
+
             ))
         )
     }, {dispatch: true})

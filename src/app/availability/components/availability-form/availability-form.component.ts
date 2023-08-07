@@ -3,6 +3,7 @@ import { Availability } from '../../models/availability.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { User } from 'src/app/user/models/user.interface';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'availability-form',
@@ -24,7 +25,7 @@ export class AvailabilityFormComponent implements OnInit {
   selectedTreatment: Treatment | null = null;
   
   //constructor
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private location:Location) {
     this.form = this.fb.group({
       id: [null],
       user: [null],
@@ -79,5 +80,9 @@ export class AvailabilityFormComponent implements OnInit {
   //clear the form
   clear() {
     this.form.reset();
+  }
+
+  onCancel() {
+    this.location.back();
   }
 }

@@ -52,7 +52,9 @@ export class UserEffects {
                     .pipe(
                         map(users => ({ type: UserActions.UPDATE_USER_STATE, user: data.payload })),
                         tap(() => this.router.navigate(["users"])),
-                        catchError(() => EMPTY)
+                        //catchError(() => EMPTY)
+                        catchError((error) => of({ type: UserActions.ADD_USER_ERROR, error: error.error.message }))
+
                     ))
         )
     }, { dispatch: true })

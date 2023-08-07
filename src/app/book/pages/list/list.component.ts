@@ -67,7 +67,6 @@ export class ListComponent implements OnInit{
       filterParams.bookStatus = BookStatus.BOOKED;
     }
     this.store.dispatch({ type: BookActions.GET_BOOK_LIST, payload: filterParams });
-
     this.assignBooks();
 
     this.bookService.onError().subscribe((error) => {
@@ -85,19 +84,27 @@ export class ListComponent implements OnInit{
     });
   }
 
-  selectBook(data: {book: Book, action: TableActions}) {
+  executeActionBook(data: {obj: any, action: TableActions}) {
+    console.log("selectBook => " + JSON.stringify(data.obj));
     switch(data.action) {
       case TableActions.View: {
-        this.router.navigate(['books', 'form', data.book.id]);
+        this.router.navigate(['books', 'form', data.obj.id]);
         return;
       }
       case TableActions.Delete: {
-        this.store.dispatch({type: BookActions.DELETE_BOOK_API, payload: data.book.id});
+        this.store.dispatch({type: BookActions.DELETE_BOOK_API, payload: data.obj.id});
+        return;
+      }
+      
+      case TableActions.Search: {
+        this.store.dispatch({type: BookActions.GET_BOOK_LIST, payload: data.obj});
         return;
       }
       default: ""
     }
   }
+
+  
 
   executeCommandBarAction(action: CommandBarActions){
     switch(action){

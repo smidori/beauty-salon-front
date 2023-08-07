@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, catchError, tap } from 'rxjs';
 import { CommandBarActions } from 'src/app/shared/enums/command-bar-actions.enum';
 import { AppState } from 'src/app/state/app.state';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
@@ -13,6 +13,7 @@ import { selectUsers } from 'src/app/user/state/user.selectors';
 import { Book } from '../../model/book.interface';
 import { BookActions } from '../../state/book.action';
 import { selectBooks, selectBook } from '../../state/book.selectors';
+import { UserService } from 'src/app/user/services/user.service';
 
 @Component({
   selector: 'app-form',
@@ -34,7 +35,8 @@ export class FormComponent implements OnInit {
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
-    private router: Router) {
+    private router: Router,
+    private userService: UserService) {
     const id = this.acRouter.snapshot.params['id'];
     this.book$ = this.store.select(selectBook(id));
     this.book$.subscribe(d => {
@@ -54,13 +56,26 @@ export class FormComponent implements OnInit {
       this.treatments = data;
     });
 
-    //GET USERS LIST
-    this.store.dispatch({type: UserActions.GET_USER_LIST});
-    this.users$.subscribe((data) => {
-      this.users = data;
-    })
+    // //GET USERS LIST
+    // this.store.dispatch({type: UserActions.GET_USER_LIST});
+    // this.users$.subscribe((data) => {
+    //   this.users = data;
+    // })
+    this.loadUsersByRole('CLIENT');
   }
 
+  //load the specific users
+  loadUsersByRole(role: string) {
+    this.userService.getUsersByRole(role).pipe(
+      tap(users => {
+          this.users = users;
+      }),
+      catchError(error => {
+        console.error('Error loading users by role: ' + role, error);
+        return [];
+      })
+    ).subscribe();
+  }
 
   formAction(data: { value: Book, action: string }) {
     console.log("******************* formAction from pages BOOK ******************" )

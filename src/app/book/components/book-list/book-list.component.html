@@ -42,7 +42,9 @@
                 </mat-form-field>
 
                 <div class="form-field">
-                    <button mat-raised-button color="primary" (click)="searchBooksByFilter()">Search</button>
+                    <!-- <button mat-raised-button color="primary" (click)="searchBooksByFilter()">Search</button> -->
+                    <button mat-raised-button color="primary" (click)="searchBooksByFilter(2)">Search</button>
+                    
                     &nbsp;
                     <button mat-raised-button color="warn" (click)="clearSearch()">Clear</button>
                 </div>
@@ -94,7 +96,7 @@
                     <mat-icon>delete</mat-icon>
                 </button> -->
 
-                <button class="custom-button-table" mat-icon-button color="primary" (click)="selectBook(element,0)" >
+                <button class="custom-button-table" mat-icon-button color="primary" (click)="executeActionBook(element,0)" >
                     <mat-icon>edit</mat-icon>
                 </button>
 

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Treatment } from '../../models/treatment.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TreatmentType } from '../../models/treatment-type.interface';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'treatment-form',
   templateUrl: './treatment-form.component.html',
@@ -22,7 +22,7 @@ export class TreatmentFormComponent {
   selectedTreatmentTypeId: number | undefined;
 
   //constructor
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private location:Location) {
     this.form = this.fb.group({
       id: [null],
       name: ['', Validators.required],
@@ -66,6 +66,11 @@ export class TreatmentFormComponent {
   //clear the form
   clear() {
     this.form.reset();
+  }
+
+  //cancel the register
+  onCancel() {
+    this.location.back();
   }
 
 }

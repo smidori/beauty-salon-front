@@ -24,14 +24,23 @@ export class AvailabilityService {
     console.log("Post availability => " + `${environment.apiURL}/availabilities`);
     return this.http.post<Availability>(`${environment.apiURL}/availabilities`,availability).pipe(
       tap((data: Availability) => data),
-      catchError(err => throwError(() => err))
+      //catchError(err => throwError(() => err))
+      catchError((err) => {
+        console.log("******* service error: " + err.error.message);
+        this.errorSubject.next(err.error.message);
+        return throwError(() => err);
+      }) 
     )
   }
 
   updateAvailability(id: number, availability: Availability): Observable<Availability>{
     console.log("====> update availability => " + JSON.stringify(availability));
     return this.http.put<Availability>(`${environment.apiURL}/availabilities/${id}`,availability).pipe(
-      catchError(err => throwError(() => err))
+      //catchError(err => throwError(() => err))
+      catchError((err) => {
+        this.errorSubject.next(err.error.message);
+        return throwError(() => err);
+      }) 
     )
   }
 

@@ -3,6 +3,7 @@ import { TreatmentType } from '../../models/treatment-type.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm/dialog-confirm.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'treatment-type-form',
@@ -17,7 +18,8 @@ export class TreatmentTypeFormComponent {
   form: FormGroup;
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private location:Location) {
     this.form = this.fb.group({
       id: [null],
       name: ['', Validators.required],
@@ -43,11 +45,16 @@ export class TreatmentTypeFormComponent {
   }
   emitAction() {
     console.log("treatmentType => " + JSON.stringify(this.form.value));
+    console.log("my action => " + this.actionButtonLabel )
     this.action.emit({ value: this.form.value, action: this.actionButtonLabel })
   }
 
   clear() {
     this.form.reset();
   }
-
+  
+  //cancel the register
+  onCancel() {
+    this.location.back();
+  }
 }

@@ -40,20 +40,23 @@ export class BookFormComponent implements OnInit {
 
   searchCompleted = false; // used to control when show the results
 
-  //period to do the agenda from tomorrow til 1 year ahead
+  //period to do the agenda from tomorrow til 3 months ahead
   minDate = new Date(new Date().setDate(new Date().getDate() + 1));
-  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1)); //limit the date for 1 year in advance
+  maxDate = new Date(new Date().setMonth(new Date().getMonth() + 3)); //limit the date for 3 months in advance
+  
+
 
   isSlotSelected: boolean = false;
   bookStatus = BookStatus;
   selectedBookSlot: any = null;
   selectedSlotKey: number = 0;
   isClient: boolean = false;
+  isAdmin = false;
 
   //constructor
   constructor(private fb: FormBuilder, private store: Store<AppState>,
     private auth: AuthenticateService) {
-    
+
     this.isClient = this.auth.isClient();
 
     this.searchForm = this.fb.group({
@@ -111,6 +114,10 @@ export class BookFormComponent implements OnInit {
     });
 
     this.isClient = this.auth.isClient();
+    this.isAdmin = this.auth.isAdmin();
+    if(!this.isClient){
+      this.minDate = new Date();
+    }
   }
 
   //search the available time for this treatment and date
@@ -153,6 +160,7 @@ export class BookFormComponent implements OnInit {
 
     this.emitAction();
   }
+  
   updateStatus() {
     this.emitAction();
   }

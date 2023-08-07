@@ -21,16 +21,8 @@ export class ListComponent implements OnInit{
   
   
   headers: { headerName: string, fieldName: keyof Availability, userName?: (keyof User)[] }[] = [
-    { headerName: "User", fieldName: "user", userName: ["firstName", "lastName"] },
-    
-    // { headerName: "S", fieldName: "sunday" },
-    // { headerName: "M", fieldName: "monday" },
-    // { headerName: "T", fieldName: "tuesday" },
-    // { headerName: "W", fieldName: "wednesday" },
-    // { headerName: "T", fieldName: "thursday" },
-    // { headerName: "F", fieldName: "friday" },
-    // { headerName: "S", fieldName: "saturday" },
-    
+    { headerName: "Id", fieldName: "id" },
+    { headerName: "User", fieldName: "user", userName: ["firstName", "lastName"] },    
     { headerName: "Start Date", fieldName: "startDate" },
     { headerName: "Finish Date", fieldName: "finishDate" }, //não exibir na list para ter sempre 1 nulo que é o atual
     { headerName: "Treatments", fieldName: "treatments" },

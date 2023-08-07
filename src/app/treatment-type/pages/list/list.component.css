@@ -1,8 +1,9 @@
 .container {
-    padding: 10px;
-  }
-  .container >h2{
-      margin-top: 0%;
-  }
-  
-  
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container > h2 {
+  margin-top: 0%;
+}

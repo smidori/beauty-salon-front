@@ -1,4 +1,5 @@
 export enum TableActions {
     View,
-    Delete
+    Delete,
+    Search
 }
