@@ -5,27 +5,37 @@
             <p *ngIf="error" class="error">
                 {{ error }}
             </p>
-            <p>
+            <div class="form-row">
                 <mat-form-field class="form-field">
                     <mat-label>Username</mat-label>
                     <input type="text" name="username" matInput placeholder="Username" formControlName="login">
                 </mat-form-field>
-            </p>
+            </div>
 
-            <p>
+            <div class="form-row">
                 <mat-form-field class="form-field">
                     <mat-label>Password</mat-label>
                     <input type="password" name="password" matInput placeholder="Password" formControlName="password">
                 </mat-form-field>
-            </p>
+            </div>
 
 
             <div class="button">
-                <button type="submit" [disabled]="form.invalid" mat-button>{{title}}</button>
+                <div class="left-button">
+                    <a mat-list-item [routerLink]="'/resetPwd'">Forgot Password</a>
+                </div>
+                <div class="right-button">
+                    <button type="submit" [disabled]="form.invalid" mat-button>{{title}}</button>
+                </div>
+            </div>
+            <div class="button">
+                <div class="left-button">
+                    <button mat-raised-button color="primary" *ngIf="title === 'Login'" [routerLink]="['/register']"
+                        routerLinkActive="router-link-active"> Create account </button>
+                </div>
             </div>
             <!-- <p *ngIf="title == 'Login'" class="link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Create account</p> -->
-            <button mat-raised-button color="primary" *ngIf="title === 'Login'" [routerLink]="['/register']"
-                routerLinkActive="router-link-active"> Create account </button>
+
 
         </form>
     </mat-card-content>
@@ -92,8 +102,8 @@
             <div class="form-row">
                 <mat-form-field class="form-field">
                     <mat-label>Mobile Phone</mat-label>
-                    <input matInput type="text" appPhoneNumber placeholder="Mobile Phone" formControlName="mobilePhone"
-                        required>
+                    <input matInput type="text" minlength="6" appPhoneNumber placeholder="Mobile Phone"
+                        formControlName="mobilePhone" required>
                 </mat-form-field>
                 <mat-form-field class="form-field">
                     <mat-label>Home Phone</mat-label>
@@ -104,15 +114,50 @@
 
 
             <div class="button">
-                <button type="submit" [disabled]="formRegister.invalid || !passwordsMatch()"
-                    mat-button>{{title}}</button>
-
+                <div class="right-button">
+                    <button type="submit" [disabled]="formRegister.invalid || !passwordsMatch()"
+                        mat-button>{{title}}</button>
+                </div>
             </div>
 
+            <div>
+                <div class="left-button">
+                    <button mat-raised-button color="primary" *ngIf="title === 'Register'" [routerLink]="['/login']"
+                        routerLinkActive="router-link-active"> Sign In </button>
+                </div>
+            </div>
             <!-- <p *ngIf="title == 'Register'" class="link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</p> -->
 
-            <button mat-raised-button color="primary" *ngIf="title === 'Register'" [routerLink]="['/login']"
-                routerLinkActive="router-link-active"> Sign In </button>
+
+
+        </form>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="title == 'Reset Password'">
+        <form [formGroup]="formResetPassword" (ngSubmit)="submit()">
+            <p *ngIf="error" class="error">
+                {{ error }}
+            </p>
+            <div>
+                <mat-form-field class="form-field">
+                    <mat-label>E-mail</mat-label>
+                    <input type="text" name="email" matInput placeholder="E-mail" formControlName="email">
+                </mat-form-field>
+            </div>
+
+            <div class="button">
+                <div class="right-button">
+                    <button type="submit" [disabled]="formResetPassword.invalid" mat-button>{{title}}</button>
+                </div>
+
+            </div>
+            <div class="button">
+                <div class="left-button">
+                    <!-- <p *ngIf="title == 'Login'" class="link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Create account</p> -->
+                    <button mat-raised-button color="primary" *ngIf="title === 'Reset Password'"
+                        [routerLink]="['/login']" routerLinkActive="router-link-active"> Login account </button>
+                </div>
+            </div>
 
         </form>
     </mat-card-content>

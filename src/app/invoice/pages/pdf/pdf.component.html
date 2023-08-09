@@ -1,5 +1,61 @@
-<command-bar (action)="executeCommandBarAction($event)"></command-bar>
+<command-bar menuTitle="Invoice" (action)="executeCommandBarAction($event)"></command-bar>
 
-<div class="container">
+<!-- <div class="container">
     <invoice-pdf [selectedInvoice]="invoice" (action)="formAction($event)"></invoice-pdf>
+</div> -->
+<div class="container">
+    <div class="report">
+        <div id="invoice-pdf">
+            <!-- Display user info if selectedInvoice exists -->
+            <div class="form-row paragraph-spacing" *ngIf="invoice">
+                <p><b>Company: </b>Beauty Salon</p>
+                <p><b>Phone:</b>1234-5678</p>
+                <p><b>Address:</b>30-34 Westmoreland St</p>
+                <br />
+                <p><b>Client: </b> {{ invoice.client.firstName }} {{invoice.client.lastName}}</p>
+                <p><b>Mobile Phone: </b> {{ invoice.client.mobilePhone }} </p><br />
+                <p><b>Date: </b>{{ invoice.date | date: 'dd/MM/yyyy' }}</p>
+                <p><b>Observation: </b>{{ invoice.observation }}</p>
+                <!-- <p><b>Total Due: </b>{{ invoice?.total | currency: 'EUR' }}</p> -->
+            </div>
+            <hr>
+            <ng-container *ngIf="invoice?.invoiceItems !== null">
+                <h4>Items:</h4>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Subtotal</th>
+                            <th>Extra</th>
+                            <th>Discount</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of invoice?.invoiceItems">
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.amount }}</td>
+                            <td class="text-right">{{ item.subtotal | currency: 'EUR' }}</td>
+                            <td class="text-right">{{ item.extra | currency: 'EUR' }}</td>
+                            <td class="text-right">{{ item.discount | currency: 'EUR' }}</td>
+                            <td class="text-right">{{ item.total | currency: 'EUR' }}</td>
+                        </tr>
+                        <tr *ngIf="invoice?.total">
+                            <td colspan="5" class="total-label">Total due</td>
+                            <td class="total-label text-right">{{ invoice?.total | currency: 'EUR' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+
+        </div>
+    </div>
+    <div class="button-group">
+        &nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="generatePDF()">
+            <mat-icon>picture_as_pdf</mat-icon> Generate PDF
+        </button>
+
+    </div>
 </div>

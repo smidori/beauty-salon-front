@@ -13,6 +13,7 @@ import { StoreModule } from '@ngrx/store';
 import { BookEffects } from './state/book.effects';
 import { bookReducer, bookSlotReducer } from './state/book.reducers';
 import { KeysPipe } from './pipes/keys';
+import { InvoiceRoutingModule } from '../invoice/invoice-routing.module';
 
 
 
@@ -29,6 +30,7 @@ import { KeysPipe } from './pipes/keys';
     MaterialModule,
     ReactiveFormsModule,
     BookRoutingModule,
+    InvoiceRoutingModule,
     SharedModule,
     StoreModule.forFeature('bookState', bookReducer),
     EffectsModule.forFeature([BookEffects]),

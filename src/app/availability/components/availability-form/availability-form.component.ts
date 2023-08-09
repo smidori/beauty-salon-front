@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Treatment } from 'src/app/treatment/models/treatment.interface';
 import { User } from 'src/app/user/models/user.interface';
 import { Location } from '@angular/common';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'availability-form',
@@ -72,10 +73,10 @@ export class AvailabilityFormComponent implements OnInit {
   emitAction() {
     this.form.get('hourStartTime')?.setValue(this.fixTimeFormat(this.form.get('hourStartTime')?.value));
     this.form.get('hourFinishTime')?.setValue(this.fixTimeFormat(this.form.get('hourFinishTime')?.value));
-
     
     this.action.emit({ value: this.form.value, action: this.actionButtonLabel })
   }
+  
 
   //clear the form
   clear() {

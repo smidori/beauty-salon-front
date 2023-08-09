@@ -20,7 +20,6 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(data: User) {
-    console.log("submit user register");
     this.store.dispatch({type: AuthActions.CREATE_USER, payload: data})
   }
 

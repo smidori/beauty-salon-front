@@ -17,17 +17,17 @@
             <mat-label>User</mat-label>
             <mat-select formControlName="user" required>
                 <mat-option *ngFor="let user of users" [value]="user">{{ user.firstName
-                    }}</mat-option>
+                    }} {{ user.lastName}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
 
     <div class="form-row">
-        <mat-form-field class="form-field">
+        <mat-form-field class="form-field custom-one-field">
             <mat-label>Treatments</mat-label>
             <mat-select formControlName="treatments" multiple [compareWith]="compareTreatmentObjects" required>
                 <mat-option *ngFor="let treatment of treatments" [value]="treatment">{{ treatment.name
-                    }}</mat-option>
+                    }} - ({{treatment.duration}} min) {{treatment.price | currency: 'EUR'}}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>

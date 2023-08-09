@@ -13,7 +13,6 @@ import { invoiceReducer } from './state/invoice.reducers';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { PdfComponent } from './pages/pdf/pdf.component';
-import { InvoicePdfComponent } from './components/invoice-pdf/invoice-pdf.component';
 import { SharedModule } from "../shared/shared.module";
 
 
@@ -26,7 +25,6 @@ import { SharedModule } from "../shared/shared.module";
         InvoiceFormComponent,
         CommandBarComponent,
         PdfComponent,
-        InvoicePdfComponent,
     ],
     imports: [
         CommonModule,

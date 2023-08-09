@@ -12,6 +12,7 @@ import { BookActions } from '../../state/book.action';
 import { selectSlots } from '../../state/book.selectors';
 import { BookSearchParams } from './../../model/bookSearchParams.interface';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'book-form',
@@ -55,7 +56,7 @@ export class BookFormComponent implements OnInit {
 
   //constructor
   constructor(private fb: FormBuilder, private store: Store<AppState>,
-    private auth: AuthenticateService) {
+    private auth: AuthenticateService,private location:Location) {
 
     this.isClient = this.auth.isClient();
 
@@ -241,4 +242,8 @@ export class BookFormComponent implements OnInit {
     return bookStatusLabels[statusValue];
   }
 
+  //cancel the register
+  onCancel() {
+    this.location.back();
+  }
 }

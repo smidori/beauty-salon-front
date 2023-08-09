@@ -7,7 +7,8 @@ import { AuthActions, setAuthentication, setUserDetails } from './auth.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
 import { User } from 'src/app/user/models/user.interface';
-import { UserLogin } from '../models/user.interface';
+import { ResetPwd, UserLogin } from '../models/user.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -15,6 +16,13 @@ import { UserLogin } from '../models/user.interface';
 @Injectable()
 export class AuthEffects {
  
+  constructor(
+    private actions$: Actions,
+    private authService: AuthenticateService,
+    private router: Router,
+    private store: Store<AppState>,
+    private snackBar: MatSnackBar
+  ) {}
 
   loginUser$ = createEffect(() => {
     return this.actions$.pipe(
@@ -36,6 +44,26 @@ export class AuthEffects {
     }, {dispatch: true}
   );
   
+
+  resetPwd$ = createEffect(() => {
+    
+    return this.actions$.pipe(
+        ofType(AuthActions.RESET_PWD),
+        mergeMap(((data: {type: string, payload: ResetPwd}) => this.authService.resetPwd(data.payload)
+          .pipe(
+            tap(() => {
+              this.router.navigate(["/login"]);
+              this.snackBar.open('Email sent successfully !', 'Dismiss', {
+                duration: 3000, 
+              });
+              }),
+            catchError(async (data) => ({ type: AuthActions.LOGIN_ERROR, error: data.error }))
+          ))
+        ))
+    }, {dispatch: true}
+  );
+ 
+
   createUser$ = createEffect(() => {
     
     return this.actions$.pipe(
@@ -56,10 +84,5 @@ export class AuthEffects {
         ))
     }, {dispatch: true}
   );
-  constructor(
-    private actions$: Actions,
-    private authService: AuthenticateService,
-    private router: Router,
-    private store: Store<AppState>,
-  ) {}
+  
 }

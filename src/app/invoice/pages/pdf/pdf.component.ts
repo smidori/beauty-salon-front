@@ -15,6 +15,9 @@ import { CommandBarActions } from '../../enums/command-bar-actions.enum';
 import { Invoice, Product } from '../../model/invoice.interface';
 import { InvoiceActions } from '../../state/invoice.action';
 import { selectInvoices, selectInvoice } from '../../state/invoice.selectors';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { InvoiceService } from '../../services/invoice.service';
 
 @Component({
   selector: 'app-pdf',
@@ -41,15 +44,17 @@ export class PdfComponent implements OnInit {
   products: ReadonlyArray<Product> = [];
   products$ = this.store.select(selectProducts());
 
+  invoiceId: number;
 
   constructor(
     private acRouter: ActivatedRoute,
     private store: Store<AppState>,
-    private router: Router) {
+    private router: Router,
+    private invoiceService: InvoiceService) {
 
     //properties
-    const id = this.acRouter.snapshot.params['id'];
-    this.invoice$ = this.store.select(selectInvoice(id));
+    this.invoiceId = this.acRouter.snapshot.params['id'];
+    this.invoice$ = this.store.select(selectInvoice(this.invoiceId));
 
     //subscribe the invoice$
     this.invoice$.subscribe(data => {
@@ -62,23 +67,48 @@ export class PdfComponent implements OnInit {
 
 
   ngOnInit(): void {
-    //GET TREATMENT LIST - dispatch the action
-    this.store.dispatch({ type: TreatmentActions.GET_TREATMENT_LIST });
-    this.treatments$.subscribe((data) => {
-      this.treatments = data;
-    });
+    // //GET TREATMENT LIST - dispatch the action
+    // this.store.dispatch({ type: TreatmentActions.GET_TREATMENT_LIST });
+    // this.treatments$.subscribe((data) => {
+    //   this.treatments = data;
+    // });
 
-    //GET USERS LIST - dispatch the action
-    this.store.dispatch({ type: UserActions.GET_USER_LIST });
-    this.users$.subscribe((data) => {
-      this.users = data;
-    });
+    // //GET USERS LIST - dispatch the action
+    // this.store.dispatch({ type: UserActions.GET_USER_LIST });
+    // this.users$.subscribe((data) => {
+    //   this.users = data;
+    // });
 
-    //GET PRODUCT LIST - dispatch the action
-    this.store.dispatch({ type: ProductActions.GET_PRODUCT_LIST });
-    this.products$.subscribe((data) => {
-      this.products = data;
-    });
+    // //GET PRODUCT LIST - dispatch the action
+    // this.store.dispatch({ type: ProductActions.GET_PRODUCT_LIST });
+    // this.products$.subscribe((data) => {
+    //   this.products = data;
+    // });
+
+    this.checkAction();
+  }
+
+  //check is is update or create
+  checkAction() {
+    if (this.invoiceId) {
+      this.patchDataValues()
+    }
+  }
+
+  //copy the values from selectedInvoice to form
+  patchDataValues() {
+    if (this.invoiceId) {
+
+      this.invoiceService.getInvoiceById(this.invoiceId).subscribe(
+        (data: Invoice) => {
+          console.log("data => " + JSON.stringify(data))
+          this.invoice = data;
+        },
+        (error) => {
+          console.error('Error to get Invoice:', error);
+        }
+      );
+    }
   }
 
   //actions that can be executed
@@ -110,5 +140,33 @@ export class PdfComponent implements OnInit {
       }
       default: ""
     }
+  }
+
+  generatePDF() {
+    // Get the element to converte to PDF
+    const element = document.getElementById('invoice-pdf');
+      
+    // Use html2canvas to convert element HTML to an image
+    if(element){
+      html2canvas(element).then((canvas) => {
+        //const imgWidth = 100; // Largura da imagem no PDF
+        const imgWidth = 180; 
+        const imgHeight = (imgWidth / canvas.width) * canvas.height;
+
+        //generate a image
+        const imgData = canvas.toDataURL('image/png');
+    
+        // generate a pdf
+        const pdf = new jsPDF.default('p', 'mm', 'a4');
+    
+        // Add the page to pdf
+        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+    
+        //save to pdf
+        pdf.save('invoice_' + this.invoice?.date.toString().substring(0, 10) +"_" + this.invoice?.client.firstName + " " + this.invoice?.client.lastName 
+        + ".pdf");
+      });
+    }
+    
   }
 }

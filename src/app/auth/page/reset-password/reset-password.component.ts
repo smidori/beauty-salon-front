@@ -1,21 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { selectError } from '../../state/auth.selectors';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AuthenticateService } from 'src/app/core/services/authenticate.service';
-// import { User } from '../../models/user.interface';
 import { AuthActions, clearError } from '../../state/auth.actions';
-import { selectError } from '../../state/auth.selectors';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserLogin } from '../../models/user.interface';
-import { clearUserError } from 'src/app/user/state/user.actions';
-
+import { ResetPwd } from '../../models/user.interface';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.css']
 })
-export class LoginComponent{
+export class ResetPasswordComponent {
   error$ = this.store.select(selectError());
  
   constructor(private store: Store, 
@@ -23,12 +20,12 @@ export class LoginComponent{
               private router: Router, 
               private _snackBar: MatSnackBar) {
     
-    this.checkJWT();
+    
     this.getError();
   }
 
-  submit(data: UserLogin) {
-    this.store.dispatch({type: AuthActions.LOGIN, payload: data})
+  submit(data: ResetPwd) {
+    this.store.dispatch({type: AuthActions.RESET_PWD, payload: data})
   }
 
   getError() {
@@ -46,13 +43,6 @@ export class LoginComponent{
         }, 5000);
       }
     })
-  }
-
-  checkJWT() {
-    if(this.authService.isAuthenticated()) {
-      console.log("checkJWT ==> isAutehnticated ");
-      this.router.navigate(['/users'])
-    }
   }
 
 }

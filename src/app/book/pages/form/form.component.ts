@@ -15,6 +15,8 @@ import { BookActions, clearBookError } from '../../state/book.action';
 import { selectBooks, selectBook, selectError } from '../../state/book.selectors';
 import { UserService } from 'src/app/user/services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from 'src/app/shared/components/dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-form',
@@ -40,7 +42,8 @@ export class FormComponent implements OnInit {
     private store: Store<AppState>,
     private router: Router,
     private userService: UserService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,) {
       
     const id = this.acRouter.snapshot.params['id'];
     this.book$ = this.store.select(selectBook(id));
@@ -48,6 +51,9 @@ export class FormComponent implements OnInit {
       if (d) {
         this.menuTitle = "Update Book";
         this.book = d;
+        if(this.book.status == 'BILLED'){
+          this.menuTitle = "View Book";
+        }
       }
     });
     this.error$ = this.store.select(selectError);
@@ -100,13 +106,30 @@ export class FormComponent implements OnInit {
       }
       case "Update": {
         this.store.dispatch({ type: BookActions.UPDATE_BOOK_API, payload: data.value });
+
+        //generate invoice?
+        if(data.value.status == 'COMPLETED'){
+          const dialogRef = this.dialog.open(DialogConfirmComponent, {
+            width: '400px',
+            data: 'This treatment is completed. Do you want to generate the invoice'
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              this.router.navigate(["invoices", "form","idClient", data.value.clientUserId]);
+            }
+          });
+        }
+
         return;
       }
       default: ""
     }
   }
 
+  
   executeCommandBarAction(action: CommandBarActions) {
+    this.store.dispatch(clearBookError());
     switch (action) {
       case CommandBarActions.Create: {
         this.router.navigate(["books", "form"]);

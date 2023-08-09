@@ -13,6 +13,7 @@ export class AuthFormComponent implements OnInit {
   @Output() submitEmitter = new EventEmitter();
   form: FormGroup;
   formRegister: FormGroup;
+  formResetPassword: FormGroup;
 
   constructor(private fb: FormBuilder,private snackBar: MatSnackBar) {
     this.form = this.fb.group({
@@ -20,6 +21,9 @@ export class AuthFormComponent implements OnInit {
       password: ['', Validators.required],
     });
 
+    this.formResetPassword = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
 
     this.formRegister = this.fb.group({
       login: ['', Validators.required],
@@ -60,8 +64,10 @@ export class AuthFormComponent implements OnInit {
     console.log("submit title " + this.title)
     if (this.title == "Login") {
       this.submitEmitter.emit(this.form.value);
-    } else {
+    } else if (this.title == "Register"){
       this.submitEmitter.emit(this.formRegister.value);
+    }else{
+      this.submitEmitter.emit(this.formResetPassword.value);
     }
 
   }

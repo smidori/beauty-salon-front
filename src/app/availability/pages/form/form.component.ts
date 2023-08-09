@@ -93,6 +93,7 @@ export class FormComponent implements OnInit {
   //actions that can be executed
   formAction(data: { value: Availability, action: string }) {
     this.store.dispatch(clearAvailabilityError());
+    
     switch (data.action) {
       case "Create": {
         this.store.dispatch({ type: AvailabilityActions.ADD_AVAILABILITY_API, payload: data.value });
@@ -108,6 +109,7 @@ export class FormComponent implements OnInit {
 
   //navigate to the page
   executeCommandBarAction(action: CommandBarActions) {
+    this.store.dispatch(clearAvailabilityError());
     switch (action) {
       case CommandBarActions.Create: {
         this.router.navigate(["availabilities", "form"]);

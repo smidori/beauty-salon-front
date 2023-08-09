@@ -31,12 +31,16 @@ export class InvoiceEffects {
             ofType(InvoiceActions.ADD_INVOICE_API),
             mergeMap((data: { type: string, payload: Invoice }) => this.invoiceService.addInvoice(data.payload)
                 .pipe(
-                    map(invoices => ({ type: InvoiceActions.ADD_INVOICE_STATE, invoice: data.payload })),
-                    tap(() => this.router.navigate(["invoices"])),
+                    mergeMap(createdInvoice => {
+                        this.router.navigate(["invoices", "pdf", createdInvoice.id]);
+                        return [
+                          { type: InvoiceActions.ADD_INVOICE_STATE, invoice: data.payload }
+                        ];
+                      }),
                     catchError((error) => of({ type: InvoiceActions.ADD_INVOICE_ERROR, error: error.error.message }))
-
-                    //catchError(() => EMPTY)
-                ))
+                  )
+                
+                )
         )
     }, { dispatch: true })
 

@@ -1,5 +1,3 @@
-<h4>{{selectedBook ? "Update/View Book" : "Select the treatment and the day"}}</h4>
-
 <div *ngIf="!selectedBook">
   <form [formGroup]="bookForm">
     <div class="form-row custom-form-row" *ngIf="!isClient">
@@ -93,12 +91,11 @@
     <p><b>From: </b> {{ bookForm.get('startTimeBook')?.value }} <b> to </b> {{ bookForm.get('finishTimeBook')?.value }}</p>
     <p><b>Professional: </b> {{ bookForm.get('workerUserFirstName')?.value }} {{ bookForm.get('workerUserLastName')?.value }}</p>
     <p><b>Client: </b> {{ bookForm.get('clientUserFirstName')?.value }} {{ bookForm.get('clientUserLastName')?.value }}</p>
-    <p><b>Date Create: </b> {{ bookForm.get('createdDate')?.value }}</p>
 
     <mat-form-field appearance="fill">
       <mat-label>Status</mat-label>
       <mat-select formControlName="status" >
-        <mat-option *ngFor="let status of getBookStatusValues()" [value]="status" [disabled]="isClient">
+        <mat-option *ngFor="let status of getBookStatusValues()" [value]="status" [disabled]="isClient || bookForm.get('status')?.value == 'BILLED'">
           {{ getStatusName(status) }}
         </mat-option>
       </mat-select>
@@ -109,14 +106,18 @@
       <div class="form-row">
         <mat-form-field class="example-full-width" appearance="outline" style="width: 100%;">
           <mat-label>Observation</mat-label>
-          <textarea matInput formControlName="observation" cols="300" rows="4"></textarea>
+          <textarea matInput formControlName="observation" cols="300" rows="4" [readonly]="bookForm.get('status')?.value == 'BILLED'"></textarea>
         </mat-form-field>
       </div>
   
-      <div>
-        <button mat-raised-button color="primary" (click)="updateStatus()">Update</button>
+      <div >
+        <button *ngIf="bookForm.get('status')?.value != 'BILLED'" mat-raised-button color="primary" (click)="updateStatus()" >Update</button>
+      
+      &nbsp;
+        <button  mat-raised-button color="warn" (click)="onCancel()">
+                Cancel
+        </button>
       </div>
-    
   </form>
 </div>
 

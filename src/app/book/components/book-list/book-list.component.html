@@ -96,10 +96,14 @@
                     <mat-icon>delete</mat-icon>
                 </button> -->
 
-                <button class="custom-button-table" mat-icon-button color="primary" (click)="executeActionBook(element,0)" >
+                <button class="custom-button-table" mat-icon-button color="primary" (click)="executeActionBook(element,0)" *ngIf="element['status'] !== 'BILLED'">
                     <mat-icon>edit</mat-icon>
                 </button>
-
+                &nbsp;
+                <button class="custom-button-table" mat-icon-button color="primary" (click)="executeActionBook(element,0)" *ngIf="element['status'] == 'BILLED'">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                &nbsp;
                 <button class="custom-button-table" mat-icon-button color="warn" (click)="openDeleteConfirmationDialog(element, 1)" *ngIf="element['status'] === 'BOOKED'" >
                     <mat-icon>delete</mat-icon>
                 </button>

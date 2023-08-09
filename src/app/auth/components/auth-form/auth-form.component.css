@@ -8,6 +8,14 @@
   min-width: 300px;
 }
 
+mat-card-title {
+  font-size: larger;
+  font-family: cursive;
+  font-weight: 800;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
 mat-card-title,
 mat-card-content {
   display: flex;
@@ -21,10 +29,33 @@ mat-card-content {
   background-color: red;
 }
 
-.button {
+/* .button {
   display: flex;
   justify-content: flex-end;
+} */
+
+.button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
+
+.left-button {
+  flex: 1;
+  text-align: left;
+}
+.left-button a{
+  font-size: small;
+  margin-top: 0px;
+  
+}  
+
+.right-button {
+  flex: 1;
+  text-align: right;
+}
+
 
 .link {
   cursor: pointer;
@@ -40,9 +71,17 @@ mat-card-content {
   margin-right: 10px;
 }
 
+.form-row .form-field {
+  margin-bottom: -10px;
+}
+
 mat-card {
   max-width: auto;
   margin: 0 auto;
+
+  border: 1px solid #e0e0e0; /* Cor e espessura da borda desejada */
+    border-radius: 8px; /* Raio do canto da borda */
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 1); /* Sombra suave */
 }
 
 .form-field {

@@ -38,6 +38,7 @@ export class FormComponent implements OnInit {
   products: ReadonlyArray<Product> = [];
   products$ = this.store.select(selectProducts());
 
+  idClient: number | null;
 
   constructor(
     private acRouter: ActivatedRoute,
@@ -56,6 +57,8 @@ export class FormComponent implements OnInit {
         this.invoice = data;
       }
     });
+
+    this.idClient = this.acRouter.snapshot.params['id'];
   }
 
 
@@ -69,6 +72,10 @@ export class FormComponent implements OnInit {
     //GET USERS LIST - dispatch the action
     this.loadUsersByRole('CLIENT');
 
+
+    this.idClient = this.acRouter.snapshot.params['id'];
+    
+
     //GET PRODUCT LIST - dispatch the action
     this.store.dispatch({ type: ProductActions.GET_PRODUCT_LIST });
     this.products$.subscribe((data) => {
@@ -81,6 +88,15 @@ export class FormComponent implements OnInit {
     this.userService.getUsersByRole(role).pipe(
       tap(users => {
           this.clients = users;
+
+          //in case the invoice is generate from completed book, bring only this client
+          if(this.idClient != null){
+            var selectedClient = this.clients.find(client => client.id == this.idClient);
+            if(selectedClient){
+              this.clients = [selectedClient];
+            }
+          }
+
       }),
       catchError(error => {
         console.error('Error loading users by role: ' + role, error);
@@ -91,10 +107,11 @@ export class FormComponent implements OnInit {
 
   //actions that can be executed
   formAction(data: { value: Invoice, action: string }) {
-    console.log("Invoice formAction " + data.value)
+    console.log("Invoice formAction " + data.action)
     switch (data.action) {
       case "Create": {
         this.store.dispatch({ type: InvoiceActions.ADD_INVOICE_API, payload: data.value });
+        //this.router.navigate(["invoices", "pdf", createdInvoiceId]);        
         return;
       }
       case "Update": {

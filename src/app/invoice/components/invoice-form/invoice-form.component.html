@@ -1,7 +1,7 @@
 <form [formGroup]="invoiceForm">
 
   <!-- Select a client for new invoice -->
-  <div class="form-row custom-form-row" *ngIf="!selectedInvoice">
+  <div class="form-row custom-form-row" *ngIf="!selectedInvoice && idClient == null">
   <mat-form-field class="form-field custom-form-field custom-one-field">
     <mat-label>Client</mat-label>
     <mat-select formControlName="client">
@@ -9,6 +9,15 @@
     </mat-select>
   </mat-form-field>
   </div>
+
+  <div class="form-row custom-form-row" *ngIf="!selectedInvoice && idClient != null">
+    <mat-form-field class="form-field custom-form-field custom-one-field">
+      <mat-label>Client</mat-label>
+      <mat-select formControlName="client" [disabled]="idClient != null">
+      <mat-option [value]="clients[0]">{{ clients[0].firstName }} {{ clients[0].lastName }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
 
   <ng-container *ngIf="hasInvoiceItems()">
   <div formArrayName="invoiceItems">

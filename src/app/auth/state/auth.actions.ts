@@ -7,9 +7,11 @@ export enum AuthActions {
     SET_TOKEN = '[AUTH] Set Token',
     CREATE_USER = '[AUTH] Create User',
     LOGIN_ERROR = '[AUTH] LOGIN_ERROR',
+    CLEAR_ERROR = '[AUTH] CLEAR_ERROR',
     SET_IS_AUTHENTICATED = '[AUTH] SET_IS_AUTHENTICATED',
     CLEAR_TOKEN = '[Auth] Clear Token',
     SET_USER_DETAILS = '[AUTH] Set User Details',
+    RESET_PWD = '[AUTH] Reset Pwd',
 }
 
 
@@ -22,6 +24,10 @@ export const setToken = createAction(
 export const setError = createAction(
     AuthActions.LOGIN_ERROR,
     props<{ error: any }>(),
+);
+
+export const clearError = createAction(
+    AuthActions.CLEAR_ERROR
 );
 
 export const setAuthentication = createAction(

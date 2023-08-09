@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/state/app.state';
@@ -13,13 +13,15 @@ import { Location } from '@angular/common';
   templateUrl: './invoice-form.component.html',
   styleUrls: ['./invoice-form.component.css']
 })
-export class InvoiceFormComponent implements OnInit {
+export class InvoiceFormComponent implements OnInit, AfterViewInit {
   //get data from input
   @Input() selectedInvoice: Invoice | null = null;
   @Input() actionButtonLabel: string = "Create";
   @Input() treatments: ReadonlyArray<Treatment> = [];
   @Input() products: ReadonlyArray<Product> = [];
   @Input() clients: User[] = [];
+
+  @Input() idClient: number | null = null;
 
   //send data to page
   @Output() action = new EventEmitter();
@@ -52,19 +54,29 @@ export class InvoiceFormComponent implements OnInit {
 
     this.productForm = this.fb.group({
       product: [null],
-    })
-
-    
+    })    
   }
 
   ngOnInit(): void {
     this.checkAction();
+ 
     // Add observer to call the service, when the client is changed
     this.clientFormControl.valueChanges.subscribe((client) => {
       if (client) {
         this.loadBooksForClient(client.id); //Load books from this client for this current date
       }
     });
+ 
+    
+  }
+
+  ngAfterViewInit(): void{
+    if(this.idClient != null){  
+      
+      // Set the selected client in the form control
+      this.invoiceForm.get('client')?.setValue(this.clients[0]);
+
+    }
   }
 
   //call the methods to filter the products with stock
@@ -153,8 +165,6 @@ export class InvoiceFormComponent implements OnInit {
 
   //send an action
   emitAction() {
-    console.log("emitAction: " + JSON.stringify(this.invoiceForm.value));
-
     this.action.emit({ value: this.invoiceForm.value, action: this.actionButtonLabel })
   }
 

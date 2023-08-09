@@ -23,3 +23,7 @@
 /* .custom-form-field .mat-form-field-wrapper .mat-mdc-text-field-wrapper {
   height: 40px;
 } */
+
+.custom-one-field {
+  flex: 1;
+}

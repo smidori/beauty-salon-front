@@ -39,6 +39,15 @@ export class AuthenticateService {
     return log
   }
 
+  //call the endpoint to login in the system
+  resetPwd(data: { email: string }): Observable<any> {
+    //call endpoint
+    return this.http.post<any>(`${environment.apiURL}/emails/resetPwd`,data).pipe(
+      tap((data: any) => {}),
+      catchError(err => throwError(() => err))
+    )
+  }
+
   //call the api to register the client in the system
   register(user: User): Observable<any> {
     return this.http.post<any>(`${environment.apiURL}/auth/register`, user).pipe(

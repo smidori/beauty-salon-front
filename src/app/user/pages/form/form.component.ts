@@ -122,6 +122,7 @@ export class FormComponent implements OnInit{
 
   //navigate to the page
   executeCommandBarAction(action: CommandBarActions) {
+    this.store.dispatch(clearUserError());
     switch (action) {
       case CommandBarActions.Create: {
         this.router.navigate(["users", "form"]);
