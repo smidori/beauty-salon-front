@@ -13,4 +13,5 @@ export interface BookFilterParams {
     bookStatus: string | null;
     clientId: number | null;
     workerId: number | null;
+    filterDateBy:string | "=";
 }

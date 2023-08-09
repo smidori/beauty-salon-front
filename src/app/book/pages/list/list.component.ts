@@ -46,12 +46,13 @@ export class ListComponent implements OnInit{
   ){}
 
   ngOnInit(): void {  
-    //this.store.dispatch({ type: BookActions.GET_BOOK_LIST});
+    
     const filterParams: BookFilterParams = {
       dateBook: null, //will be replaced in the back end depends on the logged user
       bookStatus: null,
       clientId: null, //will be replaced in the back end depends on the logged user
       workerId: null, //will be replaced in the back end depends on the logged user
+      filterDateBy: "=",
     };
     // const currentDate = new Date();
     // var today = currentDate.toLocaleDateString('en-IE');
@@ -85,7 +86,6 @@ export class ListComponent implements OnInit{
   }
 
   executeActionBook(data: {obj: any, action: TableActions}) {
-    console.log("selectBook => " + JSON.stringify(data.obj));
     switch(data.action) {
       case TableActions.View: {
         this.router.navigate(['books', 'form', data.obj.id]);

@@ -49,6 +49,7 @@ export class BookListComponent implements OnInit{
       workerId : [null],
       clientId : [null],
       bookStatus: [null],
+      filterDateBy: ['='],
     });
 
 
@@ -66,26 +67,6 @@ export class BookListComponent implements OnInit{
     this.loadUsersByRole("WORKER");
   }
 
-  //search the book using the filter in the screen
-  // searchBooksByFilter(){
-  //   this.bookService.getBooksByFilter(this.searchForm.value).subscribe(
-  //     (books) => {
-  //         this.books = books;
-  //     },
-  //     (error) => {
-  //       console.error('Error loading books: ', error);
-  //     }
-  //   );
-  // }
-
-  //worked
-  // searchBooksByFilter(){
-  //   this.store.dispatch({ type: BookActions.GET_BOOK_LIST, payload: this.searchForm.value });
-  //   this.books$.subscribe((data) => {
-  //     this.books = data;
-  //   });
-  // }
-
   searchBooksByFilter(action:TableActions) {
 
     var obj: BookFilterParams = {
@@ -93,6 +74,7 @@ export class BookListComponent implements OnInit{
       bookStatus: this.searchForm.get('bookStatus')?.value, 
       clientId: this.searchForm.get('clientId')?.value,  
       workerId: this.searchForm.get('workerId')?.value,  
+      filterDateBy: this.searchForm.get('filterDateBy')?.value,  
     };
 
     //this.book.emit({book,action});

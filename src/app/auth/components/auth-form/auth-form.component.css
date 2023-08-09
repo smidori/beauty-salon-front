@@ -79,9 +79,9 @@ mat-card {
   max-width: auto;
   margin: 0 auto;
 
-  border: 1px solid #e0e0e0; /* Cor e espessura da borda desejada */
-    border-radius: 8px; /* Raio do canto da borda */
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 1); /* Sombra suave */
+  border: 1px solid #e0e0e0;  
+    border-radius: 8px;  
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 1); 
 }
 
 .form-field {

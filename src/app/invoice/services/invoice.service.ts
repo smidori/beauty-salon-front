@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core"
 import { Observable, tap, catchError, throwError } from "rxjs"
 import { Invoice } from "src/app/invoice/model/invoice.interface"
 import { environment } from "src/environments/environment"
+import { InvoiceFilterParams } from "../model/invoiceFilterParams.interface"
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,19 @@ export class InvoiceService {
 
   constructor(private http: HttpClient) { }
 
-  getInvoices(): Observable<Invoice[]>{
-    console.log('getInvoices => ' + `${environment.apiURL}/invoices`)
-    return this.http.get<Invoice[]>(`${environment.apiURL}/invoices`).pipe(
+  // getInvoices(): Observable<Invoice[]>{
+  //   console.log('getInvoices => ' + `${environment.apiURL}/invoices`)
+  //   return this.http.get<Invoice[]>(`${environment.apiURL}/invoices`).pipe(
+  //     tap((data: Invoice[]) => data),
+  //     catchError(err => throwError(() => err))
+  //   )
+  // }
+
+  getInvoicesByFilter(invoice: InvoiceFilterParams): Observable<Invoice[]> {
+    return this.http.post<Invoice[]>(`${environment.apiURL}/invoices/withFilters`, invoice).pipe(
       tap((data: Invoice[]) => data),
       catchError(err => throwError(() => err))
-    )
+    );
   }
 
   getInvoiceById(id: number): Observable<Invoice>{

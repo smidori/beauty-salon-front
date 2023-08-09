@@ -1,5 +1,5 @@
 <command-bar menuTitle="Invoices" [isVisibleCreate]="isVisibleCreate" [isVisibleList]="isVisibleList"  (action)="executeCommandBarAction($event)"></command-bar>
 
 <div class="container">
-    <invoice-list [invoices]="invoices" [headers]="headers" (invoice)="selectInvoice($event)"></invoice-list>
+    <invoice-list [invoices]="invoices" [headers]="headers" (invoice)="executeActionInvoice($event)"></invoice-list>
  </div>

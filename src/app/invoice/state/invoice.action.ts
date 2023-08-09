@@ -1,5 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { Invoice } from "../model/invoice.interface";
+import { InvoiceFilterParams } from "../model/invoiceFilterParams.interface";
 
 
 export enum InvoiceActions {
@@ -18,6 +19,7 @@ export enum InvoiceActions {
 
 export const getInvoiceList = createAction(
     InvoiceActions.GET_INVOICE_LIST,
+    props<{invoice:InvoiceFilterParams}>()
 );
 
 export const setInvoiceList = createAction(

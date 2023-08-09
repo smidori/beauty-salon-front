@@ -8,6 +8,7 @@ export interface Invoice{
   observation : string;
   total: number;
   date: Date;
+  createdDate: Date;
   invoiceItems: InvoiceItem[];
 }
 
