@@ -4,20 +4,7 @@
         <th mat-header-cell *matHeaderCellDef>
             {{ item.headerName }}
         </th>
-        <td mat-cell *matCellDef="let element">
-            
-            <!-- <ng-container *ngFor="let day of daysOfWeek">
-              <ng-container *ngIf="item.fieldName === day">
-                <div>
-                  <span>
-                    <mat-icon *ngIf="element[item.fieldName]">check</mat-icon>
-                    <mat-icon *ngIf="!element[item.fieldName]">close</mat-icon>
-                  </span>
-                </div>
-              </ng-container>
-            </ng-container> -->
-            
-            
+        <td mat-cell *matCellDef="let element">    
 
             <ng-container *ngIf="item.fieldName === 'user' && item.userName">
                 {{ getFullName(element[item.fieldName], item.userName) }}
@@ -31,7 +18,7 @@
                 <div >
                   <ul class="treatments">
                     <li *ngFor="let treatment of element[item.fieldName]">
-                      {{ treatment.name }}  ({{treatment.duration}} min)
+                      {{ treatment.name }} - ({{ treatment.type.name}}) - ({{treatment.duration}} min)
                     </li>
                   </ul>
                 </div>
@@ -61,10 +48,10 @@
             <button class="custom-button-table" (click)="selectAvailability(element,0)" mat-icon-button color="primary">
                 <mat-icon>edit</mat-icon>
             </button>
-            &nbsp;
+            <!-- &nbsp;
             <button (click)="selectAvailability(element, 1)" mat-raised-button color="warn">
                 <mat-icon>delete</mat-icon> Delete
-            </button>
+            </button> -->
         </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="headerFields"></tr>

@@ -7,6 +7,10 @@
   margin-right: 10px;
 }
 
+.form-row .form-field {
+  margin-bottom: -12px;
+}
+
 .button-group {
   display: flex;
   gap: 10px;
@@ -14,11 +18,10 @@
 
 .button-toggle-container-horizontal {
   display: flex;
-  flex-wrap: nowrap; /* Impede a quebra dos botões para a próxima linha */
-  overflow-x: auto; /* Habilita a rolagem horizontal */
+  flex-wrap: nowrap;  
+  overflow-x: auto;  
   width: 1000px;
 }
-
 
 /* .auto-close-panel .mat-select-panel {
   position: static;

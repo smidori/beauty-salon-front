@@ -26,7 +26,7 @@ export class TreatmentFormComponent {
     this.form = this.fb.group({
       id: [null],
       name: ['', Validators.required],
-      description: ['', Validators.required],
+      description: [''],
       price: ['', Validators.required],
       duration: ['', Validators.required],
       type: ['', Validators.required],
@@ -58,6 +58,15 @@ export class TreatmentFormComponent {
     return object1 && object2 && object1.id == object2.id;
   }
 
+  //for stock accept only integer numbers
+  onlyNumbers(event: any): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+  
   //send an action
   emitAction() {
     this.action.emit({ value: this.form.value, action: this.actionButtonLabel })

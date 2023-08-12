@@ -26,8 +26,8 @@
         <mat-form-field class="form-field custom-one-field">
             <mat-label>Treatments</mat-label>
             <mat-select formControlName="treatments" multiple [compareWith]="compareTreatmentObjects" required>
-                <mat-option *ngFor="let treatment of treatments" [value]="treatment">{{ treatment.name
-                    }} - ({{treatment.duration}} min) {{treatment.price | currency: 'EUR'}}</mat-option>
+                <mat-option *ngFor="let treatment of treatments" [value]="treatment">
+                    {{ treatment.name}} - ({{ treatment.type.name}}) - ({{treatment.duration}} min) </mat-option>
             </mat-select>
         </mat-form-field>
     </div>

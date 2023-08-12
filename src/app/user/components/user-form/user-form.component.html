@@ -12,7 +12,12 @@
     </div>
 
     <div class="form-row">
-        <mat-form-field class="form-field">
+        <mat-form-field class="form-field" *ngIf="(actionButtonLabel == 'Update')">
+            <mat-label>E-mail</mat-label>
+            <input matInput type="email" placeholder="Email" formControlName="email" readonly>
+        </mat-form-field>
+
+        <mat-form-field class="form-field" *ngIf="!(actionButtonLabel == 'Update')">
             <mat-label>E-mail</mat-label>
             <input matInput type="email" placeholder="Email" formControlName="email" required>
         </mat-form-field>

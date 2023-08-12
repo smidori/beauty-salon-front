@@ -7,17 +7,49 @@
   margin-right: 10px;
 }
 
+.form-row .form-field {
+  margin-bottom: -12px;
+}
+
 .button-group {
   display: flex;
   gap: 10px;
 }
 
 .custom-datepicker {
-  width: 213px; /* Defina o tamanho desejado aqui */
+  width: 213px;
 }
 
 .custom-input-number {
   width: 17vh;
+}
+
+mat-card {
+  max-width: auto;
+  /* margin: 0 auto; */
+  margin-bottom: 10px;
+
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 1);
+}
+
+mat-card-header{
+  margin-top: -20px;  
+  margin-bottom: -5px;
+  margin-left: -5px;  
+  margin-right: -5px;  
+}
+
+.button-delete-item {
+  margin-top: 10px;  
+}
+
+mat-card-content{
+  margin-top: -2px;  
+  margin-bottom: -30px;  
+  margin-left: -5px;  
+  margin-right: -5px;  
 }
 
 /* .form-row {

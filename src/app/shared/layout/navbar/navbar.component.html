@@ -8,17 +8,22 @@
         <a><mat-icon>phone_in_talk</mat-icon>1234-5678</a>
         <a class="address"><mat-icon>location_on</mat-icon> 30-34 Westmoreland St</a>
     </div>
-    <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/treatments'">Treatments</button>
     <button *ngIf="isAdmin" mat-raised-button color="primary"[routerLink]="'/treatment-types'">Treatment types</button>
+    <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/treatments'">Treatments</button>
     <button *ngIf="isAuthenticated && !isClient" mat-raised-button color="primary"[routerLink]="'/products'">Products</button>
     <button *ngIf="isAuthenticated && isAdmin" mat-raised-button color="primary"[routerLink]="'/users'">Users</button>
     <button *ngIf="isAdmin" mat-raised-button color="primary"[routerLink]="'/availabilities'">Availabilities</button>
     <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/books'">Books</button>
     <button *ngIf="isAuthenticated" mat-raised-button color="primary"[routerLink]="'/invoices'">Invoices</button>
-
-    <button *ngIf="isAuthenticated" mat-raised-button color="primary" (click)="editUserDetails()">MyAccount</button>
-
     <div class="spacer"></div>
+
+    <!-- <button *ngIf="isAuthenticated" mat-raised-button color="primary" (click)="editUserDetails()">MyAccount</button> -->
+
+    <button  matTooltip="My Account" *ngIf="isAuthenticated" mat-icon-button color="primary" (click)="editUserDetails()">
+        <mat-icon  fontIcon="account_circle"></mat-icon>
+    </button>
+
+    
         
     
     <span *ngIf="isAuthenticated">Hello, {{ name }}</span>

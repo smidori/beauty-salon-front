@@ -46,8 +46,6 @@
   
           <div *ngFor="let slotKey of bookSlots | keys">
             <ng-container *ngIf="resultForm.get('selectedSlotKey')?.value === slotKey">
-              <!-- <p>{{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} ({{
-                bookSlots[slotKey]['dateBook']}}) </p> -->
               <p>Duration: {{ bookSlots[slotKey]['startTimeBook']}} - {{ bookSlots[slotKey]['finishTimeBook']}} </p>
               <p>Select the Professional: </p>
               <mat-radio-group formControlName="selectedBookSlot" required>

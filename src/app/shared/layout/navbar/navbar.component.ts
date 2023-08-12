@@ -16,20 +16,15 @@ import { User } from 'src/app/user/models/user.interface';
 })
 
 export class NavbarComponent implements OnInit {
-  
-  //isAuthenticated$: Observable<boolean>;
-  //userDetails$ = this.store.select(selectUserDetails);
+
   name = '';
   isAuthenticated = false;
   isAdmin = false;
   isWorker = false;
   isClient = false;
-  //userDetails$!: Observable<any>;
-  //userDetails!: User;
-  
+
   constructor(private auth: AuthenticateService, private router: Router, private store: Store<AppState>,
     private scrollService: ScrollService) {
-    console.log("constructor navbar");
   }
 
   onAnchorClick(section: string) {
@@ -37,7 +32,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit navbar");
     // Subscribe in the event to update the values of isAuthenticated e isAdmin
     this.auth.onAuthenticationChange().subscribe((isAuthenticated) => {
       this.isAuthenticated = this.auth.isAuthenticated();
@@ -53,8 +47,7 @@ export class NavbarComponent implements OnInit {
     this.isWorker = this.auth.isWorker();
     this.isClient = this.auth.isClient();
     this.name = this.auth.name();
-    console.log("ngOnInit => isAdmin " + this.isAdmin)
-    
+
   }
 
   logout() {
@@ -68,7 +61,7 @@ export class NavbarComponent implements OnInit {
 
   editUserDetails() {
     const userId = this.auth.userId();
-    this.router.navigate(['users', 'form', userId]);    
+    this.router.navigate(['users', 'form', userId]);
     return;
   }
 

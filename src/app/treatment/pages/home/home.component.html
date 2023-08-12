@@ -2,63 +2,49 @@
   <div class="container" id="home">
     <div class="image-home"></div>
     <div class="text-home">
-  <p class="description">Discover Your Perfect Beauty Experience. 
-    Indulge in a world of relaxation and rejuvenation with our beauty treatments. 
-    Our skilled team is dedicated to helping you look and feel your absolute best.</p>
-  <p class="description highlight"><b>Visit us today and embark on a journey to blissful beauty!</b></p>
+  <p class="description">Explore the Beauty Journey You'll Love. 
+    Treat yourself to a world of relaxation and revitalization with our beauty treatments. 
+    Our expert team is here to make you look and feel amazing.
+  </p>
+  <p class="description highlight"><b>Visit us today and start a wonderful journey to feeling beautifully happy!</b></p>
 </div>
 
   </div>
 
-  <div class="container" id="treatments">
-    <h3>Treatments</h3>
-    <div *ngFor="let type of getTreatmentTypes()">
-      <div class="card">
-        <h2>{{ type }}</h2>
-        <div class="treatments-container">
-          <div *ngFor="let treatment of getTreatmentsByType(type)" class="treatment">
-            <div>
-              <div class="header">
-                <h4>{{ treatment.name }}</h4>
-                <span class="spacer"></span>
-                <span class="price"> {{ treatment.price | currency: 'EUR' }}</span>
-              </div>
-
-              <p class="description">{{ treatment.description }}</p>
-              <p class="description"><b>Duration:</b> {{ treatment.duration}} min</p>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="container services" id="treatments">
+    <h3 class="center">Treatments</h3>
+    <ng-container *ngFor="let type of getTreatmentTypes();">
+      <mat-card class="type-card center">
+        <mat-card-title><h3>{{ type }}</h3></mat-card-title>
+        <table class="treatments-table">
+          <tr class="custom-tr" *ngFor="let treatment of getTreatmentsByType(type);">
+            <td class="name">{{ treatment.name }}</td>
+            <td class="price">{{ treatment.price | currency: 'EUR' }}</td>
+            <td class="details" matTooltip="{{ treatment.description }}">
+              <span *ngIf="treatment.description">+Details</span>
+            </td>
+          </tr>
+        </table>
+      </mat-card>
+    </ng-container>
   </div>
+  
 
 
   <div class="container" id="about_us">
     <h3>About Us</h3>
     <span>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vel facilisis neque. Donec quis quam
-      facilisis, vulputate sapien eu, blandit arcu. Quisque id sollicitudin nisi, et laoreet dolor. Nulla molestie
-      nulla malesuada felis venenatis, vitae sagittis mauris fringilla. Aliquam malesuada tortor ut nibh bibendum, non
-      euismod magna consequat. Nullam vulputate imperdiet ipsum in facilisis. Phasellus volutpat sem eget nunc
-      pulvinar, vitae luctus dolor euismod. Donec vel mi vel ex molestie pulvinar sed a tortor. Praesent vitae ornare
-      ex. Vestibulum ante ips
+      At our salon, we're all about making you feel wonderful.
     </span>
-    <p>Donec dapibus tellus ac tortor tristique, eu venenatis nunc fringilla. Aenean in cursus magna,
-      vitae ultrices urna. Vivamus feugiat accumsan nisl, quis rutrum nulla hendrerit ac.
-      Aenean elit elit, pharetra vitae commodo quis, finibus sed libero. Curabitur et cursus massa,
-      eu efficitur mauris. Proin dictum, libero ut lacinia finibus, ante orci maximus neque, ac
-      maximus odio sapien non nisl. Proin porta odio quis dui efficitur, vel tincidunt turpis rhoncus. Nullam id nibh
-      at nulla porttitor gravida vel id massa. In hac habitasse platea dictumst. Suspendisse placerat, turpis ac
+    <p>
+      We have a team of friendly and skilled professionals who are here to help you look and feel your best.
+    </p>
+    <!-- <p> Nullam id nibh at nulla porttitor gravida vel id massa. In hac habitasse platea dictumst. Suspendisse placerat, turpis ac
       sagittis porttitor, arcu magna tempus libero, nec bibendum arcu mi sit amet justo. Cras non tincidunt augue, sed
       sollicitudin arcu. Aliquam eleifend suscipit tortor eget dapibus. Cras consequat hendrerit ex id aliquet. Fusce
       et tellus ultrices, sagittis diam in, gravida sem. Maecenas hendrerit vitae leo sed feugiat. Maecenas dictum
-      venenatis magna, et dignissim diam euismod imperdiet.</p>
-    <p>Quisque ac nisi pharetra, tempor mauris ac, posuere eros. Ut dapibus, arcu eget pharetra
-      convallis, mi ipsum aliquam velit, in convallis nulla neque quis ex. Donec vel ante sodales,
-      luctus felis vel, tempor lacus. Praesent convallis congue est eu blandit. Sed luctus lorem
-      eget enim volutpat, at convallis mi molestie. Nunc finibus ex vel ipsum dapibus, eu vehicula augue euismod. Duis
-      efficitur finibus lectus, quis</p>
+      venenatis magna, et dignissim diam euismod imperdiet.
+    </p> -->
+    
   </div>
 </div>

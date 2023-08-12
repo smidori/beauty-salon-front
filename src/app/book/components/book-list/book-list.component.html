@@ -33,22 +33,20 @@
 
 
                 <mat-form-field class="form-field">
-                    <mat-label>Client</mat-label>
-                    <mat-select formControlName="clientId">
-                        <mat-option *ngFor="let user of clients" [value]="user.id">{{ user.firstName
-                            }}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-
-
-                <mat-form-field class="form-field">
                     <mat-label>Professional</mat-label>
                     <mat-select formControlName="workerId">
                         <mat-option *ngFor="let user of workers" [value]="user.id">{{ user.firstName
-                            }}</mat-option>
+                            }} {{ user.lastName}}</mat-option>
                     </mat-select>
                 </mat-form-field>
+
+                <mat-form-field class="form-field" *ngIf="!isClient">
+                    <mat-label>Client</mat-label>
+                    <mat-select formControlName="clientId">
+                        <mat-option *ngFor="let user of clients" [value]="user.id">{{ user.firstName
+                            }}  {{ user.lastName}}</mat-option>
+                    </mat-select>
+                </mat-form-field>                
 
                 <div class="form-field">
                     <!-- <button mat-raised-button color="primary" (click)="searchBooksByFilter()">Search</button> -->
@@ -62,7 +60,9 @@
         </form>
     </div>
     <div class="button-group">
-        <button mat-raised-button color="primary" (click)="generatePDF()">Generate PDF</button>
+        <button mat-raised-button color="warn" (click)="generatePDF()">
+            <mat-icon>picture_as_pdf</mat-icon> Generate PDF
+        </button>
     </div>
 
 

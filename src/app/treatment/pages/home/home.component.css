@@ -77,3 +77,52 @@ h2 {
 .spacer {
   flex-grow: 1;
 } 
+
+.custom-tr:nth-child(odd) {
+  background-color: #E0E0E0  /* #BFDDF3; */
+}
+
+.type-row {
+  font-family: cursive;
+}
+
+mat-card {
+  max-width: 50%;
+  /* margin: 0 auto; */
+  margin-bottom: 10px;
+
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 1);
+}
+
+.center {
+  text-align: center;
+  font-family: cursive;
+}
+
+.type-card {
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.type-card mat-card-title {
+  text-align: center;
+}
+
+ 
+.type-card .treatments-table td.name {
+  width: 60%;  
+}
+
+.type-card .treatments-table td.price {
+  width: 40%;  
+}
+
+.services {
+  background-color: black;
+}
+
+.services h3 {
+  color: red;
+}

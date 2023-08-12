@@ -5,7 +5,7 @@
     <div class="form-row">
         <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Name</mat-label>
-            <input matInput placeholder="Name" formControlName="name" required>
+            <input matInput placeholder="Name" formControlName="name" required maxlength="30">
         </mat-form-field>
         
         <!-- <mat-form-field class="form-field">
@@ -16,7 +16,7 @@
     <div class="form-row">       
         <mat-form-field class="form-field custom-one-field">
             <mat-label>Description</mat-label>
-            <textarea matInput placeholder="Description" formControlName="description" required maxlength="50"></textarea>
+            <textarea matInput placeholder="Description" formControlName="description" maxlength="100"></textarea>
         </mat-form-field>
     </div>
 
@@ -29,7 +29,7 @@
 
         <mat-form-field class="form-field">
             <mat-label>Duration</mat-label>
-            <input matInput placeholder="Duration" formControlName="duration" required>
+            <input matInput type="number" placeholder="Duration" formControlName="duration" (keypress)="onlyNumbers($event)" required>
         </mat-form-field>
     </div>
 

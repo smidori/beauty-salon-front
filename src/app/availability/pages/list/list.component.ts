@@ -22,7 +22,7 @@ export class ListComponent implements OnInit{
   
   headers: { headerName: string, fieldName: keyof Availability, userName?: (keyof User)[] }[] = [
     { headerName: "Id", fieldName: "id" },
-    { headerName: "User", fieldName: "user", userName: ["firstName", "lastName"] },    
+    { headerName: "Worker", fieldName: "user", userName: ["firstName", "lastName"] },    
     { headerName: "Start Date", fieldName: "startDate" },
     { headerName: "Finish Date", fieldName: "finishDate" }, //não exibir na list para ter sempre 1 nulo que é o atual
     { headerName: "Treatments", fieldName: "treatments" },

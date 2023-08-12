@@ -27,7 +27,7 @@ export class ProductFormComponent {
     this.form = this.fb.group({
       id: [null],
       name: ['', Validators.required],
-      description: ['', Validators.required],
+      description: [''],
       price: ['', Validators.required],
       stock: [0, Validators.required],
     });
@@ -69,5 +69,14 @@ export class ProductFormComponent {
 
   onCancel() {
     this.location.back();
+  }
+
+  //for stock accept only integer numbers
+  onlyNumbers(event: any): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
   }
 }

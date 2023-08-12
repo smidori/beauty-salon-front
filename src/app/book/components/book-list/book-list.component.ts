@@ -23,21 +23,22 @@ import { BookFilterParams } from '../../model/bookSearchParams.interface';
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
-export class BookListComponent implements OnInit{
+export class BookListComponent implements OnInit {
   @Input() headers: Array<{ headerName: string, fieldName: keyof Book, userName?: (keyof User)[] }> = []
   @Input() books: ReadonlyArray<Book> = [];
-  @Output() book = new EventEmitter<{obj: any, action:TableActions}>();
-  
+  @Output() book = new EventEmitter<{ obj: any, action: TableActions }>();
+
   //@Output() searchBooks = new EventEmitter<{book: BookFilterParams, action:TableActions}>();
 
-  headerFields:string[] = [];
+  headerFields: string[] = [];
 
   workers: User[] = [];
   clients: User[] = [];
   searchForm: FormGroup;
   books$ = this.store.select(selectBooks());
-  
-  constructor(private fb:FormBuilder, 
+  isClient = false;
+
+  constructor(private fb: FormBuilder,
     private userService: UserService,
     private bookService: BookService,
     private authService: AuthenticateService,
@@ -46,8 +47,8 @@ export class BookListComponent implements OnInit{
 
     this.searchForm = this.fb.group({
       dateBook: [null],
-      workerId : [null],
-      clientId : [null],
+      workerId: [null],
+      clientId: [null],
       bookStatus: [null],
       filterDateBy: ['='],
     });
@@ -56,9 +57,9 @@ export class BookListComponent implements OnInit{
     const currentDate = new Date();
     var today = currentDate.toISOString();
 
-    if(this.authService.isAdmin() || this.authService.isWorker()){  
+    if (this.authService.isAdmin() || this.authService.isWorker()) {
       this.searchForm.get('dateBook')?.setValue(today);
-    }else{//client
+    } else {//client
       this.searchForm.get('bookStatus')?.setValue(BookStatus.BOOKED);;
     }
 
@@ -67,23 +68,28 @@ export class BookListComponent implements OnInit{
     this.loadUsersByRole("WORKER");
   }
 
-  searchBooksByFilter(action:TableActions) {
+  ngOnInit(): void {
+    this.getHeaderFields();
+    this.isClient = this.authService.isClient();
+  }
+
+  searchBooksByFilter(action: TableActions) {
 
     var obj: BookFilterParams = {
-      dateBook: this.searchForm.get('dateBook')?.value, 
-      bookStatus: this.searchForm.get('bookStatus')?.value, 
-      clientId: this.searchForm.get('clientId')?.value,  
-      workerId: this.searchForm.get('workerId')?.value,  
-      filterDateBy: this.searchForm.get('filterDateBy')?.value,  
+      dateBook: this.searchForm.get('dateBook')?.value,
+      bookStatus: this.searchForm.get('bookStatus')?.value,
+      clientId: this.searchForm.get('clientId')?.value,
+      workerId: this.searchForm.get('workerId')?.value,
+      filterDateBy: this.searchForm.get('filterDateBy')?.value,
     };
 
     //this.book.emit({book,action});
-    this.book.emit({obj,action});
+    this.book.emit({ obj, action });
 
   }
 
   //clear the filter parameters
-  clearSearch(){
+  clearSearch() {
     this.searchForm.reset();
   }
 
@@ -109,12 +115,8 @@ export class BookListComponent implements OnInit{
     return nameParts.join(' ');
   }
 
-  
-  ngOnInit(): void {
-    this.getHeaderFields();
-  }
 
-  getHeaderFields(){
+  getHeaderFields() {
     this.headerFields = this.headers.map((data) => data.fieldName);
     this.headerFields.push("actions");
   }
@@ -123,12 +125,12 @@ export class BookListComponent implements OnInit{
   //   this.book.emit({book,action})
   // }
 
-  executeActionBook(obj: any, action:TableActions) {
-    this.book.emit({obj,action})
+  executeActionBook(obj: any, action: TableActions) {
+    this.book.emit({ obj, action })
   }
 
   //modal delete confirmation
-  openDeleteConfirmationDialog(book: Book, action:TableActions): void {
+  openDeleteConfirmationDialog(book: Book, action: TableActions): void {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '400px',
       data: 'Are you sure you want to delete this item?'
@@ -145,7 +147,7 @@ export class BookListComponent implements OnInit{
   getBookStatusValues(): string[] {
     return Object.keys(bookStatusLabels);
   }
-  
+
   // get the name in enum BookStatus
   getStatusName(statusValue: string): string {
     return bookStatusLabels[statusValue];
@@ -154,9 +156,9 @@ export class BookListComponent implements OnInit{
   generatePDF() {
     // Get the element to converte to PDF
     const element = document.getElementById('pdf');
-      
+
     // Use html2canvas to convert element HTML to an image
-    if(element){
+    if (element) {
       html2canvas(element).then((canvas) => {
 
         const imgWidth = 200; // Largura da imagem no PDF //235 foi um bom numero
@@ -164,14 +166,14 @@ export class BookListComponent implements OnInit{
 
         //generate a image
         const imgData = canvas.toDataURL('image/png');
-    
+
         // generate a pdf
         const pdf = new jsPDF.default('p', 'mm', 'a4');
-    
+
         // Add the page to pdf
         pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
         //pdf.addImage(imgData, 'PNG', 10, 10, canvas.width, canvas.height);
-    
+
         //save to pdf
         pdf.save('book-list.pdf');
       });

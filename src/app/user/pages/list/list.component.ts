@@ -28,10 +28,11 @@ export class ListComponent implements OnInit {
   menuTitle = "My Account";
 
   headers: { headerName: string, fieldName: keyof User }[] = [
-    { headerName: "Id", fieldName: "id" },
+    // { headerName: "Id", fieldName: "id" },
     { headerName: "First Name", fieldName: "firstName" },
     { headerName: "Last Name", fieldName: "lastName" },
-    { headerName: "E-mail", fieldName: "email" },
+    { headerName: "Email", fieldName: "email" },
+    { headerName: "Role", fieldName: "role" },
     { headerName: "Gender", fieldName: "gender" },
     { headerName: "Mobile Phone", fieldName: "mobilePhone" },
   ]

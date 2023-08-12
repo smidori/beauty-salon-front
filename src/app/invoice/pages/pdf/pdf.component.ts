@@ -150,7 +150,7 @@ export class PdfComponent implements OnInit {
     if(element){
       html2canvas(element).then((canvas) => {
         //const imgWidth = 100; // Largura da imagem no PDF
-        const imgWidth = 180; 
+        const imgWidth = 135; 
         const imgHeight = (imgWidth / canvas.width) * canvas.height;
 
         //generate a image

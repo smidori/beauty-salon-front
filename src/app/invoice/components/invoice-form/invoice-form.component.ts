@@ -197,7 +197,7 @@ export class InvoiceFormComponent implements OnInit, AfterViewInit {
       id: [null],
       description: [treatment.name],
       observation: [''],
-      worker: [null],
+      worker: [book.workerUserId],
       amount: [1, Validators.required],
       subtotal: [treatment.price, Validators.required],
       extra: [0],
